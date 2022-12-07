@@ -65,13 +65,13 @@ function FirstPage(props) {
             border: "1px solid black",
           }}
         >
-          <Box sx={{ width: "80%" }}>
+          
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
             deserunt dignissimos voluptates mollitia suscipit totam nemo
             consequuntur asperiores, ipsa quos placeat aliquam eos iste harum
             esse amet blanditiis! Expedita cupiditate, ab dolorem nobis
             architecto accusamus consequatur placeat commodi natus deserunt?
-          </Box>
+          
         </Grid.Col>
       </Grid>
     </div>
