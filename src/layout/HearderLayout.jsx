@@ -6,6 +6,9 @@ import {
   ActionIcon,
   Container,
   Burger,
+  Drawer,
+  Image,
+  Box,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -14,7 +17,7 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons";
 import { MantineLogo } from "@mantine/ds";
-
+import ZamodiLogo from './../assets/Zamodi-Logo.png'
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
@@ -83,6 +86,11 @@ const useStyles = createStyles((theme) => ({
         .color,
     },
   },
+  hiddenDesktop: {
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 const links = [
@@ -101,7 +109,9 @@ const links = [
 ];
 
 function HearderLayout(props) {
-  const [opened, { toggle }] = useDisclosure(false);
+  // const [opened, { toggle }] = useDisclosure(false);
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
+    useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
@@ -122,33 +132,52 @@ function HearderLayout(props) {
   ));
 
   return (
-    <Header height={56} mb={120}>
-      <Container className={classes.inner}>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          size="sm"
-          className={classes.burger}
-        />
-        <Group className={classes.links} spacing={5}>
-          {items}
-        </Group>
+    <>
+      <Header height={56} mb={120}>
+        <Container className={classes.inner}>
+          <Burger
+            opened={drawerOpened}
+            onClick={toggleDrawer}
+            size="sm"
+            className={classes.burger}
+          />
+          <Group className={classes.links} spacing={5}>
+            {items}
+          </Group>
 
-        <MantineLogo size={28} />
+          <MantineLogo size={28} />
 
-        <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon size="lg">
-            <IconBrandTwitter size={18} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg">
-            <IconBrandYoutube size={18} stroke={1.5} />
-          </ActionIcon>
-          <ActionIcon size="lg">
-            <IconBrandInstagram size={18} stroke={1.5} />
-          </ActionIcon>
-        </Group>
-      </Container>
-    </Header>
+          <Group spacing={0} className={classes.social} position="right" noWrap>
+            <ActionIcon size="lg">
+              <IconBrandTwitter size={18} stroke={1.5} />
+            </ActionIcon>
+            <ActionIcon size="lg">
+              <IconBrandYoutube size={18} stroke={1.5} />
+            </ActionIcon>
+            <ActionIcon size="lg">
+              <IconBrandInstagram size={18} stroke={1.5} />
+            </ActionIcon>
+          </Group>
+        </Container>
+      </Header>
+
+      <Drawer
+        transition="rotate-left"
+        transitionDuration={250}
+        transitionTimingFunction="ease"
+        opened={drawerOpened}
+        onClose={closeDrawer}
+        size="100%"
+        padding="md"
+        title="ZAMODI"
+        className={classes.hiddenDesktop}
+        zIndex={1000000}
+      >
+       <Box>
+        <Image src={ZamodiLogo} />
+       </Box>
+      </Drawer>
+    </>
   );
 }
 

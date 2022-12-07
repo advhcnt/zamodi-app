@@ -4,6 +4,7 @@ import DashboardPage from "./pages/DashboardPage";
 import FirstPage from "./pages/FirstPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import './App.css'
 
 function App(props) {
   return (

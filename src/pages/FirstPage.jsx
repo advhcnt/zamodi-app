@@ -1,15 +1,18 @@
-import { Box, Button, Grid, Group, Text } from "@mantine/core";
+import { Box, Button, Grid, Group, Image, Text } from "@mantine/core";
 import React from "react";
+import authLogo from "./../assets/authLogo.svg";
+import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 
 function FirstPage(props) {
   return (
-    <div style={{ height: "100vh", width: "100vw", overflowX: "hidden" }}>
-      <Grid style={{ height: "100.5vh" }}>
+    <div style={{ width: "100vw", overflow: "hidden" }}>
+      <Grid style={{ height: "100vh" }}>
         {/* Première partie */}
         <Grid.Col
           md={6}
           order={2}
           orderMd={1}
+          className={"FirstPathAuth"}
           style={{
             display: "flex",
             alignItems: "center",
@@ -19,7 +22,7 @@ function FirstPage(props) {
           }}
         >
           <Box sx={{ width: "80%" }}>
-            <Text fz="xl" ta={"center"}>
+            <Text fz="xl" ta={"center"} fw={700}>
               WELCOME
             </Text>
             <Text fz={"xs"}>
@@ -57,21 +60,46 @@ function FirstPage(props) {
           order={1}
           orderMd={2}
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            justifyItems: "center",
             borderRadius: " 115px 0px 0px 0px ",
             border: "1px solid black",
           }}
         >
-          
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-            deserunt dignissimos voluptates mollitia suscipit totam nemo
-            consequuntur asperiores, ipsa quos placeat aliquam eos iste harum
-            esse amet blanditiis! Expedita cupiditate, ab dolorem nobis
-            architecto accusamus consequatur placeat commodi natus deserunt?
-          
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              justifyItems: "center",
+              textAlign: "center",
+              // justifyContent: "center",
+              alignContent: "center",
+              width: "100%",
+            }}
+          >
+            <Image
+              radius="md"
+              src={ZamodiLogo}
+              alt="Random unsplash image"
+              height={"100%"}
+              width={"100%"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            />
+          </div>
+          <Box
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              justifyItems: "center",
+              marginTop:'18vh'
+            }}
+          >
+            <Image radius="md" src={authLogo} alt="Random unsplash image" />
+          </Box>
         </Grid.Col>
       </Grid>
     </div>
