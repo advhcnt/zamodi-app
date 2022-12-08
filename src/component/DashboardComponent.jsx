@@ -5,6 +5,7 @@ import {
   Grid,
   Image,
   Paper,
+  Tabs,
   Text,
   UnstyledButton,
 } from "@mantine/core";
@@ -13,8 +14,8 @@ import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import Tableau from "./Tableau";
-import graphOrange from './../assets/grapheOrange.png';
-import graphBlanc from './../assets/graphBlanc.png';
+import graphOrange from "./../assets/grapheOrange.png";
+import graphBlanc from "./../assets/graphBlanc.png";
 
 const tableData = [
   {
@@ -47,56 +48,7 @@ const tableData = [
     company: "Funk, Rohan and Kreiger",
     email: "Jamie23@hotmail.com",
   },
-  {
-    name: "Austin Jacobi",
-    company: "Botsford - Corwin",
-    email: "Genesis42@yahoo.com",
-  },
-  {
-    name: "Hershel Mosciski",
-    company: "Okuneva, Farrell and Kilback",
-    email: "Idella.Stehr28@yahoo.com",
-  },
-  {
-    name: "Mylene Ebert",
-    company: "Kirlin and Sons",
-    email: "Hildegard17@hotmail.com",
-  },
-  {
-    name: "Lou Trantow",
-    company: "Parisian - Lemke",
-    email: "Hillard.Barrows1@hotmail.com",
-  },
-  {
-    name: "Dariana Weimann",
-    company: "Schowalter - Donnelly",
-    email: "Colleen80@gmail.com",
-  },
-  {
-    name: "Dr. Christy Herman",
-    company: "VonRueden - Labadie",
-    email: "Lilyan98@gmail.com",
-  },
-  {
-    name: "Katelin Schuster",
-    company: "Jacobson - Smitham",
-    email: "Erich_Brekke76@gmail.com",
-  },
-  {
-    name: "Melyna Macejkovic",
-    company: "Schuster LLC",
-    email: "Kylee4@yahoo.com",
-  },
-  {
-    name: "Pinkie Rice",
-    company: "Wolf, Trantow and Zulauf",
-    email: "Fiona.Kutch@hotmail.com",
-  },
-  {
-    name: "Brain Kreiger",
-    company: "Lueilwitz Group",
-    email: "Rico98@hotmail.com",
-  },
+  
 ];
 
 const useStyles = createStyles((theme) => ({
@@ -115,7 +67,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     paddingLeft: "2vw",
-    marginBlock:'2vh',
+    marginBlock: "2vh",
     gap: 10,
     justifyItems: "center",
     textAlign: "center",
@@ -223,12 +175,36 @@ function DashboardComponent(props) {
           <Box>
             <Grid>
               <Grid.Col md={6}>
-                <Card>dsezteer</Card>
+                <Card>
+                  <Tabs defaultValue="gallery" color="green" center>
+                    <Tabs.List position={"center"}>
+                      <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
+                      <Tabs.Tab value="mois">Mois</Tabs.Tab>
+                      <Tabs.Tab value="annees">Années</Tabs.Tab>
+                    </Tabs.List>
+
+                    <Tabs.Panel value="semaine" pt="xs">
+                      Graphe de la semaine
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="mois" pt="xs">
+                      Graphe du mois
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="annees" pt="xs">
+                      Graphe de l'année
+                    </Tabs.Panel>
+                  </Tabs>
+                </Card>
               </Grid.Col>
               <Grid.Col md={6}>
                 <Card>
-                  <Paper withBorder radius="md" p="xs" className={classes.secondCard}>
-                   
+                  <Paper
+                    withBorder
+                    radius="md"
+                    p="xs"
+                    className={classes.secondCard}
+                  >
                     <div>
                       <Text size="sm" mt={7} fw={700}>
                         10.000 Fcfa
@@ -247,8 +223,12 @@ function DashboardComponent(props) {
                     </div>
                   </Paper>
 
-                  <Paper withBorder radius="md" p="xs" className={classes.secondCard}>
-                    
+                  <Paper
+                    withBorder
+                    radius="md"
+                    p="xs"
+                    className={classes.secondCard}
+                  >
                     <div>
                       <Text size="sm" mt={7} fw={700}>
                         10.000 Fcfa
@@ -260,7 +240,7 @@ function DashboardComponent(props) {
                     <div>
                       <Image
                         src={graphOrange}
-                        style={{ height: "80%", width: "80%",margin:"0px" }}
+                        style={{ height: "80%", width: "80%", margin: "0px" }}
                         alt={"Logo mtn"}
                       />
                     </div>
@@ -272,7 +252,7 @@ function DashboardComponent(props) {
 
           {/* /tableau */}
           <Box my={15}>
-            <Card radius={'md'} >
+            <Card radius={"md"}>
               <Tableau data={tableData} />
             </Card>
           </Box>
@@ -280,7 +260,9 @@ function DashboardComponent(props) {
 
         {/* Parie Historique */}
         <Grid.Col md={2}>
-          <Text>Historique</Text>
+          <Text>
+            <Card>sqdgvhjgt</Card>
+          </Text>
         </Grid.Col>
       </Grid>
     </Box>
