@@ -13,6 +13,7 @@ import {
   IconHome,
 } from "@tabler/icons";
 import { MantineLogo } from "@mantine/ds";
+import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -150,23 +151,23 @@ function SidebarLayout() {
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a
-          href="#"
+        <Link
+          to="#"
           className={classes.link}
           onClick={(event) => event.preventDefault()}
         >
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
-        </a>
+        </Link>
 
-        <a
-          href="#"
+        <Link
+          to="#"
           className={classes.link}
           onClick={(event) => event.preventDefault()}
         >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
-        </a>
+        </Link>
       </Navbar.Section>
     </Navbar>
   );
