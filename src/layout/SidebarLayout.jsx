@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createStyles, Navbar, Group, Code } from "@mantine/core";
+import { createStyles, Navbar, Group, Code, Image } from "@mantine/core";
 import {
  
   IconStar,
@@ -12,7 +12,7 @@ import {
   IconFileText,
   IconHome,
 } from "@tabler/icons";
-import { MantineLogo } from "@mantine/ds";
+import  ZamodiLogo  from "./../assets/Zamodi-Logo.png";
 import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme, _params, getRef) => {
@@ -144,8 +144,7 @@ function SidebarLayout() {
     <Navbar height={"100%"} width={"auto"} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          <MantineLogo size={28} />
-          <Code sx={{ fontWeight: 700 }}>v3.1.2</Code>
+          <Image src={ZamodiLogo} size={28} />
         </Group>
         {links}
       </Navbar.Section>
