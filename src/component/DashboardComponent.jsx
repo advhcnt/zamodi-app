@@ -48,7 +48,6 @@ const tableData = [
     company: "Funk, Rohan and Kreiger",
     email: "Jamie23@hotmail.com",
   },
-  
 ];
 
 const useStyles = createStyles((theme) => ({
@@ -107,7 +106,7 @@ function DashboardComponent(props) {
     <Box>
       <Grid>
         {/* Partie info */}
-        <Grid.Col md={10}>
+        <Grid.Col md={9}>
           <Box>
             <Grid>
               <Grid.Col md={4}>
@@ -259,10 +258,8 @@ function DashboardComponent(props) {
         </Grid.Col>
 
         {/* Parie Historique */}
-        <Grid.Col md={2}>
-          <Text>
-            <Card>sqdgvhjgt</Card>
-          </Text>
+        <Grid.Col md={3}>
+          <Card style={{width:'100%',height:"100%"}}>sqdgvhjgt</Card>
         </Grid.Col>
       </Grid>
     </Box>

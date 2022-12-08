@@ -32,9 +32,9 @@ function DashboardPage(props) {
           <Box>
             <HearderLayout />
           </Box>
-          <Container >
+          <Box style={{paddingInline:'20px'}}>
             <DashboardComponent />
-          </Container>
+          </Box>
         </Grid.Col>
       </Grid>
     </div>
