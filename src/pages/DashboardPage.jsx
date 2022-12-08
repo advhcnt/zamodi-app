@@ -1,5 +1,6 @@
 import { Box, Container, createStyles, Grid } from "@mantine/core";
 import React from "react";
+import DashboardComponent from "../component/DashboardComponent";
 import HearderLayout from "../layout/HearderLayout";
 import SidebarLayout from "../layout/SidebarLayout";
 
@@ -27,11 +28,13 @@ function DashboardPage(props) {
         </Grid.Col>
        
        
-        <Grid.Col md={10}>
+        <Grid.Col md={10} style={{backgroundColor:'#f7f7f7'}}>
           <Box>
             <HearderLayout />
           </Box>
-          <Container>Hello la team</Container>
+          <Container >
+            <DashboardComponent />
+          </Container>
         </Grid.Col>
       </Grid>
     </div>
