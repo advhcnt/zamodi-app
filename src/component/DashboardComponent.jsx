@@ -9,13 +9,15 @@ import {
   Text,
   UnstyledButton,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import Tableau from "./Tableau";
 import graphOrange from "./../assets/grapheOrange.png";
 import graphBlanc from "./../assets/graphBlanc.png";
+import grapheData from "./../assets/data/chatData";
+import Graphe from "./Graphe";
 
 const tableData = [
   {
@@ -64,12 +66,9 @@ const useStyles = createStyles((theme) => ({
   },
   secondCard: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "space-between",
     paddingLeft: "2vw",
     marginBlock: "2vh",
-    gap: 10,
-    justifyItems: "center",
-    textAlign: "center",
     borderRadius: theme.radius.md,
     height: 80,
     backgroundColor:
@@ -101,6 +100,7 @@ const useStyles = createStyles((theme) => ({
 
 function DashboardComponent(props) {
   const { classes, theme } = useStyles();
+  const [chartData, setChartData] = useState(grapheData);
 
   return (
     <Box>
@@ -183,7 +183,7 @@ function DashboardComponent(props) {
                     </Tabs.List>
 
                     <Tabs.Panel value="semaine" pt="xs">
-                      Graphe de la semaine
+                      {/* <Graphe chartData={chartData} /> */}
                     </Tabs.Panel>
 
                     <Tabs.Panel value="mois" pt="xs">
@@ -198,51 +198,49 @@ function DashboardComponent(props) {
               </Grid.Col>
               <Grid.Col md={6}>
                 <Card>
-                  <Paper
-                    withBorder
-                    radius="md"
-                    p="xs"
-                    className={classes.secondCard}
-                  >
-                    <div>
-                      <Text size="sm" mt={7} fw={700}>
-                        10.000 Fcfa
-                      </Text>
-                      <Text size="xs" mt={1} c="dimmed">
-                        lorem ipsum
-                      </Text>
-                    </div>
-
-                    <div>
-                      <Image
-                        src={graphBlanc}
-                        style={{ height: "100%", width: "100%" }}
-                        alt={"Logo mtn"}
-                      />
-                    </div>
+                  <Paper withBorder radius="md" p="xs">
+                    <Grid>
+                      <Grid.Col span={4}>
+                        <Text size="sm" mt={7} fw={700}>
+                          10.000 Fcfa
+                        </Text>
+                        <Text size="xs" mt={1} c="dimmed">
+                          lorem ipsum
+                        </Text>
+                      </Grid.Col>
+                      <Grid.Col span={8}>
+                        {" "}
+                        <Image
+                          src={graphBlanc}
+                          style={{ height: "100%", width: "100%" }}
+                          alt={"Logo mtn"}
+                        />
+                      </Grid.Col>
+                    </Grid>
                   </Paper>
 
-                  <Paper
-                    withBorder
-                    radius="md"
-                    p="xs"
-                    className={classes.secondCard}
-                  >
-                    <div>
-                      <Text size="sm" mt={7} fw={700}>
-                        10.000 Fcfa
-                      </Text>
-                      <Text size="xs" mt={1} c="dimmed">
-                        lorem ipsum
-                      </Text>
-                    </div>
-                    <div>
-                      <Image
-                        src={graphOrange}
-                        style={{ height: "80%", width: "80%", margin: "0px" }}
-                        alt={"Logo mtn"}
-                      />
-                    </div>
+                  <Paper withBorder radius="md" p="xs">
+                    <Grid>
+                      <Grid.Col span={4}>
+                        <Text size="sm" mt={7} fw={700}>
+                          10.000 Fcfa
+                        </Text>
+                        <Text size="xs" mt={1} c="dimmed">
+                          lorem ipsumFDGFGF
+                        </Text>
+                      </Grid.Col>
+                      <Grid.Col span={8} style={{padding:0}}>
+                        <Image
+                          src={graphOrange}
+                          style={{
+                            height: "100%",
+                            width: "100%",
+                            margin: "0px",
+                          }}
+                          alt={"Logo mtn"}
+                        />
+                      </Grid.Col>
+                    </Grid>
                   </Paper>
                 </Card>
               </Grid.Col>
@@ -259,7 +257,47 @@ function DashboardComponent(props) {
 
         {/* Parie Historique */}
         <Grid.Col md={3}>
-          <Card style={{width:'100%',height:"100%"}}>sqdgvhjgt</Card>
+          <Card style={{ width: "100%", height: "100%" }}>
+            <Text size={"md"} fw={400}>
+              Historique
+            </Text>
+            {[...Array(5).keys()].map((item) => (
+              <Paper
+                withBorder
+                radius="md"
+                p="xs"
+                className={classes.secondCard}
+                key={item}
+              >
+                <div style={{ display: "flex" }}>
+                  <Image
+                    src={mtnLogo}
+                    style={{ height: "100%", width: "100%", zIndex: 1 }}
+                    alt={"Logo mtn"}
+                  />
+                  <Image
+                    src={sbinLogo}
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      zIndex: 1000,
+                      marginLeft: -15,
+                    }}
+                    alt={"Logo mtn"}
+                  />
+                </div>
+
+                <div>
+                  <Text size="sm" mt={7} fw={700}>
+                    10.000 Fcfa
+                  </Text>
+                  <Text size="xs" mt={1} c="dimmed">
+                    lorem ipsum
+                  </Text>
+                </div>
+              </Paper>
+            ))}
+          </Card>
         </Grid.Col>
       </Grid>
     </Box>

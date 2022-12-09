@@ -227,6 +227,14 @@ const useStyles = createStyles((theme, _params, getRef) => {
         display: "none",
       },
     },
+    NavhiddenMobile:{
+      display: "flex", 
+      gap: 20, 
+      alignItems: "center",
+      [theme.fn.smallerThan("sm")]: {
+        display: "none",
+      },
+    }
   };
 });
 
@@ -311,8 +319,8 @@ function HearderLayout(props) {
             </Box>
 
             <Box
-              className={classes.hiddenMobile}
-              style={{ display: "flex", gap: 20, alignItems: "center" }}
+              className={classes.NavhiddenMobile}
+              // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
                 icon={<IconSearch size={14} />}
