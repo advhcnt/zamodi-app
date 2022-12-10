@@ -4,6 +4,17 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left;
+  background-color: rgb(92, 28, 28);
+}
+
+.Second
+PathAuth
+{
+  background-image: url('./assets/backround1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-color: rgb(92, 28, 28);
 }
 
 .EcritVert{
@@ -13,4 +24,29 @@
 .ArrierePlan
 {
   background-color: green;
+}
+
+.FirstPathAuth2{
+  background-color:rgba(46, 35, 164, 0.514);
+}
+
+.secondplace{
+  background-image: url('./assets/AuthBottomBackground.svg');
+  background-repeat: no-repeat;
+  background-position: top right;
+  background-size: 500px;
+  background-blend-mode: hard-light;
+  background-position-x: right;
+}
+
+.secondplaceBottom{
+  background-image: url('./assets/AuthTopBackground.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100%;
+}
+
+.imageStyle{
+  width: 10vw;
+  
 }
