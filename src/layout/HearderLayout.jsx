@@ -150,7 +150,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     linkDrawerActive: {
       "&, &:hover": {
-        backgroundColor: "green",
+        backgroundColor: "#20986e",
         color: "white",
         borderRadius: "0px 12px 12px 0px",
         [`& .${icon}`]: {

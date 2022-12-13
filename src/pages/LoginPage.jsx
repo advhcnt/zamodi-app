@@ -4,7 +4,6 @@ import {
   TextInput,
   PasswordInput,
   Text,
-  Paper,
   Group,
   Button,
   Divider,
@@ -13,12 +12,61 @@ import {
   Stack,
   Grid,
   Box,
-  SimpleGrid,
+  createStyles,
+  Image,
 } from "@mantine/core";
-
+import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import { Link } from "react-router-dom";
+import { IconLock, IconMail } from "@tabler/icons";
+import facebook from "./../assets/facebookSVG.svg";
+import authLogo from "./../assets/Auth.svg";
+const useStyles = createStyles((theme) => ({
+  logo: {
+    marginBottom: "12vh",
+    marginInline: "10vw",
+    justifyContent: "center",
+    alignContent: "center",
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+  loginButton: {
+    backgroundColor: "#20986e",
+    width: "100%",
+    marginTop: "3vh",
+  },
+  partieChamp: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    justifyItems: "center",
+    height: "100vh",
+  },
+  partieNeutre: {
+    backgroundColor: "#20986e",
+    display: "flex",
+    alignItems: "center",
+    justifyContent:'space-around',
+    borderRadius: " 110px 0px 0px 0px ",
+    border: "1px solid white",
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+  hiddenDesktop: {
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+  hiddenMobile: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+}));
 
 function LoginPage(props) {
+  const { classes } = useStyles();
   const [type, toggle] = useToggle(["login", "register"]);
   const form = useForm({
     initialValues: {
@@ -38,30 +86,40 @@ function LoginPage(props) {
   });
 
   return (
-    <div>
-      <Grid>
-        <Grid.Col md={6} order={2} orderMd={1} style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent:'center',
-            justifyItems:'center',
-            height:'100vh'
-          }}>
-          <Paper radius="md" p="xl" withBorder {...props}>
-            <Text size="lg" weight={500} ta={"center"}>
-              Welcome to ZAMODI, {type} with
-            </Text>
-
-            <Divider
-              label="Or continue with email"
-              labelPosition="center"
-              my="lg"
+    <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
+      <Grid
+        className={"secondplaceLogin"}
+        style={{ maxHeight: "102vh", overflow: "hidden" }}
+      >
+        <Grid.Col
+          md={6}
+          order={2}
+          orderMd={1}
+          className={` ${classes.partieChamp}`}
+        >
+          <Box style={{ width: "70%" }}>
+            <Image
+              src={ZamodiLogo}
+              width={"70%"}
+              mb={"8vh"}
+              className={classes.hiddenMobile}
             />
+            <Image src={ZamodiLogo} className={classes.logo} />
+
+            <Text size={28} weight={900}>
+              Connexion
+            </Text>
+            <Text size={"xs"} mb={"8vh"}>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi,
+              porro. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Modi, porro.
+            </Text>
 
             <form onSubmit={form.onSubmit(() => {})}>
               <Stack>
                 {type === "register" && (
                   <TextInput
+                    radius="lg"
                     label="Name"
                     variant={"filled"}
                     placeholder="Your name"
@@ -73,8 +131,16 @@ function LoginPage(props) {
                 )}
 
                 <TextInput
+                  radius="32px"
+                  icon={
+                    <IconMail
+                      size={20}
+                      color={"#20986e"}
+                      className={classes.lesIcones}
+                    />
+                  }
                   required
-                  label="Email"
+                  size={"md"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
                   value={form.values.email}
@@ -85,8 +151,16 @@ function LoginPage(props) {
                 />
 
                 <PasswordInput
+                  radius="32px"
+                  size={"md"}
+                  icon={
+                    <IconLock
+                      size={20}
+                      color={"#20986e"}
+                      className={classes.lesIcones}
+                    />
+                  }
                   required
-                  label="Password"
                   placeholder="Your password"
                   variant={"filled"}
                   value={form.values.password}
@@ -118,34 +192,64 @@ function LoginPage(props) {
                   onClick={() => toggle()}
                   size="xs"
                 >
-                  <Link to={"/register"}>
-                    {type === "register"
-                      ? "Already have an account? Login"
-                      : "Don't have an account? Register"}
+                  <Link to={"/register"} style={{ color: "#20986e" }}>
+                    Mot de passe oublier
                   </Link>
                 </Anchor>
-                <Button type="submit">{upperFirst(type)}</Button>
               </Group>
+              <Button
+                size="xs"
+                fw={"xs"}
+                // type="submit"
+                radius={"lg"}
+                className={classes.loginButton}
+              >
+                {upperFirst("Se connecter")}
+              </Button>
             </form>
-          </Paper>
+
+            <Divider
+              label="Or continue with email"
+              labelPosition="center"
+              my="lg"
+            />
+            <Group position="apart" mt="xl">
+              <Image src={facebook} alt="facebook" width={25} />
+            </Group>
+            <Group position="apart" mt="xl">
+              <Anchor
+                component="button"
+                type="button"
+                color="dimmed"
+                style={{ color: "black" }}
+                size="xs"
+              >
+                Je n'ai pas encore de compte?
+                <Link to={"/register"}>
+                  <span style={{ color: "#20986e" }}>Créer un compte</span>
+                </Link>
+              </Anchor>
+            </Group>
+          </Box>
         </Grid.Col>
-        <Grid.Col
-          md={6}
-          order={1}
-          orderMd={2}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            borderRadius: " 115px 0px 0px 115px ",
-            border: "1px solid black",
-          }}
-        >
-          <Box>
+        <Grid.Col md={6} order={1} orderMd={2} className={classes.partieNeutre}>
+          <Box style={{ width: "58%" }}>
             {" "}
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos sed
+            <Box style={{display:'flex',alignItems:'center',justifyContent:'space-around'}} >
+              <Image
+                src={authLogo}
+                alt="auth logo"
+                width={"100%"}
+                marginX={"auto"}
+              />
+            </Box>
+            <Box style={{marginInline:'auto', width: "80%",textAlign:'center',justifyContent:'center',alignContent:'center',display:'flex' }}>
+              <Text size={10} ta='center' style={{color:'whitesmoke',}}>
+           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos sed
             blanditiis sint. Odio, magni vero minus blanditiis cupiditate nisi
-            quas omnis a id vel quo voluptates expedita sapiente tenetur soluta
-            facere sunt placeat nemo at accusamus aliquid sed vitae. Debitis.
+           </Text>
+            </Box>
+           
           </Box>
         </Grid.Col>
       </Grid>

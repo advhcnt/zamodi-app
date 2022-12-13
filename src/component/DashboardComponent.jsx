@@ -27,7 +27,7 @@ const tableData = [
   },
   {
     name: "Deangelo Runolfsson",
-    company: "Greenfelder - Krajcik",
+    company: "#20986efelder - Krajcik",
     email: "Kadin_Trantow87@yahoo.com",
   },
   {
@@ -175,7 +175,7 @@ function DashboardComponent(props) {
             <Grid>
               <Grid.Col md={6}>
                 <Card>
-                  <Tabs defaultValue="gallery" color="green" center>
+                  <Tabs defaultValue="gallery" color="#20986e" center>
                     <Tabs.List position={"center"}>
                       <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
                       <Tabs.Tab value="mois">Mois</Tabs.Tab>

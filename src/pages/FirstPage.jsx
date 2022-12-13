@@ -92,7 +92,7 @@ function FirstPage(props) {
                   style={{
                     borderRadius: "32px",
                     color: "white",
-                    backgroundColor: "green",
+                    backgroundColor: "#20986e",
                   }}
                 >
                   <IconArrowRight />Inscription
@@ -148,7 +148,7 @@ function FirstPage(props) {
               />
             </Box>
             <Box className={classes.LesButtonsTTONS}>
-              <Text fz="60px" ta={"center"} fw={700} c={"green"} mb="md">
+              <Text fz="60px" ta={"center"} fw={700} c={"#20986e"} mb="md">
                 WELCOME
               </Text>
               <Text fz={"sm"} c={"black"} mb="lg">
@@ -162,7 +162,7 @@ function FirstPage(props) {
                   style={{
                     borderRadius: "32px",
                     color: "white",
-                    backgroundColor: "green",
+                    backgroundColor: "#20986e",
                   }}
                 >
                   <IconArrowRight /> Connexion
@@ -174,7 +174,7 @@ function FirstPage(props) {
                   style={{
                     borderRadius: "32px",
                     color: "white",
-                    backgroundColor: "green",
+                    backgroundColor: "#20986e",
                   }}
                 >
                   <IconArrowRight /> Inscription
