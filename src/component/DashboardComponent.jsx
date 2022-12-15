@@ -7,7 +7,6 @@ import {
   Paper,
   Tabs,
   Text,
-  UnstyledButton,
 } from "@mantine/core";
 import React, { useState } from "react";
 import mtnLogo from "./../assets/momo.png";
@@ -18,6 +17,7 @@ import graphOrange from "./../assets/grapheOrange.png";
 import graphBlanc from "./../assets/graphBlanc.png";
 import grapheData from "./../assets/data/chatData";
 import Graphe from "./Graphe";
+import HistoriqueComponent from "./HistoriqueComponent";
 
 const tableData = [
   {
@@ -229,7 +229,7 @@ function DashboardComponent(props) {
                           lorem ipsumFDGFGF
                         </Text>
                       </Grid.Col>
-                      <Grid.Col span={8} style={{padding:0}}>
+                      <Grid.Col span={8} style={{ padding: 0 }}>
                         <Image
                           src={graphOrange}
                           style={{
@@ -257,47 +257,7 @@ function DashboardComponent(props) {
 
         {/* Parie Historique */}
         <Grid.Col md={3}>
-          <Card style={{ width: "100%", height: "100%" }}>
-            <Text size={"md"} fw={400}>
-              Historique
-            </Text>
-            {[...Array(5).keys()].map((item) => (
-              <Paper
-                withBorder
-                radius="md"
-                p="xs"
-                className={classes.secondCard}
-                key={item}
-              >
-                <div style={{ display: "flex" }}>
-                  <Image
-                    src={mtnLogo}
-                    style={{ height: "100%", width: "100%", zIndex: 1 }}
-                    alt={"Logo mtn"}
-                  />
-                  <Image
-                    src={sbinLogo}
-                    style={{
-                      height: "100%",
-                      width: "100%",
-                      zIndex: 1000,
-                      marginLeft: -15,
-                    }}
-                    alt={"Logo mtn"}
-                  />
-                </div>
-
-                <div>
-                  <Text size="sm" mt={7} fw={700}>
-                    10.000 Fcfa
-                  </Text>
-                  <Text size="xs" mt={1} c="dimmed">
-                    lorem ipsum
-                  </Text>
-                </div>
-              </Paper>
-            ))}
-          </Card>
+          <HistoriqueComponent />
         </Grid.Col>
       </Grid>
     </Box>

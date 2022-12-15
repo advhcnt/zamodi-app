@@ -39,6 +39,7 @@ import {
 } from "@tabler/icons";
 import gb from './../assets/gb.svg'
 import fr from './../assets/fr.svg'
+import { Link } from "react-router-dom";
 
 
 const user = {
@@ -60,20 +61,20 @@ const langues = [
 ];
 
 const DrawerData = [
-  { link: "", label: "Dashboard", icon: IconHome },
-  { link: "", label: "Faire un échange", icon: IconArrowsLeftRight },
-  { link: "", label: "Recharge", icon: IconWallet },
-  { link: "", label: "Historique", icon: IconFileText },
-  { link: "", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "", label: "Partager l'application", icon: IconShare },
-  { link: "", label: "Noter le service", icon: IconStar },
+  { link: "/dashboard", label: "Dashboard", icon: IconHome },
+  { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
+  { link: "wallet", label: "Recharge", icon: IconWallet },
+  { link: "historique", label: "Historique", icon: IconFileText },
+  { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
+  { link: "partager", label: "Partager l'application", icon: IconShare },
+  { link: "service", label: "Noter le service", icon: IconStar },
 ];
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
   return {
     langue: {
-      border:'1px solid ',
+      border: '1px solid ',
       color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
       borderRadius: theme.radius.sm,
@@ -227,9 +228,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
         display: "none",
       },
     },
-    NavhiddenMobile:{
-      display: "flex", 
-      gap: 20, 
+    NavhiddenMobile: {
+      display: "flex",
+      gap: 20,
       alignItems: "center",
       [theme.fn.smallerThan("sm")]: {
         display: "none",
@@ -265,16 +266,16 @@ function HearderLayout(props) {
       </span>
       <div style={{ width: "100%" }}>
         {" "}
-        <a
+        <Link
           className={cx(classes.linkDrawer, {
             [classes.linkDrawerActive]: item.label === activeDrawerLink,
           })}
-          href={item.link}
+          to={item.link}
           key={item.label}
         >
           <item.icon className={classes.linkDrawerIcon} stroke={1.5} />
           <span>{item.label}</span>
-        </a>
+        </Link>
       </div>
     </div>
   ));
@@ -320,7 +321,7 @@ function HearderLayout(props) {
 
             <Box
               className={classes.NavhiddenMobile}
-              // style={{ display: "flex", gap: 20, alignItems: "center" }}
+            // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
                 icon={<IconSearch size={14} />}
@@ -367,7 +368,7 @@ function HearderLayout(props) {
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item>
-                    <div style={{display:'flex',gap:3}}>
+                    <div style={{ display: 'flex', gap: 3 }}>
                       {" "}
                       <Avatar
                         src={langues[1].flag}
@@ -486,6 +487,7 @@ function HearderLayout(props) {
         // title="ZAMODI"
         className={classes.hiddenDesktop}
         zIndex={1000000}
+        closeOnEscape
       >
         <Box>
           <Image src={ZamodiLogo} />

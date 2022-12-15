@@ -93,15 +93,14 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 const data = [
-  { link: "", label: "Dashboard", icon: IconHome },
-  { link: "", label: "Faire un échange", icon: IconArrowsLeftRight },
-  { link: "", label: "Recharge", icon: IconWallet },
-  { link: "", label: "Historique", icon: IconFileText },
-  { link: "", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "", label: "Partager l'application", icon: IconShare },
-  { link: "", label: "Noter le service", icon: IconStar },
+  { link: "/dashboard", label: "Dashboard", icon: IconHome },
+  { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
+  { link: "wallet", label: "Recharge", icon: IconWallet },
+  { link: "historique", label: "Historique", icon: IconFileText },
+  { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
+  { link: "partager", label: "Partager l'application", icon: IconShare },
+  { link: "service", label: "Noter le service", icon: IconStar },
 ];
-
 
 function SidebarLayout() {
   const { classes, cx } = useStyles();
@@ -126,16 +125,16 @@ function SidebarLayout() {
       </span>
       <div style={{ width: "100%" }}>
         {" "}
-        <a
+        <Link
           className={cx(classes.link, {
             [classes.linkActive]: item.label === active,
           })}
-          href={item.link}
+          to={item.link}
           key={item.label}
         >
           <item.icon className={classes.linkIcon} stroke={1.5} />
           <span>{item.label}</span>
-        </a>
+        </Link>
       </div>
     </div>
   ));

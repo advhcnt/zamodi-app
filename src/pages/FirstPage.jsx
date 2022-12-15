@@ -40,6 +40,17 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
+  },
+  secondplaceBottom2:{
+    height: "24vh", 
+    marginTop: "0vh",
+     marginLeft: "-8px",
+    [theme.fn.smallerThan("md")]: {
+      height: "16vh",
+    },
+    [theme.fn.smallerThan("sm")]: {
+      height: "16vh",
+    },
   }
 }));
 
@@ -48,10 +59,10 @@ function FirstPage(props) {
   const navigation = useNavigate();
 
   return (
-    <div style={{ maxWidth: "100vw", overflow: "hidden",maxHeight:'100vh' }}>
-      <Grid style={{ maxHeight: "102vh",overflow: "hidden" }}>
+    <Box style={{ maxWidth: "100vw", overflow: "hidden",maxHeight:'100vh' }}>
+      <Grid style={{ maxHeight: "100%" }}>
         {/* Première partie */}
-        <Grid.Col md={6} order={2} orderMd={1} className={`FirstPathAuth ${classes.hiddenDesktop}` }>
+        <Grid.Col md={6} order={2} orderMd={1} className={`FirstPathAuth ` }>
           <div
             className={"FirstPathAuth2"}
             style={{
@@ -63,6 +74,7 @@ function FirstPage(props) {
               width: "100%",
             }}
           >
+
             <Box sx={{ width: "80%", bottom: 0, top: "auto" }}>
               <Text fz="60px" ta={"center"} fw={900} c={"white"} mb={30}>
                 WELCOME
@@ -148,7 +160,7 @@ function FirstPage(props) {
               />
             </Box>
             <Box className={classes.LesButtonsTTONS}>
-              <Text fz="60px" ta={"center"} fw={700} c={"#20986e"} mb="md">
+              <Text fz="60px" ta={"center"} fw={700} c={"#20986e"} mb="lg">
                 WELCOME
               </Text>
               <Text fz={"sm"} c={"black"} mb="lg">
@@ -183,12 +195,12 @@ function FirstPage(props) {
             </Box>
           </div>
           <div
-            className="secondplaceBottom"
-            style={{ height: "20vh", marginTop: "0vh", marginLeft: "-8px" }}
+            className={`secondplaceBottom ${classes.secondplaceBottom2}`}
+            
           ></div>
         </Grid.Col>
       </Grid>
-    </div>
+    </Box>
   );
 }
 

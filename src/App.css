@@ -5,10 +5,10 @@
   background-repeat: no-repeat;
   background-position: left;
   background-color: rgb(92, 28, 28);
+  padding-top: 10px;
 }
 
-.Second
-PathAuth
+.SecondPathAuth
 {
   background-image: url('./assets/backround1.png');
   background-size: cover;
@@ -18,12 +18,12 @@ PathAuth
 }
 
 .EcritVert{
-  color: green;
+  color: #20986e;
 }
 
 .ArrierePlan
 {
-  background-color: green;
+  background-color: #20986e;
 }
 
 .FirstPathAuth2{
@@ -65,4 +65,27 @@ color: #20986e;
 }
 .dh{
   color: #20986e;
+}
+
+.enteteTableau{
+  background-color: #20986e;
+}
+thead{
+  border-radius:32px;
+}
+.mantine-1dn2tzg
+{
+  color:#fff;
+}
+
+.mantine-1dn2tzg:hover{
+  color:black;
+}
+
+.mantine-58izoo:hover{
+  color:black;
+}
+
+.ombre{
+  box-shadow: inherit;
 }

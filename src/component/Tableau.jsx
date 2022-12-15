@@ -23,7 +23,8 @@ const useStyles = createStyles((theme) => ({
     padding: `${theme.spacing.xs}px ${theme.spacing.md}px`,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor: 'white',
+      color: 'black',
     },
   },
 
@@ -85,7 +86,7 @@ function sortData(
   );
 }
 
- function Tableau({ data }) {
+function Tableau({ data }) {
   const [search, setSearch] = useState('');
   const [sortedData, setSortedData] = useState(data);
   const [sortBy, setSortBy] = useState(null);
@@ -109,6 +110,7 @@ function sortData(
       <td>{row.name}</td>
       <td>{row.email}</td>
       <td>{row.company}</td>
+      <td>{'action'}</td>
     </tr>
   ));
 
@@ -122,33 +124,41 @@ function sortData(
         onChange={handleSearchChange}
       />
       <Table
+        radius={'lg'}
         horizontalSpacing="md"
         verticalSpacing="xs"
         sx={{ tableLayout: 'fixed', minWidth: 700 }}
       >
-        <thead>
-          <tr>
+        <thead >
+
+          <tr className={`enteteTableau`}>
             <Th
               sorted={sortBy === 'name'}
               reversed={reverseSortDirection}
               onSort={() => setSorting('name')}
             >
-              Name
+              Opérateurs
             </Th>
             <Th
               sorted={sortBy === 'email'}
               reversed={reverseSortDirection}
               onSort={() => setSorting('email')}
             >
-              Email
+              Montant
             </Th>
             <Th
               sorted={sortBy === 'company'}
               reversed={reverseSortDirection}
               onSort={() => setSorting('company')}
             >
-              Company
+              Date et heure
             </Th>
+
+            <th>
+              <Text weight={500} size="sm" color={'white'}>
+                Action
+              </Text>
+            </th>
           </tr>
         </thead>
         <tbody>
