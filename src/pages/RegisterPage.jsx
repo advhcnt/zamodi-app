@@ -278,7 +278,7 @@ function LoginPage(props) {
                 display: "flex",
               }}
             >
-              <Text size={10} ta="center" style={{ color: "whitesmoke" }}>
+              <Text size={10} ta="center" style={{ color: "whitesmoke",marginTop:'30px'  }}>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos
                 sed blanditiis sint. Odio, magni vero minus blanditiis
                 cupiditate nisi

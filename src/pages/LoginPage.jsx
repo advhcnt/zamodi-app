@@ -62,7 +62,7 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
-  },
+  }
 }));
 
 function LoginPage(props) {
@@ -86,10 +86,10 @@ function LoginPage(props) {
   });
 
   return (
-    <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
+    <Box style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
       <Grid
-        className={"secondplaceLogin"}
-        style={{ maxHeight: "102vh", overflow: "hidden" }}
+          className={"secondplaceLogin"}
+        style={{ maxHeight: "110vh", overflow: "hidden"}}
       >
         <Grid.Col
           md={6}
@@ -243,7 +243,7 @@ function LoginPage(props) {
                 marginX={"auto"}
               />
             </Box>
-            <Box style={{marginInline:'auto', width: "80%",textAlign:'center',justifyContent:'center',alignContent:'center',display:'flex' }}>
+            <Box style={{marginInline:'auto', width: "80%",textAlign:'center',justifyContent:'center',alignContent:'center',display:'flex',marginTop:'30px' }}>
               <Text size={10} ta='center' style={{color:'whitesmoke',}}>
            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos sed
             blanditiis sint. Odio, magni vero minus blanditiis cupiditate nisi
@@ -253,7 +253,7 @@ function LoginPage(props) {
           </Box>
         </Grid.Col>
       </Grid>
-    </div>
+    </Box>
   );
 }
 
