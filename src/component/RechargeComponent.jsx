@@ -19,7 +19,7 @@ import ResumeComponent from "./ResumeComponent";
 function RechargeComponent(props) {
   const [valide, setvalide] = useState(false);
   return (
-    <Container>
+    <Container size={'sm'}>
       <Grid style={{ justifyContent: "space-around" }}>
         <Grid.Col md={10}>
           <Card shadow="lg" p="lg" radius="md" withBorder>
@@ -52,7 +52,7 @@ function RechargeComponent(props) {
                   </Text>
                   <Select
                     width={"100%"}
-                    size={"lg"}
+                  
                     placeholder="Opération Type"
                     rightSection={<IconChevronDown size={14} />}
                     rightSectionWidth={30}
@@ -68,7 +68,7 @@ function RechargeComponent(props) {
                    Montant de recharge
                   </Text>
                   <Select
-                    size={"lg"}
+                  
                     placeholder="Amount"
                     rightSection={<IconChevronDown size={14} />}
                     rightSectionWidth={30}
@@ -93,7 +93,7 @@ function RechargeComponent(props) {
                   </Text>
                   <Select
                     width={"100%"}
-                    size={"lg"}
+                  
                     placeholder="I get"
                     rightSection={<IconChevronDown size={14} />}
                     rightSectionWidth={30}
@@ -109,7 +109,7 @@ function RechargeComponent(props) {
                     Je veux
                   </Text>
                   <Select
-                    size={"lg"}
+                  
                     placeholder="I want"
                     rightSection={<IconChevronDown size={14} />}
                     rightSectionWidth={30}
@@ -134,7 +134,7 @@ function RechargeComponent(props) {
                     Le numéro :
                   </Text>
                   <TextInput
-                    size={"lg"}
+                  
                     placeholder="Votre numéro"
                     withAsterisk
                     className={"ombre"}
@@ -146,7 +146,7 @@ function RechargeComponent(props) {
                     Confirmé le numéro :
                   </Text>
                   <TextInput
-                    size={"lg"}
+                  
                     placeholder="Confirmer numéro"
                     withAsterisk
                     className={"ombre"}
@@ -162,7 +162,7 @@ function RechargeComponent(props) {
                 }}
               >
                 <Button
-                  size={"lg"}
+                
                   mr={"sm"}
                   className={"ArrierePlan"}
                   onClick={() => {

@@ -17,9 +17,9 @@ import {
   Image,
 } from "@mantine/core";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
-import facebook from "./../assets/facebookSVG.svg";
+import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -67,6 +67,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function LoginPage(props) {
+  const navigation = useNavigate();
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
   const form = useForm({
@@ -92,6 +93,7 @@ function LoginPage(props) {
         className={"secondplaceLogin"}
         style={{ maxHeight: "102vh", overflow: "hidden" }}
       >
+        {/* Partie une */}
         <Grid.Col
           md={6}
           order={2}
@@ -212,9 +214,10 @@ function LoginPage(props) {
               <Button
                 size="xs"
                 fw={"xs"}
-                type="submit"
+                // type="submit"
                 radius={"lg"}
                 className={classes.loginButton}
+                onClick={() =>navigation('/dashboard')}
               >
                 {upperFirst("Se connecter")}
               </Button>
@@ -251,6 +254,8 @@ function LoginPage(props) {
             </Group>
           </Box>
         </Grid.Col>
+
+        {/* Partie second */}
         <Grid.Col md={6} order={1} orderMd={2} className={classes.partieNeutre}>
           <Box style={{ width: "58%" }}>
             {" "}

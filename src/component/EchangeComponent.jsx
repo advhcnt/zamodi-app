@@ -19,7 +19,7 @@ import ResumeComponent from "./ResumeComponent";
 function EchangeComponent(props) {
   const [valide, setvalide] = useState(false);
   return (
-    <Container>
+    <Container size={'sm'}>
       {!valide && (
         <Grid style={{ justifyContent: "space-around" }}>
           <Grid.Col md={10}>
@@ -44,7 +44,7 @@ function EchangeComponent(props) {
                       Montant de recharge
                     </Text>
                     <TextInput
-                      size={"lg"}
+                    
                       placeholder="Your name"
                       withAsterisk
                       className={"ombre"}
@@ -67,8 +67,8 @@ function EchangeComponent(props) {
                       J'ai
                     </Text>
                     <Select
-                      width={"100%"}
-                      size={"lg"}
+                      fullWidth
+                    
                       placeholder="Pick one"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
@@ -84,7 +84,7 @@ function EchangeComponent(props) {
                       Je veux
                     </Text>
                     <Select
-                      size={"lg"}
+                    
                       placeholder="Pick one"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
@@ -109,7 +109,7 @@ function EchangeComponent(props) {
                       Le numéro :
                     </Text>
                     <TextInput
-                      size={"lg"}
+                    
                       placeholder="Votre numéro"
                       withAsterisk
                       className={"ombre"}
@@ -121,7 +121,7 @@ function EchangeComponent(props) {
                       Confirmé le numéro :
                     </Text>
                     <TextInput
-                      size={"lg"}
+                    
                       placeholder="Confirmer numéro"
                       withAsterisk
                       className={"ombre"}
@@ -137,7 +137,7 @@ function EchangeComponent(props) {
                   }}
                 >
                   <Button
-                    size={"lg"}
+                  
                     mr={"lg"}
                     className={"ArrierePlan"}
                     onClick={() =>{

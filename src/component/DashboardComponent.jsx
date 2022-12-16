@@ -18,6 +18,7 @@ import graphBlanc from "./../assets/graphBlanc.png";
 import grapheData from "./../assets/data/chatData";
 import Graphe from "./Graphe";
 import HistoriqueComponent from "./HistoriqueComponent";
+import HistoriqueDashboard from "./HistoriqueDashboard";
 
 const tableData = [
   {
@@ -148,6 +149,7 @@ function DashboardComponent(props) {
                   </div>
                 </div>
               </Grid.Col>
+
               <Grid.Col md={4}>
                 <div className={classes.item}>
                   <div>
@@ -219,7 +221,7 @@ function DashboardComponent(props) {
                     </Grid>
                   </Paper>
 
-                  <Paper withBorder radius="md" p="xs">
+                  <Paper withBorder radius="md" p="xs" my={15}>
                     <Grid>
                       <Grid.Col span={4}>
                         <Text size="sm" mt={7} fw={700}>
@@ -257,7 +259,7 @@ function DashboardComponent(props) {
 
         {/* Parie Historique */}
         <Grid.Col md={3}>
-          <HistoriqueComponent />
+          <HistoriqueDashboard />
         </Grid.Col>
       </Grid>
     </Box>

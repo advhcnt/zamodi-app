@@ -1,4 +1,4 @@
-import { Box, Card, Group, Image, Paper, Text } from "@mantine/core";
+import { Box, Card, Container, Group, Image, Paper, Text } from "@mantine/core";
 import React from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
 function HistoriqueComponent(props) {
   const { classes, theme } = useStyles();
   return (
-    <Box style={{ width: "100%", height: "100%" }}>
+    <Container size={'md'}>
       <Text size={"md"} fw={400}>
         Historique
       </Text>
@@ -117,7 +117,7 @@ function HistoriqueComponent(props) {
           </Group>
         </Paper>
       ))}
-    </Box>
+    </Container>
   );
 }
 

@@ -10,7 +10,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons';
+import { IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconDotsVertical } from '@tabler/icons';
 
 
 const useStyles = createStyles((theme) => ({
@@ -110,7 +110,7 @@ function Tableau({ data }) {
       <td>{row.name}</td>
       <td>{row.email}</td>
       <td>{row.company}</td>
-      <td>{'action'}</td>
+      <td style={{textAlign:'right',alignContent:'right'}}><IconDotsVertical ta={'right'}/></td>
     </tr>
   ));
 

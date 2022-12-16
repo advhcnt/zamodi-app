@@ -12,6 +12,7 @@ import {
   Menu,
   Avatar,
   UnstyledButton,
+  Paper,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -51,11 +52,11 @@ const user = {
 
 const langues = [
   {
-    libelle: "Français",
+    libelle: "Fr",
     flag: fr,
   },
   {
-    libelle: "Anglais",
+    libelle: "En",
     flag: gb,
   },
 ];
@@ -73,6 +74,22 @@ const DrawerData = [
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
   return {
+    link2: {
+      ...theme.fn.focusStyles(),
+      display: "flex",
+      alignItems: "center",
+      textDecoration: "none",
+      fontSize: theme.fontSizes.sm,
+      color:
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[1]
+          : theme.colors.gray[7],
+      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      borderRadius: theme.radius.sm,
+      fontWeight: 500,
+      marginTop: '80px',
+
+    },
     langue: {
       border: '1px solid ',
       color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
@@ -493,6 +510,30 @@ function HearderLayout(props) {
           <Image src={ZamodiLogo} />
         </Box>
         <Box>{linksDrawer}</Box>
+
+        <Box my={'100px'}>
+          <Paper style={{ border: '2px solid #f7f7f7', padding: '15px' }}>
+            <Text ta="center" fw={'bold'}>À Propos</Text>
+            <Text fz={'xs'} >
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+              diam nonumy eirmod tempor
+            </Text>
+          </Paper>
+        </Box>
+        <Box className={classes.footer}>
+
+
+          <Link
+            to="/login"
+            className={classes.link2}
+            // onClick={(event) => event.preventDefault()}
+
+            style={{ backgroundColor: '#20986e', borderRadius: '12px', paddingLeft: '10px', color: "white" }}
+          >
+            <IconLogout className={classes.linkIcon} stroke={1.5} />
+            <span>Deconnexion</span>
+          </Link>
+        </Box>
       </Drawer>
     </>
   );
