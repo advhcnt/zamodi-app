@@ -63,7 +63,7 @@ const langues = [
 const DrawerData = [
   { link: "/dashboard", label: "Dashboard", icon: IconHome },
   { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
-  { link: "wallet", label: "Recharge", icon: IconWallet },
+  { link: "recharge", label: "Recharge", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
   { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
   { link: "partager", label: "Partager l'application", icon: IconShare },
