@@ -22,7 +22,7 @@ import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
 const useStyles = createStyles((theme) => ({
   logo: {
-    marginBottom: "12vh",
+    marginBottom: "1%",
     marginInline: "10vw",
     justifyContent: "center",
     alignContent: "center",
@@ -62,6 +62,12 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
+  },
+  boxStyle:{
+      width:'70%',
+      [theme.fn.smallerThan("md")]: {
+        width:'80%',
+      },
   }
 }));
 
@@ -86,13 +92,13 @@ function LoginPage(props) {
           ? "Password should include at least 6 characters"
           : null,
     },
+    
   });
 
   return (
-    <Box style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
+    <Box style={{ maxWidth: "100vw" }}>
       <Grid
           className={"secondplaceLogin"}
-        style={{ maxHeight: "110vh", overflow: "hidden"}}
       >
         {/* Première partie */}
         <Grid.Col
@@ -101,19 +107,19 @@ function LoginPage(props) {
           orderMd={1}
           className={` ${classes.partieChamp}`}
         >
-          <Box style={{ width: "70%" }}>
+          <Box className={classes.boxStyle} >
             <Image
               src={ZamodiLogo}
               width={"70%"}
-              mb={"8vh"}
+              mb={"8%"}
               className={classes.hiddenMobile}
             />
             <Image src={ZamodiLogo} className={classes.logo} />
 
-            <Text size={28} weight={900}>
+            <Text size={25} weight={900}>
               Connexion
             </Text>
-            <Text size={"xs"} mb={"8vh"}>
+            <Text size={"xs"} mb={"8%"}>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi,
               porro. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Modi, porro.
@@ -144,7 +150,7 @@ function LoginPage(props) {
                     />
                   }
                   required
-                  size={"md"}
+                  size={"sm"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
                   value={form.values.email}
@@ -156,7 +162,7 @@ function LoginPage(props) {
 
                 <PasswordInput
                   radius="32px"
-                  size={"md"}
+                  size={"sm"}
                   icon={
                     <IconLock
                       size={20}

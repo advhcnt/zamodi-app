@@ -49,6 +49,8 @@
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: 100%;
+  padding: 0px;
+  margin-inline: 0px;
 }
 
 .secondplaceLogin{
@@ -97,4 +99,8 @@ thead{
 
 .mantine-nsdj{
   margin: 0px;
+}
+
+.mantine-x2728r,.mantine-wuvfgn  {
+  padding: 0;
 }

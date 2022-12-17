@@ -14,6 +14,10 @@ import authLogo from "./../assets/authLogo.svg";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 
 const useStyles = createStyles((theme) => ({
+  image: {
+    width: "70%",
+    height: "70%",
+  },
   LesButtonsTTONS: {
     marginInline: "20px",
 
@@ -36,22 +40,29 @@ const useStyles = createStyles((theme) => ({
       display: "none",
     },
   },
-  onMobile:{
+  onMobile: {
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
   },
-  secondplaceBottom2:{
-    height: "24vh", 
-    marginTop: "0vh",
-     marginLeft: "-8px",
+  secondplaceBottom2: {
+    height: "15.3vh",
+    marginTop: "11vh",
+   
     [theme.fn.smallerThan("md")]: {
-      height: "16vh",
+      marginTop: "4%",
+      
     },
     [theme.fn.smallerThan("sm")]: {
       height: "16vh",
     },
-  }
+    secondPlacejsx: {
+      paddingTop: 70,
+      [theme.fn.smallerThan("md")]: {
+        paddingTop: 0,
+      },
+    },
+  },
 }));
 
 function FirstPage(props) {
@@ -59,10 +70,15 @@ function FirstPage(props) {
   const navigation = useNavigate();
 
   return (
-    <Box style={{ maxWidth: "100vw", overflow: "hidden",maxHeight:'100vh' }}>
-      <Grid style={{ maxHeight: "100%" }}>
+    <Box style={{ maxWidth: "100vw" }}>
+      <Grid>
         {/* Première partie */}
-        <Grid.Col md={6} order={2} orderMd={1} className={`FirstPathAuth ` }>
+        <Grid.Col
+          md={6}
+          order={2}
+          orderMd={1}
+          className={`FirstPathAuth ${classes.onMobile} `}
+        >
           <div
             className={"FirstPathAuth2"}
             style={{
@@ -74,7 +90,6 @@ function FirstPage(props) {
               width: "100%",
             }}
           >
-
             <Box sx={{ width: "80%", bottom: 0, top: "auto" }}>
               <Text fz="60px" ta={"center"} fw={900} c={"white"} mb={30}>
                 WELCOME
@@ -95,7 +110,8 @@ function FirstPage(props) {
                     backgroundColor: "white",
                   }}
                 >
-                  <IconArrowRight />Connexion
+                  <IconArrowRight />
+                  Connexion
                 </Button>
 
                 <Button
@@ -107,7 +123,8 @@ function FirstPage(props) {
                     backgroundColor: "#20986e",
                   }}
                 >
-                  <IconArrowRight />Inscription
+                  <IconArrowRight />
+                  Inscription
                 </Button>
               </Group>
             </Box>
@@ -119,12 +136,13 @@ function FirstPage(props) {
           md={6}
           order={1}
           orderMd={2}
+
           // style={{
           //   border: "1px solid black",
           //   borderRadius: " 115px 0px 0px 0px "
           // }}
         >
-          <div style={{ paddingTop: 80 }} className={"secondplace"}>
+          <div className={`secondplace ${classes.secondPlacejsx}`}>
             <div
               style={{
                 display: "flex",
@@ -151,16 +169,10 @@ function FirstPage(props) {
               />
             </div>
             <Box className={classes.Mobile}>
-              <Image
-                radius="md"
-                src={authLogo}
-                alt="Random unsplash image"
-                width={450}
-                className={"imageStyle"}
-              />
+              <img src={authLogo} className={classes.image} alt={"Hello"} />
             </Box>
             <Box className={classes.LesButtonsTTONS}>
-              <Text fz="60px" ta={"center"} fw={700} c={"#20986e"} mb="lg">
+              <Text fz="43px" ta={"center"} fw={700} c={"#20986e"} mb="lg">
                 WELCOME
               </Text>
               <Text fz={"sm"} c={"black"} mb="lg">
@@ -196,7 +208,6 @@ function FirstPage(props) {
           </div>
           <div
             className={`secondplaceBottom ${classes.secondplaceBottom2}`}
-            
           ></div>
         </Grid.Col>
       </Grid>

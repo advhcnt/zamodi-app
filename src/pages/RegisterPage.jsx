@@ -23,8 +23,8 @@ import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
 const useStyles = createStyles((theme) => ({
   logo: {
-    marginBottom: "12vh",
-    marginInline: "10vw",
+    marginBottom: "1%",
+    marginInline: "10%",
     justifyContent: "center",
     alignContent: "center",
     [theme.fn.largerThan("md")]: {
@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
   loginButton: {
     backgroundColor: "#20986e",
     width: "100%",
-    marginTop: "3vh",
+    marginTop: "3%",
   },
   partieChamp: {
     display: "flex",
@@ -104,7 +104,7 @@ function LoginPage(props) {
             <Image
               src={ZamodiLogo}
               width={"70%"}
-              mb={"4vh"}
+              mb={"8%"}
               className={classes.hiddenMobile}
             />
             <Image src={ZamodiLogo} className={classes.logo} />
@@ -112,10 +112,9 @@ function LoginPage(props) {
             <Text size={28} weight={900}>
               Créer un compte
             </Text>
-            <Text size={"xs"} mb={"4vh"}>
+            <Text size={"xs"} mb={"8%"}>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi,
-              porro. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Modi, porro.
+             
             </Text>
 
             <form onSubmit={form.onSubmit(() => {})}>
@@ -147,7 +146,7 @@ function LoginPage(props) {
                     />
                   }
                   required
-                  size={"md"}
+                  size={"sm"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
                   value={form.values.email}
@@ -159,7 +158,7 @@ function LoginPage(props) {
 
                 <PasswordInput
                   radius="32px"
-                  size={"md"}
+                  size={"sm"}
                   icon={
                     <IconLock
                       size={20}
