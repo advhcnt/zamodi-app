@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
         alignItems: "center",
         paddingLeft: "2vw",
         marginBlock: "2vh",
-        gap: 15,
+        gap: 1,
         borderRadius: theme.radius.md,
         height: 80,
         backgroundColor:
@@ -45,14 +45,14 @@ function HistoriqueDashboard(props) {
                             alignItems: 'center',
                             // justifyContent: "space-between",
                             width: "100%",
-                            gap:5,
+                            gap:1,
                         }}
                     >
 
                         <Box>
                             <Image
                                 src={mtnLogo}
-                                style={{ height: "80%", width: "80%" }}
+                                style={{ height: "60%", width: "60%" }}
                                 alt={"Logo mtn"}
                             />
                         </Box>

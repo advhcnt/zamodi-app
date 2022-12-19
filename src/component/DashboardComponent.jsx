@@ -107,7 +107,7 @@ function DashboardComponent(props) {
     <Box>
       <Grid>
         {/* Partie info */}
-        <Grid.Col md={9}>
+        <Grid.Col md={8.5}>
           <Box>
             <Grid>
               <Grid.Col md={4}>
@@ -258,7 +258,7 @@ function DashboardComponent(props) {
         </Grid.Col>
 
         {/* Parie Historique */}
-        <Grid.Col md={3}>
+        <Grid.Col md={3.5}>
           <HistoriqueDashboard />
         </Grid.Col>
       </Grid>
