@@ -12,6 +12,7 @@ import ContactComponent from "./component/ContactComponent";
 import PartagerComponent from "./component/PartagerComponent";
 import ServiceComponent from "./component/ServiceComponent";
 import RechargeComponent from "./component/RechargeComponent";
+import ProfileComponent from "./component/ProfileComponent";
 
 function App(props) {
   return (
@@ -20,6 +21,7 @@ function App(props) {
         <Route path="/" element={<FirstPage />} />
         <Route path="/dashboard" element={<DashboardPage />}>
           <Route index element={<DashboardComponent />} />
+          <Route path="profile" element={<ProfileComponent />} />
           <Route path="echange" element={<EchangeComponent />} />
           <Route path="recharge" element={<RechargeComponent />}/>
           <Route path="historique" element={<HistoriqueComponent />} />

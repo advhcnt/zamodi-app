@@ -3,7 +3,6 @@ import { createStyles, Navbar, Group, Code, Image, Card, Text, Paper } from "@ma
 import {
 
   IconStar,
-  IconSwitchHorizontal,
   IconLogout,
   IconArrowsLeftRight,
   IconWallet,
@@ -125,6 +124,7 @@ function SidebarLayout() {
 
   const links = data.map((item) => (
     <div
+    key={item.icon}
       style={{ display: "flex", width: "100%" }}
       onClick={(event) => {
         event.preventDefault();

@@ -40,7 +40,7 @@ import {
 } from "@tabler/icons";
 import gb from './../assets/gb.svg'
 import fr from './../assets/fr.svg'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const user = {
@@ -273,6 +273,7 @@ function HearderLayout(props) {
         setActiveDrawerLink(item.label);
         setDivActive(item.label);
       }}
+      key={item.icon}
     >
       <span
         className={cx(classes.firstPart, {
@@ -298,6 +299,8 @@ function HearderLayout(props) {
   ));
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
+
+  const navigation = useNavigate()
 
   return (
     <>
@@ -448,32 +451,13 @@ function HearderLayout(props) {
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <Menu.Item
-                    icon={<IconHeart size={14} color={"red"} stroke={1.5} />}
-                  >
-                    Liked posts
-                  </Menu.Item>
-                  <Menu.Item
-                    icon={<IconStar size={14} color={"yellow"} stroke={1.5} />}
-                  >
-                    Saved posts
-                  </Menu.Item>
-                  <Menu.Item
-                    icon={<IconMessage size={14} color={"blue"} stroke={1.5} />}
-                  >
-                    Your comments
-                  </Menu.Item>
+                 
 
                   <Menu.Label>Settings</Menu.Label>
-                  <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
+                  <Menu.Item icon={<IconSettings size={14} stroke={1.5} />} onClick={()=>navigation('profile')}>
                     Account settings
                   </Menu.Item>
-                  <Menu.Item
-                    icon={<IconSwitchHorizontal size={14} stroke={1.5} />}
-                  >
-                    Change account
-                  </Menu.Item>
-                  <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
+                  <Menu.Item icon={<IconLogout size={14} stroke={1.5} />} onClick={()=>navigation('profile')}>
                     Logout
                   </Menu.Item>
 
