@@ -20,6 +20,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail } from "@tabler/icons";
 import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
+import { useEffect, useState,useRef } from "react";
+import { useLoginMutation } from './../features/auth/authApiSlice'
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
+
+
+
 const useStyles = createStyles((theme) => ({
   logo: {
     marginBottom: "1%",
@@ -72,6 +79,24 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function LoginPage(props) {
+  const errRef = useRef()
+  const [user, setUser] = useState('')
+    const [pwd, setPwd] = useState('')
+    const [errMsg, setErrMsg] = useState('')
+    const navigate = useNavigate()
+
+    const [login, { isLoading }] = useLoginMutation()
+    const dispatch = useDispatch()
+
+
+  //   useEffect(() => {
+  //     userRef.current.focus()
+  // }, [])
+
+    useEffect(() => {
+        setErrMsg('')
+    }, [user, pwd])
+
 
   const navigation=useNavigate();
 
@@ -92,8 +117,34 @@ function LoginPage(props) {
           ? "Password should include at least 6 characters"
           : null,
     },
-    
+   
   });
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+        const userData = await login({ user, pwd }).unwrap()
+        dispatch(setCredentials({ ...userData, user }))
+        setUser('')
+        setPwd('')
+        navigate('/dashboard')
+    } catch (err) {
+        if (!err?.originalStatus) {
+            // isLoading: true until timeout occurs
+            setErrMsg('No Server Response');
+        } else if (err.originalStatus === 400) {
+            setErrMsg('Missing Username or Password');
+        } else if (err.originalStatus === 401) {
+            setErrMsg('Unauthorized');
+        } else {
+            setErrMsg('Login Failed');
+        }
+        errRef.current.focus();
+    }
+}
+
 
   return (
     <Box style={{ maxWidth: "100vw" }}>
@@ -124,21 +175,10 @@ function LoginPage(props) {
               porro. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Modi, porro.
             </Text>
-
-            <form onSubmit={form.onSubmit(() => {})}>
+            <Text ta={'center'} c={'red'} ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</Text>
+            <form onSubmit={handleSubmit}>
               <Stack>
-                {type === "register" && (
-                  <TextInput
-                    radius="lg"
-                    label="Name"
-                    variant={"filled"}
-                    placeholder="Your name"
-                    value={form.values.name}
-                    onChange={(event) =>
-                      form.setFieldValue("name", event.currentTarget.value)
-                    }
-                  />
-                )}
+               
 
                 <TextInput
                   radius="32px"
@@ -153,9 +193,9 @@ function LoginPage(props) {
                   size={"sm"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
-                  value={form.values.email}
+                  value={user}
                   onChange={(event) =>
-                    form.setFieldValue("email", event.currentTarget.value)
+                    setUser(event.target.value)
                   }
                   error={form.errors.email && "Invalid email"}
                 />
@@ -173,9 +213,9 @@ function LoginPage(props) {
                   required
                   placeholder="Your password"
                   variant={"filled"}
-                  value={form.values.password}
+                  value={pwd}
                   onChange={(event) =>
-                    form.setFieldValue("password", event.currentTarget.value)
+                    setPwd(event.target.value)
                   }
                   error={
                     form.errors.password &&
@@ -213,7 +253,8 @@ function LoginPage(props) {
                 // type="submit"
                 radius={"lg"}
                 className={classes.loginButton}
-                onClick={() =>navigation('/dashboard')}
+                // onClick={() =>navigation('/dashboard')}
+                type={'submit'}
               >
                 {upperFirst("Se connecter")}
               </Button>
