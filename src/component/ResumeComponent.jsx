@@ -10,20 +10,63 @@ import {
   Select,
   Button,
   Image,
+  Modal,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { Group } from "@mantine/core";
 import { IconArrowLeft, IconArrowsLeftRight, IconChevronDown } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
+import operationsService from "../services/operations.service";
 
 function ResumeComponent(props) {
+
+  const [opened, setOpened] = useState(false);
+  const [openedSecondModal, setOpenedSecondModal] = useState(false);
+  const [transactionId, setTransactionId] = useState('');
+
+  const handleSubmit = () => {
+    setOpenedSecondModal(false)
+
+    operationsService.addUserOperation({
+      numero: props.numero,
+      jai: props.jai,
+      jeveux: props.jeveux,
+      transactionId: transactionId,
+      montant: props.montant,
+      OperationKind: 'echange'
+    }).then(
+      (data) => {
+        alert("la team")
+        console.log(data)
+        console.log('La team')
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+          console.log(resMessage)
+        // alert(resMessage);
+      }
+    );
+
+  }
+
+  const handleModal = () => {
+    setOpened(false)
+    setOpenedSecondModal(true)
+  }
   return (
     <Box>
       <Grid style={{ justifyContent: "space-around" }}>
         <Grid.Col md={8}>
+
           <Card shadow="lg" p="lg" radius="md" withBorder>
             <Card.Section
               withBorder
@@ -40,12 +83,12 @@ function ResumeComponent(props) {
 
             <Card.Section mb={50}>
               <Group position={"apart"} my={20}>
-                <Text fz="lg" fx={900} c={"black"} mx={25}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
                   Montant{" "}
                 </Text>
-                <Text fz={"lg"} c={"black"} mx={25}>
+                <Text fz={"lg"} c={"black"} mx={10}>
                   {" "}
-                  5000{" "}
+                  {props.montant}
                 </Text>
               </Group>
 
@@ -54,33 +97,33 @@ function ResumeComponent(props) {
                 my={20}
                 style={{ backgroundColor: "#f7f7f7" }}
               >
-                <Text fz="lg" fx={900} c={"black"} mx={25} my={10}>
+                <Text fz="lg" fx={900} c={"black"} mx={10} my={10}>
                   J'ai :{" "}
                 </Text>
-                <Group mx={25} my={10}>
+                <Group mx={10} my={10}>
                   <Image
-                    src={mtnLogo}
+                    src={props.jai.split(" ")[0] === 'Mtn' ? mtnLogo : props.jai.split(" ")[0] === 'Moov' ? moovLogo : sbinLogo}
                     style={{ height: "35%", width: "35%" }}
                     alt={"Logo mtn"}
                   />
                   <Text fz="lg" c={"black"}>
-                    MTN{" "}
+                    {props.jai.split(" ")[0]}
                   </Text>
                 </Group>
               </Group>
 
               <Group position={"apart"} my={20}>
-                <Text fz="lg" fx={900} c={"black"} mx={25}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
                   Je veux{" "}
                 </Text>
-                <Group mx={25}>
+                <Group mx={10}>
                   <Image
-                    src={sbinLogo}
+                    src={props.jeveux.split(" ")[0] === 'Mtn' ? mtnLogo : props.jeveux.split(" ")[0] === 'Moov' ? moovLogo : sbinLogo}
                     style={{ height: "35%", width: "35%" }}
                     alt={"Logo mtn"}
                   />
                   <Text fz={"lg"} c={"black"}>
-                    Celtiis{" "}
+                    {props.jeveux.split(" ")[0]}
                   </Text>
                 </Group>
               </Group>
@@ -90,11 +133,11 @@ function ResumeComponent(props) {
                 my={20}
                 style={{ backgroundColor: "#f7f7f7" }}
               >
-                <Text fz="lg" fx={900} c={"black"} mx={25} my={10}>
+                <Text fz="lg" fx={900} c={"black"} mx={10} my={10}>
                   Le numéro{" "}
                 </Text>
-                <Text fz={"lg"} c={"black"} mx={25} my={10}>
-                  61000001{" "}
+                <Text fz={"lg"} c={"black"} mx={10} my={10}>
+                  {props.numero}
                 </Text>
               </Group>
 
@@ -108,16 +151,52 @@ function ResumeComponent(props) {
               >
                 <Group position={'center'} >
                   <Button size={"sm"} mr={"lg"} bg={'black'}
-                  onClick={()=>props.setValide(false)}>
-                     <IconArrowLeft size={20} mx={3} />{" "}Modifier
+                    onClick={() => props.setValide(false)}>
+                    <IconArrowLeft size={20} mx={3} />{" "}Modifier
                   </Button>
-                  <Button size={"sm"} mr={"lg"} className={"ArrierePlan"}>
+                  <Button size={"sm"} mr={"lg"} className={"ArrierePlan"} onClick={() => setOpened(true)} >
                     Valider <IconArrowRight size={20} mx={3} />{" "}
                   </Button>
                 </Group>
               </Box>
             </Card.Section>
           </Card>
+
+
+          <Modal centered opened={opened}
+            onClose={() => setOpened(false)}
+            title="Dépôt de l'argent" >
+            <Text fz={'xl'} fw={900} c={'red'} my={30} ta={'center'}>61815448</Text>
+            <Text fz={10} c={'dimmed'} my={30}> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis doloribus, explicabo harum pariatur architecto nesciunt? </Text>
+            <Group position={'center'}>
+              <Button size={"sm"} mr={"lg"} className={"ArrierePlan"} onClick={handleModal} >
+                Valider <IconArrowRight size={20} mx={3} />{" "}
+              </Button>
+            </Group>
+
+          </Modal>
+
+
+          {/* Modal pour coller le ID */}
+          <Modal centered opened={openedSecondModal}
+            onClose={() => setOpenedSecondModal(false)}
+            title="Coller l'ID" >
+
+            <TextInput placeholder="idnumMomo12543254812" value={transactionId} onChange={(event) => setTransactionId(event.target.value)} rightSection={<Button disabled className={"ArrierePlan"}>coller</Button>} />
+
+            <Text fz={10} c={'dimmed'} my={30}> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis doloribus, explicabo harum pariatur architecto nesciunt? </Text>
+
+            <Group position={'center'}>
+              <Button size={"sm"} mr={"lg"} className={"ArrierePlan"} onClick={handleSubmit} >
+                Faire une nouvelle opération <IconArrowRight size={20} mx={3} />{" "}
+              </Button>
+            </Group>
+
+          </Modal>
+
+
+
+
         </Grid.Col>
       </Grid>
     </Box>

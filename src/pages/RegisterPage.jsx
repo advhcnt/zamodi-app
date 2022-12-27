@@ -13,7 +13,6 @@ import {
   Grid,
   Box,
   createStyles,
-  Card,
   Image,
 } from "@mantine/core";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
@@ -77,7 +76,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function LoginPage(props) {
+
+function RegisterPage(props) {
   const errRef = useRef();
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
@@ -368,4 +368,4 @@ function LoginPage(props) {
   );
 }
 
-export default LoginPage;
+export default RegisterPage;
