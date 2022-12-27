@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createStyles, Navbar, Group, Code, Image, Card, Text, Paper } from "@mantine/core";
+import { createStyles, Navbar, Group, Code, Image, Card, Text, Paper, Button } from "@mantine/core";
 import {
 
   IconStar,
@@ -12,7 +12,8 @@ import {
   IconHome,
 } from "@tabler/icons";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from "../services/authService";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -118,6 +119,7 @@ const data = [
 ];
 
 function SidebarLayout() {
+  const navigate = useNavigate();
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Dashboard");
   const [DivActive, setDivActive] = useState("Dashboard");
@@ -155,6 +157,10 @@ function SidebarLayout() {
     </div>
   ));
 
+  const logOut = () => {
+    authService.logout();
+    navigate("/login");
+  };
   return (
     <Navbar height={"100%"} width={"auto"} p="md">
       <Navbar.Section grow>
@@ -176,16 +182,17 @@ function SidebarLayout() {
       <Navbar.Section className={classes.footer}>
 
 
-        <Link
-          to="/login"
+        <Button
+        
           className={classes.link2}
           // onClick={(event) => event.preventDefault()}
 
           style={{ backgroundColor: '#20986e', borderRadius: '12px', paddingLeft: '10px', color: "white" }}
+        onClick={logOut}
         >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Deconnexion</span>
-        </Link>
+        </Button>
       </Navbar.Section>
     </Navbar>
   );

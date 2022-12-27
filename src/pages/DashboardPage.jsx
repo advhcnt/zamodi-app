@@ -3,9 +3,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import DashboardComponent from "../component/DashboardComponent";
-import { selectCurrentToken } from "../features/auth/authSlice";
 import HearderLayout from "../layout/HearderLayout";
 import SidebarLayout from "../layout/SidebarLayout";
+import authService from "../services/authService";
 
 const useStyles = createStyles((theme) => ({
   colonne1: {
@@ -16,11 +16,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function DashboardPage(props) {
+
+  const currentUser = authService.getCurrentUser();
   const { classes, cx } = useStyles();
-  const token = useSelector(selectCurrentToken)
   const location = useLocation()
 
-  return token ? (
+  return currentUser ? (
     <Box style={{ overflowX: "hidden" }}>
       <Grid style={{ height: "100vh", overflowX: "hidden" }} gutter={1}>
         {/* Première partie */}

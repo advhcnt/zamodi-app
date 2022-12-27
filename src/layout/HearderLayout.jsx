@@ -38,10 +38,10 @@ import {
   IconFileText,
   IconHome,
 } from "@tabler/icons";
-import gb from './../assets/gb.svg'
-import fr from './../assets/fr.svg'
+import gb from "./../assets/gb.svg";
+import fr from "./../assets/fr.svg";
 import { Link, useNavigate } from "react-router-dom";
-
+import authService from "../services/authService";
 
 const user = {
   name: "J. Spoonfgf",
@@ -73,6 +73,7 @@ const DrawerData = [
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
+  
   return {
     link2: {
       ...theme.fn.focusStyles(),
@@ -87,11 +88,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
       padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
-      marginTop: '80px',
-
+      marginTop: "80px",
     },
     langue: {
-      border: '1px solid ',
+      border: "1px solid ",
       color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
       borderRadius: theme.radius.sm,
@@ -252,11 +252,16 @@ const useStyles = createStyles((theme, _params, getRef) => {
       [theme.fn.smallerThan("sm")]: {
         display: "none",
       },
-    }
+    },
   };
 });
 
 function HearderLayout(props) {
+  const navigate = useNavigate();
+  const logOut = () => {
+    authService.logout();
+    navigate("/login");
+  };
   // const [opened, { toggle }] = useDisclosure(false);
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
@@ -300,7 +305,7 @@ function HearderLayout(props) {
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const navigation = useNavigate()
+  const navigation = useNavigate();
 
   return (
     <>
@@ -341,7 +346,7 @@ function HearderLayout(props) {
 
             <Box
               className={classes.NavhiddenMobile}
-            // style={{ display: "flex", gap: 20, alignItems: "center" }}
+              // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
                 icon={<IconSearch size={14} />}
@@ -388,7 +393,7 @@ function HearderLayout(props) {
                 </Menu.Target>
                 <Menu.Dropdown>
                   <Menu.Item>
-                    <div style={{ display: 'flex', gap: 3 }}>
+                    <div style={{ display: "flex", gap: 3 }}>
                       {" "}
                       <Avatar
                         src={langues[1].flag}
@@ -451,13 +456,17 @@ function HearderLayout(props) {
                   </UnstyledButton>
                 </Menu.Target>
                 <Menu.Dropdown>
-                 
-
                   <Menu.Label>Settings</Menu.Label>
-                  <Menu.Item icon={<IconSettings size={14} stroke={1.5} />} onClick={()=>navigation('profile')}>
+                  <Menu.Item
+                    icon={<IconSettings size={14} stroke={1.5} />}
+                    onClick={() => navigation("profile")}
+                  >
                     Account settings
                   </Menu.Item>
-                  <Menu.Item icon={<IconLogout size={14} stroke={1.5} />} onClick={()=>navigation('profile')}>
+                  <Menu.Item
+                    icon={<IconLogout size={14} stroke={1.5} />}
+                    onClick={logOut}
+                  >
                     Logout
                   </Menu.Item>
 
@@ -495,24 +504,29 @@ function HearderLayout(props) {
         </Box>
         <Box>{linksDrawer}</Box>
 
-        <Box my={'100px'}>
-          <Paper style={{ border: '2px solid #f7f7f7', padding: '15px' }}>
-            <Text ta="center" fw={'bold'}>À Propos</Text>
-            <Text fz={'xs'} >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-              diam nonumy eirmod tempor
+        <Box my={"100px"}>
+          <Paper style={{ border: "2px solid #f7f7f7", padding: "15px" }}>
+            <Text ta="center" fw={"bold"}>
+              À Propos
+            </Text>
+            <Text fz={"xs"}>
+              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+              nonumy eirmod tempor
             </Text>
           </Paper>
         </Box>
         <Box className={classes.footer}>
-
-
           <Link
             to="/login"
             className={classes.link2}
             // onClick={(event) => event.preventDefault()}
 
-            style={{ backgroundColor: '#20986e', borderRadius: '12px', paddingLeft: '10px', color: "white" }}
+            style={{
+              backgroundColor: "#20986e",
+              borderRadius: "12px",
+              paddingLeft: "10px",
+              color: "white",
+            }}
           >
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Deconnexion</span>

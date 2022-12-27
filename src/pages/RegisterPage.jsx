@@ -21,10 +21,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
 import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import authService from "../services/authService";
+
+
 const useStyles = createStyles((theme) => ({
   logo: {
     marginBottom: "1%",
-    marginInline: "10%",
+    marginInline: "10vw",
     justifyContent: "center",
     alignContent: "center",
     [theme.fn.largerThan("md")]: {
@@ -34,7 +39,7 @@ const useStyles = createStyles((theme) => ({
   loginButton: {
     backgroundColor: "#20986e",
     width: "100%",
-    marginTop: "3%",
+    marginTop: "3vh",
   },
   partieChamp: {
     display: "flex",
@@ -64,12 +69,32 @@ const useStyles = createStyles((theme) => ({
       display: "none",
     },
   },
+  boxStyle: {
+    width: "70%",
+    [theme.fn.smallerThan("md")]: {
+      width: "80%",
+    },
+  },
 }));
 
 function LoginPage(props) {
+  const errRef = useRef();
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [mail, setMail] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setloading] = useState(false);
+
   const navigation = useNavigate();
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -86,6 +111,35 @@ function LoginPage(props) {
           : null,
     },
   });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setloading(true);
+    if (user && pwd && pwd.length >= 8) {
+      authService.register(user, mail, pwd).then(
+        (data) => {
+          if (data.status === 200 || data.state === "success") {
+            navigate("/login");
+            // window.location.reload();
+          } else {
+            setloading(false);
+            setErrMsg(data.message);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setloading(false);
+          setErrMsg(resMessage);
+        }
+      );
+    }
+  };
 
   return (
     <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
@@ -114,10 +168,17 @@ function LoginPage(props) {
             </Text>
             <Text size={"xs"} mb={"8%"}>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi,
-             
             </Text>
-
-            <form onSubmit={form.onSubmit(() => {})}>
+            <Text
+              ta={"center"}
+              c={"red"}
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </Text>
+            <form>
               <Stack>
                 <TextInput
                   icon={
@@ -130,10 +191,8 @@ function LoginPage(props) {
                   radius="32px"
                   variant={"filled"}
                   placeholder="Your name"
-                  value={form.values.name}
-                  onChange={(event) =>
-                    form.setFieldValue("name", event.currentTarget.value)
-                  }
+                  value={user}
+                  onChange={(event) => setUser(event.currentTarget.value)}
                 />
 
                 <TextInput
@@ -149,11 +208,9 @@ function LoginPage(props) {
                   size={"sm"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
-                  value={form.values.email}
-                  onChange={(event) =>
-                    form.setFieldValue("email", event.currentTarget.value)
-                  }
-                  error={form.errors.email && "Invalid email"}
+                  value={mail}
+                  onChange={(event) => setMail(event.currentTarget.value)}
+                  // error={form.errors.email && "Invalid email"}
                 />
 
                 <PasswordInput
@@ -169,29 +226,41 @@ function LoginPage(props) {
                   required
                   placeholder="Your password"
                   variant={"filled"}
-                  value={form.values.password}
-                  onChange={(event) =>
-                    form.setFieldValue("password", event.currentTarget.value)
-                  }
-                  error={
-                    form.errors.password &&
-                    "Password should include at least 6 characters"
-                  }
+                  value={pwd}
+                  onChange={(event) => setPwd(event.currentTarget.value)}
+                  // error={
+                  //   form.errors.password &&
+                  //   "Password should include at least 6 characters"
+                  // }
                 />
 
                 {type === "register" && (
-                  <div style={{display:'flex',alignItems:'center',gap:5}}>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: 5 }}
+                  >
                     <Checkbox
                       checked={form.values.terms}
                       size={15}
-                      className={'lesCheckbox'}
+                      className={"lesCheckbox"}
                       onChange={(event) =>
                         form.setFieldValue("terms", event.currentTarget.checked)
                       }
                     />
                     <Text size={10}>
-                      J'accepte les <Link to={"#"} style={{textDecoration:'none',color:'red'}}>conditions d'utilisation</Link>  et <Link to={"#"}  style={{textDecoration:'none',color:'red'}}>politique de confidentialité</Link> 
-                      
+                      J'accepte les{" "}
+                      <Link
+                        to={"#"}
+                        style={{ textDecoration: "none", color: "red" }}
+                      >
+                        conditions d'utilisation
+                      </Link>{" "}
+                      et{" "}
+                      <Link
+                        to={"#"}
+                        style={{ textDecoration: "none", color: "red" }}
+                      >
+                        politique de confidentialité
+                      </Link>
                     </Text>
                   </div>
                 )}
@@ -216,7 +285,7 @@ function LoginPage(props) {
                 // type="submit"
                 radius={"lg"}
                 className={classes.loginButton}
-                onClick={() =>navigation('/dashboard')}
+                onClick={handleSubmit}
               >
                 {upperFirst("Se connecter")}
               </Button>
@@ -282,7 +351,11 @@ function LoginPage(props) {
                 display: "flex",
               }}
             >
-              <Text size={10} ta="center" style={{ color: "whitesmoke",marginTop:'30px'  }}>
+              <Text
+                size={10}
+                ta="center"
+                style={{ color: "whitesmoke", marginTop: "30px" }}
+              >
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos
                 sed blanditiis sint. Odio, magni vero minus blanditiis
                 cupiditate nisi

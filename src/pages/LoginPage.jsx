@@ -20,12 +20,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail } from "@tabler/icons";
 import facebook from "./../assets/facebook.png";
 import authLogo from "./../assets/Auth.svg";
-import { useEffect, useState,useRef } from "react";
-import { useLoginMutation } from './../features/auth/authApiSlice'
+import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../features/auth/authSlice";
-
-
+import authService from "../services/authService";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -53,7 +50,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#20986e",
     display: "flex",
     alignItems: "center",
-    justifyContent:'space-around',
+    justifyContent: "space-around",
     borderRadius: " 110px 0px 0px 0px ",
     border: "1px solid white",
     [theme.fn.smallerThan("md")]: {
@@ -70,35 +67,28 @@ const useStyles = createStyles((theme) => ({
       display: "none",
     },
   },
-  boxStyle:{
-      width:'70%',
-      [theme.fn.smallerThan("md")]: {
-        width:'80%',
-      },
-  }
+  boxStyle: {
+    width: "70%",
+    [theme.fn.smallerThan("md")]: {
+      width: "80%",
+    },
+  },
 }));
 
 function LoginPage(props) {
-  const errRef = useRef()
-  const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
-    const [errMsg, setErrMsg] = useState('')
-    const navigate = useNavigate()
+  const errRef = useRef();
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setloading] = useState(false);
 
-    const [login, { isLoading }] = useLoginMutation()
-    const dispatch = useDispatch()
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
 
-
-  //   useEffect(() => {
-  //     userRef.current.focus()
-  // }, [])
-
-    useEffect(() => {
-        setErrMsg('')
-    }, [user, pwd])
-
-
-  const navigation=useNavigate();
+  const navigation = useNavigate();
 
   const { classes } = useStyles();
   const [type, toggle] = useToggle(["login", "register"]);
@@ -117,40 +107,41 @@ function LoginPage(props) {
           ? "Password should include at least 6 characters"
           : null,
     },
-   
   });
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setloading(true);
+    if (user && pwd && pwd.length >= 8) {
+      authService.login(user, pwd).then(
+        (data) => {
+          console.log(data)
+          if (data.status === 200 || data.state==='success') {
+            navigate("/dashboard");
+            // window.location.reload();
+          } else {
+            setloading(false);
+            setErrMsg(data.message);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
-    try {
-        const userData = await login({ user, pwd }).unwrap()
-        dispatch(setCredentials({ ...userData, user }))
-        setUser('')
-        setPwd('')
-        navigate('/dashboard')
-    } catch (err) {
-        if (!err?.originalStatus) {
-            // isLoading: true until timeout occurs
-            setErrMsg('No Server Response');
-        } else if (err.originalStatus === 400) {
-            setErrMsg('Missing Username or Password');
-        } else if (err.originalStatus === 401) {
-            setErrMsg('Unauthorized');
-        } else {
-            setErrMsg('Login Failed');
+          setloading(false);
+          setErrMsg(resMessage);
         }
-        errRef.current.focus();
+      );
     }
-}
-
+  };
 
   return (
     <Box style={{ maxWidth: "100vw" }}>
-      <Grid
-          className={"secondplaceLogin"}
-      >
+      <Grid className={"secondplaceLogin"}>
         {/* Première partie */}
         <Grid.Col
           md={6}
@@ -158,7 +149,7 @@ function LoginPage(props) {
           orderMd={1}
           className={` ${classes.partieChamp}`}
         >
-          <Box className={classes.boxStyle} >
+          <Box className={classes.boxStyle}>
             <Image
               src={ZamodiLogo}
               width={"70%"}
@@ -175,11 +166,17 @@ function LoginPage(props) {
               porro. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
               Modi, porro.
             </Text>
-            <Text ta={'center'} c={'red'} ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</Text>
+            <Text
+              ta={"center"}
+              c={"red"}
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </Text>
             <form onSubmit={handleSubmit}>
               <Stack>
-               
-
                 <TextInput
                   radius="32px"
                   icon={
@@ -194,9 +191,7 @@ function LoginPage(props) {
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
                   value={user}
-                  onChange={(event) =>
-                    setUser(event.target.value)
-                  }
+                  onChange={(event) => setUser(event.target.value)}
                   error={form.errors.email && "Invalid email"}
                 />
 
@@ -214,9 +209,7 @@ function LoginPage(props) {
                   placeholder="Your password"
                   variant={"filled"}
                   value={pwd}
-                  onChange={(event) =>
-                    setPwd(event.target.value)
-                  }
+                  onChange={(event) => setPwd(event.target.value)}
                   error={
                     form.errors.password &&
                     "Password should include at least 6 characters"
@@ -250,11 +243,11 @@ function LoginPage(props) {
               <Button
                 size="xs"
                 fw={"xs"}
-                // type="submit"
+                type="submit"
                 radius={"lg"}
                 className={classes.loginButton}
                 // onClick={() =>navigation('/dashboard')}
-                type={'submit'}
+                // type={"submit"}
               >
                 {upperFirst("Se connecter")}
               </Button>
@@ -289,7 +282,13 @@ function LoginPage(props) {
         <Grid.Col md={6} order={1} orderMd={2} className={classes.partieNeutre}>
           <Box style={{ width: "58%" }}>
             {" "}
-            <Box style={{display:'flex',alignItems:'center',justifyContent:'space-around'}} >
+            <Box
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+              }}
+            >
               <Image
                 src={authLogo}
                 alt="auth logo"
@@ -297,13 +296,23 @@ function LoginPage(props) {
                 marginX={"auto"}
               />
             </Box>
-            <Box style={{marginInline:'auto', width: "80%",textAlign:'center',justifyContent:'center',alignContent:'center',display:'flex',marginTop:'30px' }}>
-              <Text size={10} ta='center' style={{color:'whitesmoke',}}>
-           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos sed
-            blanditiis sint. Odio, magni vero minus blanditiis cupiditate nisi
-           </Text>
+            <Box
+              style={{
+                marginInline: "auto",
+                width: "80%",
+                textAlign: "center",
+                justifyContent: "center",
+                alignContent: "center",
+                display: "flex",
+                marginTop: "30px",
+              }}
+            >
+              <Text size={10} ta="center" style={{ color: "whitesmoke" }}>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos
+                sed blanditiis sint. Odio, magni vero minus blanditiis
+                cupiditate nisi
+              </Text>
             </Box>
-           
           </Box>
         </Grid.Col>
       </Grid>
