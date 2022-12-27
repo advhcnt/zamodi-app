@@ -1,9 +1,10 @@
-export default function authHeader() {
-    const user = JSON.parse(localStorage.getItem('user'));
-  
-    if (user && user.accessToken) {
-      return { Authorization: 'Bearer ' + user.accessToken };
-    } else {
-      return {};
-    }
+import axios from "axios";
+
+// export default function authHeader(token) {
+export default function authHeader(token) {
+  console.log(token)
+  if (token) {
+    // return { Authorization: 'Bearer ' + user.accessToken };
+    axios.defaults.headers.Authorization = `Bearer ${token}`;
   }
+}

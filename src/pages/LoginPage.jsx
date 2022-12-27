@@ -23,6 +23,9 @@ import authLogo from "./../assets/Auth.svg";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import authService from "../services/authService";
+import authHeader from './../services/auth-header'
+
+
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -115,8 +118,10 @@ function LoginPage(props) {
     if (user && pwd && pwd.length >= 8) {
       authService.login(user, pwd).then(
         (data) => {
-          console.log(data)
-          if (data.status === 200 || data.state==='success') {
+          if (data.status === 200 || data.state === 'success') {
+
+            authHeader(data.accessToken)
+
             navigate("/dashboard");
             // window.location.reload();
           } else {
@@ -246,8 +251,8 @@ function LoginPage(props) {
                 type="submit"
                 radius={"lg"}
                 className={classes.loginButton}
-                // onClick={() =>navigation('/dashboard')}
-                // type={"submit"}
+              // onClick={() =>navigation('/dashboard')}
+              // type={"submit"}
               >
                 {upperFirst("Se connecter")}
               </Button>

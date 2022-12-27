@@ -10,13 +10,25 @@ import {
   Select,
   Button,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
 import { IconArrowsLeftRight, IconChevronDown } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import ResumeComponent from "./ResumeComponent";
+import operation from './../services/operations.service'
+import authService from "../services/authService";
+
 
 function EchangeComponent(props) {
+  const currentUser = authService.getCurrentUser();
+  const [operations, setOperation] = useState({})
+
+  useEffect(() => {
+
+    setOperation(operation.getUserOperation(currentUser.message._id))
+    console.log(operations)
+
+  }, [])
   const [valide, setvalide] = useState(false);
   return (
     <Container size={'sm'}>
@@ -44,7 +56,7 @@ function EchangeComponent(props) {
                       Montant de recharge
                     </Text>
                     <TextInput
-                    
+
                       placeholder="Your name"
                       withAsterisk
                       className={"ombre"}
@@ -68,7 +80,7 @@ function EchangeComponent(props) {
                     </Text>
                     <Select
                       fullWidth
-                    
+
                       placeholder="Pick one"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
@@ -84,7 +96,7 @@ function EchangeComponent(props) {
                       Je veux
                     </Text>
                     <Select
-                    
+
                       placeholder="Pick one"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
@@ -109,7 +121,7 @@ function EchangeComponent(props) {
                       Le numéro :
                     </Text>
                     <TextInput
-                    
+
                       placeholder="Votre numéro"
                       withAsterisk
                       className={"ombre"}
@@ -121,7 +133,7 @@ function EchangeComponent(props) {
                       Confirmé le numéro :
                     </Text>
                     <TextInput
-                    
+
                       placeholder="Confirmer numéro"
                       withAsterisk
                       className={"ombre"}
@@ -137,13 +149,13 @@ function EchangeComponent(props) {
                   }}
                 >
                   <Button
-                  
+
                     mr={"lg"}
                     className={"ArrierePlan"}
-                    onClick={() =>{
-                        console.log(valide)
-                        setvalide(!valide)
-                    } }
+                    onClick={() => {
+                      console.log(valide)
+                      setvalide(!valide)
+                    }}
                   >
                     Valider <IconArrowRight size={20} mx={3} />{" "}
                   </Button>
