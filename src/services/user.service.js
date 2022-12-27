@@ -10,6 +10,10 @@ class UserService {
     return axios.get(API_URL + 'user', { headers: authHeader() });
   }
 
+  addAvis(){
+    return axios.post(API_URL + 'user', { headers: authHeader() },)
+  }
+
   
 }
 
