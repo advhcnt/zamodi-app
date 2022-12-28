@@ -6,7 +6,7 @@ import { API_URL } from "./http-common";
 
 class TicketService{
   getAllTicket() {
-    return axios.get(API_URL + "/ticket", { headers: authHeader() });
+    return axios.get(API_URL + "/ticket");
   }
   getUserTicket(identifiant) {
     return axios.get(API_URL + "/user/" + identifiant, {
@@ -14,19 +14,15 @@ class TicketService{
     });
   }
 
-  addUserTicket() {
-    return axios.post(API_URL + "/ticket", { headers: authHeader() });
+  addUserTicket(data) {
+    return axios.post(API_URL + "/ticket",data);
   }
   deleteUserTicket(identifiant) {
-    return axios.delete(API_URL + "/ticket/" + identifiant, {
-      headers: authHeader(),
-    });
+    return axios.delete(API_URL + "/ticket/" + identifiant);
   }
 
   updateUserTicket(identifiant) {
-    return axios.put(API_URL + "/ticket/" + identifiant, {
-      headers: authHeader(),
-    });
+    return axios.put(API_URL + "/ticket/" + identifiant);
   }
 }
 

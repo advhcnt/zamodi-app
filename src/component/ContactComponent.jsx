@@ -1,57 +1,164 @@
-import { Card, Divider, Image, Text, Textarea, TextInput, Grid, Container, Box, Button } from '@mantine/core';
-import React from 'react';
-import ContactLogo from './../assets/contact.svg'
+import {
+  Card,
+  Divider,
+  Image,
+  Text,
+  Textarea,
+  TextInput,
+  Grid,
+  Container,
+  Box,
+  Button,
+  Modal,
+  Notification,
+} from "@mantine/core";
+import { IconX } from "@tabler/icons";
+import React, { useState } from "react";
+import ticketService from "../services/ticket.service";
+import ContactLogo from "./../assets/contact.svg";
 
 function ContactComponent(props) {
-    return (
-        <div>
+  const [openedMessageModal, setOpenedMessageModal] = useState(false);
+  const [Message, setMessage] = useState("");
+  const [sujet, setsujet] = useState("");
+  const [message, setmessage] = useState("");
 
-            <Container>
-                <Text fz={'lg'} fw={'bold'} my={30}>Créer un ticket</Text>
-                <Card shadow="lg">
-                    <Card.Section>
-                        <Grid >
-                            <Grid.Col md={5} style={{ justifyContent: 'space-around', backgroundColor: '#f7f7f7' }}>
-                                <Image src={ContactLogo} style={{ width: '80%' }} mt={40} />
-                                <Container mt={20}>
-                                    <Text ta={'center'}>
-                                        Notre service client disponible pour vous écouter
-                                        24h/ 24h
-                                    </Text>
-                                </Container>
+  const [error, seterror] = useState({
+    statut: false,
+    message: "",
+  });
 
-                            </Grid.Col>
-                            <Grid.Col md={7}>
-                                <Container>
-                                    <Text fz={'md'} fw={'bold'} mt={20}>Support</Text>
-                                    <Divider mt={15} mb={40} />
-                                    <Box my={20}>
-                                        <Text size={'md'}>Sujet</Text>
-                                        <TextInput size={'md'} variant={'filled'} style={{ borderColor: '#20986e' }} />
-                                    </Box>
+  const handleSubmit = () => {
+    if (sujet && message) {
+      ticketService
+        .addUserTicket({
+          sujet: sujet,
+          description: message,
+        })
+        .then(
+          (data) => {
+            console.log(data);
+            setOpenedMessageModal(true);
+            setMessage(data.data.message);
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
 
-                                    <Box my={20}>
-                                        <Text size={'md'}>Sujet</Text>
-                                        <Textarea
-                                            autosize
-                                            minRows={2}
-                                            variant={'filled'}
-                                            style={{ borderColor: '#20986e' }}
-                                        />
-                                    </Box>
-                                    <Box my={40}>
-                                        <Button className={'ArrierePlan'} c={'white'} fullWidth >
-                                            Envoyer
-                                        </Button>
-                                    </Box>
-                                </Container>
-                            </Grid.Col>
-                        </Grid>
-                    </Card.Section>
-                </Card>
-            </Container>
-        </div>
-    );
+            console.log(resMessage);
+            setOpenedMessageModal(true);
+            setMessage(resMessage);
+            // alert(resMessage);
+          }
+        );
+    } else {
+      seterror({
+        statut: true,
+        message: "Veillez remplir les champs",
+      });
+    }
+  };
+
+  return (
+    <div>
+      <Container>
+        <Text fz={"lg"} fw={"bold"} my={30}>
+          Créer un ticket
+        </Text>
+        {error.statut && (
+          <Notification
+          my={20}
+            icon={<IconX size={18} />}
+            color="red"
+            onClick={() => seterror(false, "")}
+          >
+            {error.message}
+          </Notification>
+        )}
+        <Card shadow="lg">
+          <Card.Section>
+            <Grid>
+              <Grid.Col
+                md={5}
+                style={{
+                  justifyContent: "space-around",
+                  backgroundColor: "#f7f7f7",
+                }}
+              >
+                <Image src={ContactLogo} style={{ width: "80%" }} mt={40} />
+                <Container mt={20}>
+                  <Text ta={"center"}>
+                    Notre service client disponible pour vous écouter 24h/ 24h
+                  </Text>
+                </Container>
+              </Grid.Col>
+              <Grid.Col md={7}>
+                <Container>
+                  <Text fz={"md"} fw={"bold"} mt={20}>
+                    Support
+                  </Text>
+                  <Divider mt={15} mb={40} />
+                  <Box my={20}>
+                    <Text size={"lg"} my={5}>
+                      Sujet
+                    </Text>
+                    <TextInput
+                      value={sujet}
+                      onChange={(event) => setsujet(event.target.value)}
+                      size={"md"}
+                      variant={"filled"}
+                      style={{ borderColor: "#20986e" }}
+                    />
+                  </Box>
+
+                  <Box my={20}>
+                    <Text size={"lg"} my={5}>
+                      Message
+                    </Text>
+                    <Textarea
+                      autosize
+                      minRows={5}
+                      variant={"filled"}
+                      style={{ borderColor: "#20986e" }}
+                      value={message}
+                      onChange={(event) => setmessage(event.target.value)}
+                    />
+                  </Box>
+                  <Box my={40}>
+                    <Button
+                      className={"ArrierePlan"}
+                      c={"white"}
+                      fullWidth
+                      onClick={handleSubmit}
+                    >
+                      Envoyer
+                    </Button>
+                  </Box>
+                </Container>
+              </Grid.Col>
+            </Grid>
+          </Card.Section>
+        </Card>
+
+        {/* Modal pour afficher la réponse du serveur */}
+        <Modal
+          centered
+          opened={openedMessageModal}
+          onClose={() => setOpenedMessageModal(false)}
+          title="Réponse"
+        >
+          <Text fz={"md"} my={30}>
+            {" "}
+            {Message}
+          </Text>
+        </Modal>
+      </Container>
+    </div>
+  );
 }
 
 export default ContactComponent;

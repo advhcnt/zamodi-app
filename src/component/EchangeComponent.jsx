@@ -1,8 +1,6 @@
 import {
-  ActionIcon,
   Card,
   Container,
-  Menu,
   Text,
   TextInput,
   Box,
@@ -12,7 +10,6 @@ import {
   Notification,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { Group } from "@mantine/core";
 import { IconArrowsLeftRight, IconChevronDown, IconX } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import ResumeComponent from "./ResumeComponent";
@@ -27,7 +24,6 @@ function EchangeComponent(props) {
   const [jai, setjai] = useState('')
   const [jeveux, setjeveux] = useState('')
   const [numero, setnumero] = useState('')
-  const [identifiant, setidentifiant] = useState('')
   const [numeroConfirm, setnumeroConfirm] = useState('')
   const [valide, setvalide] = useState(false);
   const [error, seterror] = useState({

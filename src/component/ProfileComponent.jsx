@@ -11,6 +11,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import React from "react";
+import authService from "../services/authService";
 
 const useStyles = createStyles((theme) => ({
   ProfileLogo: {
@@ -21,6 +22,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function ProfileComponent(props) {
+  const currentUser = authService.getCurrentUser().message;
+
   const { classes, cx } = useStyles();
   return (
     <Box>
@@ -64,12 +67,12 @@ function ProfileComponent(props) {
               <Text fw={900}>Mon compte</Text>
               <Box my={15}>
                 <Text>Nom d'utilisateur</Text>
-                <TextInput value={"Gildas Kpadonou"} />
+                <TextInput value={currentUser.username} />
               </Box>
 
               <Box my={15}>
                 <Text>Email</Text>
-                <TextInput value={"gildaskpadonou@gmail.com"} type={'email'} />
+                <TextInput value={currentUser.email} type={'email'} />
               </Box>
 
               <Box my={15}>

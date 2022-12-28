@@ -26,6 +26,16 @@
   background-color: #20986e;
 }
 
+.ArrierePlanNeutre
+{
+  background-color: #b0c6be;
+}
+
+.ArrierePlanNeutre:hover
+{
+  background-color: #b0c6be;
+}
+
 .ArrierePlan:hover
 {
   background-color: #20986e;

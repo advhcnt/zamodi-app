@@ -6,8 +6,9 @@ import { API_URL } from "./http-common";
 class OperationService {
 
 
-  getUserOperation(identifiant) {
-    return axios.get(API_URL + "/operations/user/" + identifiant);
+  getUserOperation() {
+    // return axios.get(API_URL + "/operations/user/" + identifiant);
+    return axios.get(API_URL + "/operations/user" );
   }
 
   addUserOperation(data) {

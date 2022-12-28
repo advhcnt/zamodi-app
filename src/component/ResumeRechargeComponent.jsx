@@ -1,22 +1,16 @@
 import {
-  ActionIcon,
   Card,
-  Container,
-  Menu,
   Text,
   TextInput,
   Box,
   Grid,
-  Select,
   Button,
   Image,
   Modal,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import {
-  IconArrowLeft,
-} from "@tabler/icons";
+import { IconArrowLeft } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -24,12 +18,12 @@ import sbinLogo from "./../assets/celtiis.png";
 import operationsService from "../services/operations.service";
 import authService from "../services/authService";
 
-function ResumeComponent(props) {
+function ResumeRechargeComponent(props) {
   const currentUser = authService.getCurrentUser();
   const [opened, setOpened] = useState(false);
   const [openedSecondModal, setOpenedSecondModal] = useState(false);
-  const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [transactionId, setTransactionId] = useState("");
+  const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [Message, setMessage] = useState("");
 
   const handleSubmit = () => {
@@ -42,15 +36,15 @@ function ResumeComponent(props) {
         jeveux: props.jeveux,
         transactionId: transactionId,
         montant: props.montant,
-        OperationKind: "echange",
+        OperationKind: "achat",
         userId: currentUser.message._id,
+        Description:props.operation,
       })
       .then(
         (data) => {
-          
           console.log(data);
-          setOpenedMessageModal(true)
-          setMessage(data.data.message)
+          setOpenedMessageModal(true);
+          setMessage(data.data.message);
         },
         (error) => {
           const resMessage =
@@ -61,18 +55,22 @@ function ResumeComponent(props) {
             error.toString();
 
           console.log(resMessage);
-          setOpenedMessageModal(true)
-          setMessage(resMessage)
+          setOpenedMessageModal(true);
+          setMessage(resMessage);
           // alert(resMessage);
         }
       );
   };
 
- 
   const handleModal = () => {
     setOpened(false);
     setOpenedSecondModal(true);
   };
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, []);
+
   return (
     <Box>
       <Grid style={{ justifyContent: "space-around" }}>
@@ -92,6 +90,15 @@ function ResumeComponent(props) {
             </Card.Section>
 
             <Card.Section mb={50}>
+              <Group position={"apart"} my={20}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
+                  Type d'opération{" "}
+                </Text>
+                <Text fz={"lg"} c={"black"} mx={10}>
+                  {" "}
+                  {props.operation}
+                </Text>
+              </Group>
               <Group position={"apart"} my={20}>
                 <Text fz="lg" fx={900} c={"black"} mx={10}>
                   Montant{" "}
@@ -262,14 +269,10 @@ function ResumeComponent(props) {
             onClose={() => setOpenedMessageModal(false)}
             title="Réponse"
           >
-            
-
-            <Text fz={"md"}  my={30}>
+            <Text fz={"md"} my={30}>
               {" "}
-             { Message }
+              {Message}
             </Text>
-
-           
           </Modal>
         </Grid.Col>
       </Grid>
@@ -277,4 +280,4 @@ function ResumeComponent(props) {
   );
 }
 
-export default ResumeComponent;
+export default ResumeRechargeComponent;

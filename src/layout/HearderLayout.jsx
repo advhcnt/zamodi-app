@@ -257,6 +257,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 function HearderLayout(props) {
+  const currentUser = authService.getCurrentUser();
+
   const navigate = useNavigate();
   const logOut = () => {
     authService.logout();
@@ -433,7 +435,7 @@ function HearderLayout(props) {
                           sx={{ lineHeight: 1 }}
                           mr={3}
                         >
-                          {user.name}
+                          {currentUser.message.username}
                         </Text>
                         <Text
                           weight={500}
@@ -442,7 +444,7 @@ function HearderLayout(props) {
                           ta={"center"}
                           className={"EcritVert "}
                         >
-                          role
+                          Client
                         </Text>
                       </div>
 
