@@ -13,10 +13,13 @@ import {
   Progress,
 } from "@mantine/core";
 import { IconStar } from "@tabler/icons";
-import React from "react";
+import React, { useState } from "react";
 import NoteComponent from "./NoteComponent";
 
 function ServiceComponent(props) {
+
+  const [note, setnote] = useState(0)
+
   return (
     <div>
       <Container size={"sm"}>
@@ -72,11 +75,12 @@ function ServiceComponent(props) {
                   <Divider mt={15} mb={40} />
 
                   <Box>
-                    <NoteComponent note={5} />
-                    <NoteComponent note={4} />
-                    <NoteComponent note={3} />
-                    <NoteComponent note={2} />
-                    <NoteComponent note={1} />
+                    <NoteComponent note={note} niveau={5} setnote={setnote} />
+                    <NoteComponent note={note} niveau={4} setnote={setnote} />
+                    <NoteComponent note={note} niveau={3} setnote={setnote} />
+                    <NoteComponent note={note} niveau={2} setnote={setnote} />
+                    <NoteComponent note={note} niveau={1} setnote={setnote} />
+                    {/* checked={false} */}
                   </Box>
                 </Paper>
 

@@ -8,7 +8,7 @@ import {
   Tabs,
   Text,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
@@ -19,6 +19,7 @@ import grapheData from "./../assets/data/chatData";
 import Graphe from "./Graphe";
 import HistoriqueComponent from "./HistoriqueComponent";
 import HistoriqueDashboard from "./HistoriqueDashboard";
+import operationsService from "../services/operations.service";
 
 const tableData = [
   {
@@ -102,6 +103,22 @@ const useStyles = createStyles((theme) => ({
 function DashboardComponent(props) {
   const { classes, theme } = useStyles();
   const [chartData, setChartData] = useState(grapheData);
+
+
+  const [historique, sethistorique] = useState([])
+
+
+  useEffect(() => {
+      operationsService.getUserOperation().then(
+        (data) => {
+          const dataR = data.data;
+          sethistorique([...dataR])
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }, []);
 
   return (
     <Box>

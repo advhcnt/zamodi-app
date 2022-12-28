@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createStyles,
   Table,
@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconDotsVertical } from '@tabler/icons';
+import operationsService from '../services/operations.service';
 
 
 const useStyles = createStyles((theme) => ({
@@ -86,31 +87,56 @@ function sortData(
   );
 }
 
-function Tableau({ data }) {
+function Tableau(props) {
   const [search, setSearch] = useState('');
-  const [sortedData, setSortedData] = useState(data);
+  const [sortedData, setSortedData] = useState([]);
   const [sortBy, setSortBy] = useState(null);
   const [reverseSortDirection, setReverseSortDirection] = useState(false);
+
+
+  const [historique, sethistorique] = useState([{}])
+
+
+  useEffect(() => {
+    operationsService.getUserOperation().then(
+      (data) => {
+        const dataR = data.data;
+        setSortedData([...dataR])
+        sethistorique([...dataR])
+        console.log(dataR)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, []);
+
+
 
   const setSorting = (field) => {
     const reversed = field === sortBy ? !reverseSortDirection : false;
     setReverseSortDirection(reversed);
     setSortBy(field);
-    setSortedData(sortData(data, { sortBy: field, reversed, search }));
+    setSortedData(sortData(historique, { sortBy: field, reversed, search }));
   };
 
   const handleSearchChange = (event) => {
     const { value } = event.currentTarget;
     setSearch(value);
-    setSortedData(sortData(data, { sortBy, reversed: reverseSortDirection, search: value }));
+    setSortedData(sortData(historique, { sortBy, reversed: reverseSortDirection, search: value }));
   };
 
   const rows = sortedData.map((row) => (
-    <tr key={row.name}>
-      <td>{row.name}</td>
-      <td>{row.email}</td>
-      <td>{row.company}</td>
-      <td style={{textAlign:'right',alignContent:'right'}}><IconDotsVertical ta={'right'}/></td>
+    <tr key={row.transactionId}>
+      <td> <Text tt={'uppercase'}>{row.jai}<br/> {row.jeveux}</Text></td>
+      <td>{row.montant}</td>
+      <td>{row.updatedAt.split("T")[0]} à {row.updatedAt.split("T")[1].split(".")[0]}</td>
+      <td >
+        <Text tt={'uppercase'}> {row.OperationKind}</Text>
+
+        <br />
+        <Text c={'dimmed'} fz={13} >{row.Description}</Text>
+      </td>
     </tr>
   ));
 
@@ -166,7 +192,7 @@ function Tableau({ data }) {
             rows
           ) : (
             <tr>
-              <td colSpan={Object.keys(data[0]).length}>
+              <td colSpan={4}>
                 <Text weight={500} align="center">
                   Nothing found
                 </Text>
