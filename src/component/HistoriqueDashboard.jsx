@@ -1,10 +1,11 @@
 import { Box, Card, Group, Image, Paper, Text } from "@mantine/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import { createStyles } from "@mantine/core";
 import { IconDots, IconDotsVertical } from "@tabler/icons";
+import operationsService from "../services/operations.service";
 
 const useStyles = createStyles((theme) => ({
     secondCard: {
@@ -24,13 +25,30 @@ const useStyles = createStyles((theme) => ({
 }));
 function HistoriqueDashboard(props) {
     const { classes, theme } = useStyles();
+    const [historique, sethistorique] = useState([])
+
+
+    useEffect(() => {
+        operationsService.getUserOperation().then(
+          (data) => {
+            const dataR = data.data;
+            sethistorique([...dataR])
+            console.log("Historique ",historique)
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }, []);
+
+
     return (
         <Card style={{ width: "100%", height: "100%" }}>
             <Text size={"md"} fw={'bolder'}>
                 Historique
             </Text>
 
-            {[...Array(8).keys()].map((item) => (
+            {historique.map((item) => (
                 <Paper
                     withBorder
                     radius="md"
@@ -39,13 +57,13 @@ function HistoriqueDashboard(props) {
                     key={item}
                 >
                     <Group
-                        // position={"apart"}
+                         position={"apart"}
                         style={{
                             display: "flex",
                             alignItems: 'center',
                             // justifyContent: "space-between",
                             width: "100%",
-                            gap:1,
+                            gap:5,
                         }}
                     >
 
@@ -58,17 +76,17 @@ function HistoriqueDashboard(props) {
                         </Box>
                         <Box>
                             <Text size="xs" fw={'bold'} c="dark">
-                                MTN MOMO
+                               {item.jai} <span className={"EcritVert"} >{'=>'}</span>  {item.jeveux}
                             </Text>
                             <Text size="10px" c={'dimmed'}>
-                                31 Avril 2022,Dimanche
+                                {item.updatedAt.split("T")[0]} à {item.updatedAt.split("T")[1].split(".")[0]}
                             </Text>
                         </Box>
 
 
 
                         <Text size="xs" mt={7} fw={'bold'} c="dark">
-                            5000F cfa
+                            {item.montant} cfa
                         </Text>
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import FirstPage from "./pages/FirstPage";
@@ -13,8 +13,15 @@ import PartagerComponent from "./component/PartagerComponent";
 import ServiceComponent from "./component/ServiceComponent";
 import RechargeComponent from "./component/RechargeComponent";
 import ProfileComponent from "./component/ProfileComponent";
+import authService from "./services/authService";
+import authHeader from './services/auth-header'
 
 function App(props) {
+  
+  useEffect(() => {
+    const currentUser = authService.getCurrentUser();
+    if(currentUser) authHeader(currentUser.accessToken)
+  }, [])
   return (
     <div>
       <Routes>

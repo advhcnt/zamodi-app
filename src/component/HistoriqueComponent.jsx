@@ -31,19 +31,30 @@ const useStyles = createStyles((theme) => ({
     transition: "box-shadow 150ms ease, transform 100ms ease",
     boxShadow: "unset",
   },
+  paddingBox:{
+    paddinInline:150,
+    [theme.fn.largerThan("md")]: {
+      marginInline:0,
+    },
+  }
 }));
 function HistoriqueComponent(props) {
   const { classes, theme } = useStyles();
   const [echangeTable, setechangeTable] = useState([]);
   const [achatTable, setachatTable] = useState([]);
-  const [historiqueType, toggle] = useToggle(["echange", "recharge"]);
+  const [historiqueType, toggle] = useToggle(["echanges", "recharges"]);
 
   useEffect(() => {
     operationsService.getUserOperation().then(
       (data) => {
         const dataR = data.data;
-        setachatTable(dataR.find((item) => item.OperationKind === "achat"));
-        setechangeTable(dataR.find((item) => item.OperationKind === "echange"));
+        console.log(data.data)
+        let achat = dataR.filter((item) => item.OperationKind === "achat")
+        let echange = dataR.filter((item) => item.OperationKind === "echange")
+
+        setachatTable([...achat]);
+        setechangeTable([...echange]);
+
         console.log("Echange ", echangeTable);
         console.log("Achat ", achatTable);
       },
@@ -54,17 +65,17 @@ function HistoriqueComponent(props) {
   }, []);
 
   return (
-    <Container size={"md"}>
+    <Box className={classes.paddingBox}>
       <Group position={"apart"}>
         <Text size={"xl"} fw={400} c={"black"}>
-          Historique
+          Historique des {historiqueType}
         </Text>
         <Paper withBorder>
           <Button
             mx={10}
             my={5}
             className={
-              historiqueType === "echange" ? "ArrierePlan" : "ArrierePlanNeutre"
+              historiqueType === "echanges" ? "ArrierePlan" : "ArrierePlanNeutre"
             }
             // "ArrierePlan"
             style={{
@@ -81,7 +92,7 @@ function HistoriqueComponent(props) {
             mx={3}
             my={5}
             className={
-              historiqueType === "recharge"
+              historiqueType === "recharges"
                 ? "ArrierePlan"
                 : "ArrierePlanNeutre"
             }
@@ -98,7 +109,7 @@ function HistoriqueComponent(props) {
         </Paper>
       </Group>
 
-      {historiqueType === "echange" ? (
+      {historiqueType === "echanges" ? (
         <>
           <Box>
             <Group position={"apart"} px={10}>
@@ -123,11 +134,11 @@ function HistoriqueComponent(props) {
                   Montant
                 </Text>
               </Box>
-              <Box>
+              {/* <Box>
                 <Text size="sm" mt={7} fw={700} c="dark">
                   Action
                 </Text>
-              </Box>
+              </Box> */}
             </Group>
           </Box>
           {echangeTable.map((item) => (
@@ -146,30 +157,42 @@ function HistoriqueComponent(props) {
                   width: "100%",
                 }}
               >
-                <Box>
+                 <Box>
                   <Image
-                    src={mtnLogo}
+                    src={
+                      item.jai==="mtn"
+                        ? mtnLogo
+                        : item.jai==='moov'
+                        ? moovLogo
+                        : sbinLogo
+                    }
                     style={{ height: "100%", width: "100%" }}
-                    alt={"Logo mtn"}
+                    alt={`Logo ${item.jai}`}
                   />
                 </Box>
                 <Box>
                   <Image
-                    src={sbinLogo}
+                    src={
+                      item.jeveux==="mtn"
+                        ? mtnLogo
+                        : item.jeveux==='moov'
+                        ? moovLogo
+                        : sbinLogo
+                    }
                     style={{ height: "100%", width: "100%" }}
-                    alt={"Logo mtn"}
+                    alt={`Logo ${item.jeveux}`}
                   />
                 </Box>
                 <Box>
-                  <Text size="sm" mt={7} fw={700} c="dark">
-                    61000001
+                  <Text size="sm" mt={7} fw={400} c="dark">
+                    {item.numero}
                   </Text>
                 </Box>
                 <Box>
                   <Text
                     size="sm"
                     mt={7}
-                    fw={700}
+                    fw={400}
                     c="dark"
                     className="ArrierePlan"
                     style={{
@@ -178,14 +201,14 @@ function HistoriqueComponent(props) {
                       color: "white",
                     }}
                   >
-                    10.000 Fcfa
+                    {item.montant} Fcfa
                   </Text>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Text size="xs" mt={1} c="dimmed">
                     <IconDotsVertical size={20} color={"red"} />
                   </Text>
-                </Box>
+                </Box> */}
               </Group>
             </Paper>
           ))}
@@ -193,7 +216,7 @@ function HistoriqueComponent(props) {
       ) : (
         <>
           <Box>
-            <Group position={"apart"} px={10}>
+            <Group position={"apart"} px={5}>
               <Box>
                 <Text size="sm" mt={7} fw={700} c="dark">
                   J'ai
@@ -215,11 +238,11 @@ function HistoriqueComponent(props) {
                 Type d'opération
                 </Text>
               </Box>
-              <Box>
+              {/* <Box>
                 <Text size="sm" mt={7} fw={700} c="dark">
                   Action
                 </Text>
-              </Box>
+              </Box> */}
             </Group>
           </Box>
           {achatTable.map((item) => (
@@ -240,28 +263,40 @@ function HistoriqueComponent(props) {
               >
                 <Box>
                   <Image
-                    src={mtnLogo}
+                    src={
+                      item.jai==="mtn"
+                        ? mtnLogo
+                        : item.jai==='moov'
+                        ? moovLogo
+                        : sbinLogo
+                    }
                     style={{ height: "100%", width: "100%" }}
-                    alt={"Logo mtn"}
+                    alt={`Logo ${item.jai}`}
                   />
                 </Box>
                 <Box>
                   <Image
-                    src={sbinLogo}
+                    src={
+                      item.jeveux==="mtn"
+                        ? mtnLogo
+                        : item.jeveux==='moov'
+                        ? moovLogo
+                        : sbinLogo
+                    }
                     style={{ height: "100%", width: "100%" }}
-                    alt={"Logo mtn"}
+                    alt={`Logo ${item.jeveux}`}
                   />
                 </Box>
                 <Box>
-                  <Text size="sm" mt={7} fw={700} c="dark">
-                    61000001
+                  <Text size="sm" mt={7} fw={400} c="dark">
+                    {item.numero}
                   </Text>
                 </Box>
                 <Box>
                   <Text
                     size="sm"
                     mt={7}
-                    fw={700}
+                    fw={400}
                     c="dark"
                     className="ArrierePlan"
                     style={{
@@ -270,20 +305,20 @@ function HistoriqueComponent(props) {
                       color: "white",
                     }}
                   >
-                    10.000 Fcfa
+                    Achat {item.Description}
                   </Text>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Text size="xs" mt={1} c="dimmed">
                     <IconDotsVertical size={20} color={"red"} />
                   </Text>
-                </Box>
+                </Box> */}
               </Group>
             </Paper>
           ))}
         </>
       )}
-    </Container>
+    </Box>
   );
 }
 
