@@ -6,7 +6,7 @@ import { API_URL } from "./http-common";
 
 class UserService {
   getAllAvis() {
-    return axios.get(API_URL + "/avis", { headers: authHeader() });
+    return axios.get(API_URL + "/avis");
   }
   getUserAvis(identifiant) {
     return axios.get(API_URL + "/user/" + identifiant, {
@@ -14,9 +14,10 @@ class UserService {
     });
   }
 
-  addUserAvis() {
-    return axios.post(API_URL + "/avis", { headers: authHeader() });
+  addUserAvis(data) {
+    return axios.post(API_URL + "/avis",data);
   }
+
   deleteUserAvis(identifiant) {
     return axios.delete(API_URL + "/avis/" + identifiant, {
       headers: authHeader(),
