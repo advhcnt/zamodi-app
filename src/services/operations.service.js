@@ -11,6 +11,11 @@ class OperationService {
     return axios.get(API_URL + "/operations/user" );
   }
 
+  getUserOperationDetails() {
+    // return axios.get(API_URL + "/operations/user/" + identifiant);
+    return axios.get(API_URL + "/operations/details" );
+  }
+
   addUserOperation(data) {
     return axios.post(API_URL + "/operations",data);
   }

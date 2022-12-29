@@ -21,38 +21,38 @@ import HistoriqueComponent from "./HistoriqueComponent";
 import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
 
-const tableData = [
-  {
-    name: "Athena Weissnat",
-    company: "Little - Rippin",
-    email: "Elouise.Prohaska@yahoo.com",
-  },
-  {
-    name: "Deangelo Runolfsson",
-    company: "#20986efelder - Krajcik",
-    email: "Kadin_Trantow87@yahoo.com",
-  },
-  {
-    name: "Danny Carter",
-    company: "Kohler and Sons",
-    email: "Marina3@hotmail.com",
-  },
-  {
-    name: "Trace Tremblay PhD",
-    company: "Crona, Aufderhar and Senger",
-    email: "Antonina.Pouros@yahoo.com",
-  },
-  {
-    name: "Derek Dibbert",
-    company: "Gottlieb LLC",
-    email: "Abagail29@hotmail.com",
-  },
-  {
-    name: "Viola Bernhard",
-    company: "Funk, Rohan and Kreiger",
-    email: "Jamie23@hotmail.com",
-  },
-];
+// const tableData = [
+//   {
+//     name: "Athena Weissnat",
+//     company: "Little - Rippin",
+//     email: "Elouise.Prohaska@yahoo.com",
+//   },
+//   {
+//     name: "Deangelo Runolfsson",
+//     company: "#20986efelder - Krajcik",
+//     email: "Kadin_Trantow87@yahoo.com",
+//   },
+//   {
+//     name: "Danny Carter",
+//     company: "Kohler and Sons",
+//     email: "Marina3@hotmail.com",
+//   },
+//   {
+//     name: "Trace Tremblay PhD",
+//     company: "Crona, Aufderhar and Senger",
+//     email: "Antonina.Pouros@yahoo.com",
+//   },
+//   {
+//     name: "Derek Dibbert",
+//     company: "Gottlieb LLC",
+//     email: "Abagail29@hotmail.com",
+//   },
+//   {
+//     name: "Viola Bernhard",
+//     company: "Funk, Rohan and Kreiger",
+//     email: "Jamie23@hotmail.com",
+//   },
+// ];
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -103,22 +103,30 @@ const useStyles = createStyles((theme) => ({
 function DashboardComponent(props) {
   const { classes, theme } = useStyles();
   const [chartData, setChartData] = useState(grapheData);
-
-
+  const [operationsDetails, setoperationsDetails] = useState({})
   const [historique, sethistorique] = useState([])
 
 
   useEffect(() => {
-      operationsService.getUserOperation().then(
-        (data) => {
-          const dataR = data.data;
-          sethistorique([...dataR])
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }, []);
+
+    operationsService.getUserOperationDetails().then(
+      (data) => {
+        const dataResponse = data.data;
+        setoperationsDetails({ ...dataResponse })
+        console.log('coucou la team 1', dataResponse)
+        // console.log('coucou la team ', operationsDetails)
+      }
+    )
+
+    operationsService.getUserOperation().then(
+      (data) => {
+        let dataR = data.data;
+        sethistorique([...dataR])
+      }
+    );
+
+
+  }, []);
 
   return (
     <Box>
@@ -127,6 +135,7 @@ function DashboardComponent(props) {
         <Grid.Col md={8.5}>
           <Box>
             <Grid>
+             
               <Grid.Col md={4}>
                 <div className={classes.item}>
                   <div>
@@ -138,10 +147,10 @@ function DashboardComponent(props) {
                   </div>
                   <div>
                     <Text size="sm" mt={7} fw={700}>
-                      10.000 Fcfa
+                    {operationsDetails.Mtn} Fcfa
                     </Text>
                     <Text size="xs" mt={1} c="dimmed">
-                      lorem ipsum
+                      Toutes les dépenses
                     </Text>
                   </div>
                 </div>
@@ -158,10 +167,10 @@ function DashboardComponent(props) {
                   </div>
                   <div>
                     <Text size="sm" mt={7} fw={700}>
-                      10.000 Fcfa
+                    {operationsDetails.Moov} Fcfa
                     </Text>
                     <Text size="xs" mt={1} c="dimmed">
-                      lorem ipsum
+                      Toutes les dépenses
                     </Text>
                   </div>
                 </div>
@@ -178,10 +187,10 @@ function DashboardComponent(props) {
                   </div>
                   <div>
                     <Text size="sm" mt={7} fw={700}>
-                      10.000 Fcfa
+                    {operationsDetails.Celtiis} Fcfa
                     </Text>
                     <Text size="xs" mt={1} c="dimmed">
-                      lorem ipsum
+                      Toutes les dépenses
                     </Text>
                   </div>
                 </div>
@@ -269,7 +278,7 @@ function DashboardComponent(props) {
           {/* /tableau */}
           <Box my={15}>
             <Card radius={"md"}>
-              <Tableau data={tableData} />
+              <Tableau />
             </Card>
           </Box>
         </Grid.Col>

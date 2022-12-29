@@ -57,26 +57,31 @@ function HistoriqueDashboard(props) {
                     key={item}
                 >
                     <Group
-                         position={"apart"}
+                         position={"center"}
                         style={{
                             display: "flex",
                             alignItems: 'center',
                             // justifyContent: "space-between",
                             width: "100%",
-                            gap:5,
+                            gap:20,
                         }}
                     >
 
                         <Box>
                             <Image
-                                src={mtnLogo}
-                                style={{ height: "60%", width: "60%" }}
-                                alt={"Logo mtn"}
+                                src={ item.jai.split(' ')[0]==="Mtn"
+                                ? mtnLogo
+                                : item.jai.split(' ')[0]==='Moov'
+                                ? moovLogo
+                                : sbinLogo
+                            }
+                                style={{ height: "100%", width: "100%" }}
+                                alt={item.jai.split(' ')[0]}
                             />
                         </Box>
                         <Box>
                             <Text size="xs" fw={'bold'} c="dark">
-                               {item.jai} <span className={"EcritVert"} >{'=>'}</span>  {item.jeveux}
+                               {item.jai.split(' ')[0]} <span className={"EcritVert"} style={{fontSize:20}} >{'=>'}</span>  {item.jeveux.split(' ')[0]}
                             </Text>
                             <Text size="10px" c={'dimmed'}>
                                 {item.updatedAt.split("T")[0]} à {item.updatedAt.split("T")[1].split(".")[0]}

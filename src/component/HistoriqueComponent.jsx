@@ -160,9 +160,9 @@ function HistoriqueComponent(props) {
                  <Box>
                   <Image
                     src={
-                      item.jai==="mtn"
+                      item.jai.split(' ')[0]==="Mtn"
                         ? mtnLogo
-                        : item.jai==='moov'
+                        : item.jai.split(' ')[0]==='Moov'
                         ? moovLogo
                         : sbinLogo
                     }
@@ -173,9 +173,9 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jeveux==="mtn"
+                      item.jeveux.split(' ')[0]==="Mtn"
                         ? mtnLogo
-                        : item.jeveux==='moov'
+                        : item.jeveux.split(' ')[0]==='Moov'
                         ? moovLogo
                         : sbinLogo
                     }
@@ -264,11 +264,11 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jai==="mtn"
-                        ? mtnLogo
-                        : item.jai==='moov'
-                        ? moovLogo
-                        : sbinLogo
+                      item.jai.split(' ')[0]==="Mtn"
+                      ? mtnLogo
+                      : item.jai.split(' ')[0]==='Moov'
+                      ? moovLogo
+                      : sbinLogo
                     }
                     style={{ height: "100%", width: "100%" }}
                     alt={`Logo ${item.jai}`}
@@ -277,9 +277,9 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jeveux==="mtn"
+                      item.jeveux.split(' ')[0]==="Mtn"
                         ? mtnLogo
-                        : item.jeveux==='moov'
+                        : item.jeveux.split(' ')[0]==='Moov'
                         ? moovLogo
                         : sbinLogo
                     }
