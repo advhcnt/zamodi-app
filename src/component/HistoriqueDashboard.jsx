@@ -98,6 +98,19 @@ function HistoriqueDashboard(props) {
                     </Group>
                 </Paper>
             ))}
+
+            {historique.length===0 && (
+                <Paper
+                withBorder
+                radius="md"
+                p="xs"
+                className={classes.secondCard}>
+                    <Box>
+                        <Text fz={'xl'} fw={500} ta={'center'} >Pas d'historique </Text>
+                    </Box>
+
+                </Paper>
+            )}
         </Card>
     );
 }

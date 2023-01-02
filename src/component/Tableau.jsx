@@ -194,7 +194,7 @@ function Tableau(props) {
             <tr>
               <td colSpan={4}>
                 <Text weight={500} align="center">
-                  Nothing found
+                Pas d'opérations
                 </Text>
               </td>
             </tr>

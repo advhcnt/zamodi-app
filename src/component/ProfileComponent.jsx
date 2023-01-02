@@ -10,8 +10,10 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
+import authHeader from "../services/auth-header";
 import authService from "../services/authService";
+import userService from "../services/user.service";
 
 const useStyles = createStyles((theme) => ({
   ProfileLogo: {
@@ -23,14 +25,63 @@ const useStyles = createStyles((theme) => ({
 
 function ProfileComponent(props) {
   const currentUser = authService.getCurrentUser().message;
+  const [username, setusername] = useState(currentUser.username);
+  const [email, setemail] = useState(currentUser.email);
+  const [password, setpassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  const handleSubmit = () => {
+    if ((username && email) || (password && username && email)) {
+      if (
+        (username !== "" && email !== "" && username.length >= 4) ||
+        (password.length >= 8 &&
+          username !== "" &&
+          email !== "" &&
+          username.length > 5)
+      ) {
+        let data = (password.length >= 8)?{username:username,email:email,password:password}:{username:username,email:email}
+        userService.updateUser(currentUser._id,data).then(
+          (data) => {
+            if (data.status === 200 || data.state === "success") {
+              console.log(data)
+              authHeader(data.accessToken);
+            } else {
+              setErrMsg(data.message);
+            }
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+
+            setErrMsg(resMessage);
+          }
+        );
+      } else {
+        alert("rien");
+      }
+    } else {
+      alert("rien 2");
+    }
+  };
 
   const { classes, cx } = useStyles();
   return (
     <Box>
-      <Box sx={{height:'100px'}}  className={"ArrierePlan"}></Box>
-      <Box shadow={'xl'} >
+      <Box sx={{ height: "100px" }} className={"ArrierePlan"}></Box>
+      <Box shadow={"xl"}>
         <Container size={"sm"}>
-          <Grid bg={'white'} sx={{marginTop:'-50px',border:'1px solid white',borderRadius: "10px"}}>
+          <Grid
+            bg={"white"}
+            sx={{
+              marginTop: "-50px",
+              border: "1px solid white",
+              borderRadius: "10px",
+            }}
+          >
             <Grid.Col
               sm={3}
               className={"ArrierePlan"}
@@ -54,6 +105,16 @@ function ProfileComponent(props) {
                 <Text ml={20} c={"white"} fw={"bold"}>
                   Mon Compte
                 </Text>
+                <Box>
+                  <Text
+                    ta={"center"}
+                    c={"red"}
+                    className={errMsg ? "errmsg" : "offscreen"}
+                    aria-live="assertive"
+                  >
+                    {errMsg}
+                  </Text>
+                </Box>
                 <Divider my={10} />
                 <Text ml={20} c={"white"}>
                   Notification{" "}
@@ -67,19 +128,36 @@ function ProfileComponent(props) {
               <Text fw={900}>Mon compte</Text>
               <Box my={15}>
                 <Text>Nom d'utilisateur</Text>
-                <TextInput value={currentUser.username} />
+                <TextInput
+                  value={username}
+                  onChange={(event) => setusername(event.target.value)}
+                />
               </Box>
 
               <Box my={15}>
                 <Text>Email</Text>
-                <TextInput value={currentUser.email} type={'email'} />
+                <TextInput
+                  value={email}
+                  type={"email"}
+                  onChange={(event) => setemail(event.target.value)}
+                />
               </Box>
 
               <Box my={15}>
                 <Text>Mot de passe</Text>
-                <TextInput type={'password'} />
+                <TextInput
+                  type={"password"}
+                  value={password}
+                  onChange={(event) => setpassword(event.target.value)}
+                />
               </Box>
-              <Button c={'white'} className={"ArrierePlan"} >Modifier</Button>
+              <Button
+                c={"white"}
+                className={"ArrierePlan"}
+                onClick={handleSubmit}
+              >
+                Modifiers
+              </Button>
             </Grid.Col>
           </Grid>
         </Container>

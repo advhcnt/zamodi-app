@@ -7,12 +7,18 @@ import { API_URL } from './http-common';
 class UserService {
 
   getUserData() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+    return axios.get(API_URL + '/user');
   }
 
   addAvis(){
-    return axios.post(API_URL + 'user', { headers: authHeader() },)
+    return axios.post(API_URL + '/user',)
   }
+
+  updateUser(identifiant,data){
+    return axios.put(API_URL + '/client/'+identifiant,data)
+  }
+
+
 
   
 }
