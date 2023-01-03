@@ -58,7 +58,7 @@ function EchangeComponent(props) {
           }
         }
         else{
-          seterror({ statut:true, message:'Vous ne pouvez pas à la fois avoir et vouloir la même chose'})
+          seterror({ statut:true, message:`Tu ne peux pas avoir ${jai.split(' ')[0].toUpperCase() } et recevoir ${jeveux.split(' ')[0].toUpperCase() }`})
         }
       }
       else{
@@ -76,7 +76,7 @@ function EchangeComponent(props) {
         <Grid style={{ justifyContent: "space-around" }}>
           <Grid.Col md={10}>
             {error.statut &&
-              (<Notification icon={<IconX size={18} />} color="red" onClick={()=>seterror(false,'')}>
+              (<Notification my={30} icon={<IconX size={18} />} color="red" onClick={()=>seterror(false,'')}>
                 {error.message}
               </Notification>
               )}

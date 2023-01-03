@@ -14,9 +14,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import {
-  IconArrowLeft,
-} from "@tabler/icons";
+import { IconArrowLeft } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -32,7 +30,7 @@ function ResumeComponent(props) {
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [transactionId, setTransactionId] = useState("");
   const [Message, setMessage] = useState("");
-  const [visible, setvisible] = useState(false)
+  const [visible, setvisible] = useState(false);
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
@@ -50,10 +48,9 @@ function ResumeComponent(props) {
       })
       .then(
         (data) => {
-          
           setvisible(false);
-          setOpenedMessageModal(true)
-          setMessage(data.data.message)
+          setOpenedMessageModal(true);
+          setMessage(data.data.message);
         },
         (error) => {
           const resMessage =
@@ -64,22 +61,21 @@ function ResumeComponent(props) {
             error.toString();
 
           setvisible(false);
-          setOpenedMessageModal(true)
-          setMessage(resMessage)
+          setOpenedMessageModal(true);
+          setMessage(resMessage);
           // alert(resMessage);
         }
       );
   };
 
- 
   const handleModal = () => {
     setOpened(false);
     setOpenedSecondModal(true);
   };
   return (
-    <Box sx={{position:'relative'}}>
-       {/* LAZY LOAD */}
-       <Chargement visible={visible} />
+    <Box sx={{ position: "relative" }}>
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <Grid style={{ justifyContent: "space-around" }}>
         <Grid.Col md={8}>
           <Card shadow="lg" p="lg" radius="md" withBorder>
@@ -236,7 +232,18 @@ function ResumeComponent(props) {
               value={transactionId}
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
-                <Button  className={"ArrierePlan"}>
+                <Button
+                  className={"ArrierePlan"}
+                  onClick={()=>{navigator.clipboard
+                    .readText()
+                    .then((text) => {
+                      setTransactionId(text);
+                      console.log("Pasted content: ", text);
+                    })
+                    .catch((err) => {
+                      console.error("Failed to read clipboard contents: ", err);
+                    })}}
+                >
                   coller
                 </Button>
               }
@@ -267,14 +274,10 @@ function ResumeComponent(props) {
             onClose={() => setOpenedMessageModal(false)}
             title="Réponse"
           >
-            
-
-            <Text fz={"md"}  my={30}>
+            <Text fz={"md"} my={30}>
               {" "}
-             { Message }
+              {Message}
             </Text>
-
-           
           </Modal>
         </Grid.Col>
       </Grid>

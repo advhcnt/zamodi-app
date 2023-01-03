@@ -53,7 +53,7 @@ function RechargeComponent(props) {
           seterror({
             statut: true,
             message:
-              "Vous ne pouvez pas à la fois avoir et vouloir la même chose",
+            `Tu ne peux pas avoir ${jai.split(' ')[0].toUpperCase() } et recevoir ${jeveux.split(' ')[0].toUpperCase() }`,
           });
         }
       } else {
@@ -71,6 +71,7 @@ function RechargeComponent(props) {
           <Grid.Col md={10}>
             {error.statut && (
               <Notification
+              my={30}
                 icon={<IconX size={18} />}
                 color="red"
                 onClick={() => seterror(false, "")}

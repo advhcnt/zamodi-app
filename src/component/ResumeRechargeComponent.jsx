@@ -26,11 +26,11 @@ function ResumeRechargeComponent(props) {
   const [transactionId, setTransactionId] = useState("");
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [Message, setMessage] = useState("");
-  const [visible, setvisible] = useState(false)
+  const [visible, setvisible] = useState(false);
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
-    setvisible(true)
+    setvisible(true);
 
     operationsService
       .addUserOperation({
@@ -41,11 +41,11 @@ function ResumeRechargeComponent(props) {
         montant: props.montant,
         OperationKind: "achat",
         userId: currentUser.message._id,
-        Description:props.operation,
+        Description: props.operation,
       })
       .then(
         (data) => {
-          setvisible(false)
+          setvisible(false);
           setOpenedMessageModal(true);
           setMessage(data.data.message);
         },
@@ -57,7 +57,7 @@ function ResumeRechargeComponent(props) {
             error.message ||
             error.toString();
 
-         setvisible(false)
+          setvisible(false);
           setOpenedMessageModal(true);
           setMessage(resMessage);
           // alert(resMessage);
@@ -75,7 +75,7 @@ function ResumeRechargeComponent(props) {
   }, []);
 
   return (
-    <Box sx={{position:'relative'}}>
+    <Box sx={{ position: "relative" }}>
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
       <Grid style={{ justifyContent: "space-around" }}>
@@ -243,7 +243,23 @@ function ResumeRechargeComponent(props) {
               value={transactionId}
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
-                <Button disabled className={"ArrierePlan"}>
+                <Button
+                  className={"ArrierePlan"}
+                  onClick={() => {
+                    navigator.clipboard
+                      .readText()
+                      .then((text) => {
+                        setTransactionId(text);
+                        console.log("Pasted content: ", text);
+                      })
+                      .catch((err) => {
+                        console.error(
+                          "Failed to read clipboard contents: ",
+                          err
+                        );
+                      });
+                  }}
+                >
                   coller
                 </Button>
               }
