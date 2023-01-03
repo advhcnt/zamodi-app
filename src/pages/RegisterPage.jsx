@@ -23,6 +23,7 @@ import authLogo from "./../assets/Auth.svg";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import authService from "../services/authService";
+import Chargement from "../component/Chargement";
 
 
 const useStyles = createStyles((theme) => ({
@@ -85,7 +86,7 @@ function RegisterPage(props) {
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loading, setloading] = useState(false);
+  const [visible, setvisible] = useState(false);
 
   const navigation = useNavigate();
   const { classes, cx } = useStyles();
@@ -114,7 +115,7 @@ function RegisterPage(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setloading(true);
+    setvisible(true);
     if (user && pwd && pwd.length >= 8) {
       authService.register(user, mail, pwd).then(
         (data) => {
@@ -122,7 +123,7 @@ function RegisterPage(props) {
             navigate("/login");
             // window.location.reload();
           } else {
-            setloading(false);
+            setvisible(false);
             setErrMsg(data.message);
           }
         },
@@ -134,7 +135,7 @@ function RegisterPage(props) {
             error.message ||
             error.toString();
 
-          setloading(false);
+          setvisible(false);
           setErrMsg(resMessage);
         }
       );
@@ -142,7 +143,9 @@ function RegisterPage(props) {
   };
 
   return (
-    <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh" }}>
+    <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh", position: 'relative' }}>
+       {/* LAZY LOAD */}
+       <Chargement visible={visible} />
       <Grid
         className={"secondplaceLogin"}
         style={{ maxHeight: "102vh", overflow: "hidden" }}

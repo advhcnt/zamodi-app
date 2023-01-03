@@ -23,6 +23,7 @@ import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import operationsService from "../services/operations.service";
 import authService from "../services/authService";
+import Chargement from "./Chargement";
 
 function ResumeComponent(props) {
   const currentUser = authService.getCurrentUser();
@@ -31,9 +32,11 @@ function ResumeComponent(props) {
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [transactionId, setTransactionId] = useState("");
   const [Message, setMessage] = useState("");
+  const [visible, setvisible] = useState(false)
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
+    setvisible(true);
 
     operationsService
       .addUserOperation({
@@ -48,7 +51,7 @@ function ResumeComponent(props) {
       .then(
         (data) => {
           
-          console.log(data);
+          setvisible(false);
           setOpenedMessageModal(true)
           setMessage(data.data.message)
         },
@@ -60,7 +63,7 @@ function ResumeComponent(props) {
             error.message ||
             error.toString();
 
-          console.log(resMessage);
+          setvisible(false);
           setOpenedMessageModal(true)
           setMessage(resMessage)
           // alert(resMessage);
@@ -74,7 +77,9 @@ function ResumeComponent(props) {
     setOpenedSecondModal(true);
   };
   return (
-    <Box>
+    <Box sx={{position:'relative'}}>
+       {/* LAZY LOAD */}
+       <Chargement visible={visible} />
       <Grid style={{ justifyContent: "space-around" }}>
         <Grid.Col md={8}>
           <Card shadow="lg" p="lg" radius="md" withBorder>
@@ -231,7 +236,7 @@ function ResumeComponent(props) {
               value={transactionId}
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
-                <Button disabled className={"ArrierePlan"}>
+                <Button  className={"ArrierePlan"}>
                   coller
                 </Button>
               }

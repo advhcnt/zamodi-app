@@ -18,15 +18,19 @@ import React, { useState } from "react";
 import authService from "../services/authService";
 import NoteComponent from "./NoteComponent";
 import userservice from "./../services/avis.service";
+import Chargement from "./Chargement";
+import { useSetState } from "@mantine/hooks";
 function ServiceComponent(props) {
   const currentUser = authService.getCurrentUser().message;
   const [note, setnote] = useState(0);
   const [description, setdescription] = useState("");
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
+  const [visible, setvisible] = useState(false)
 
   const [Message, setMessage] = useState("");
 
   const handleSubmit = () => {
+    setvisible(true);
     if (currentUser.username && description) {
       userservice
         .addUserAvis({
@@ -35,9 +39,9 @@ function ServiceComponent(props) {
         })
         .then(
           (data) => {
-            console.log(data.data.message);
             setOpenedMessageModal(true);
             setMessage(data.data.message);
+            setvisible(false)
           },
           (error) => {
             const resMessage =
@@ -47,7 +51,7 @@ function ServiceComponent(props) {
               error.message ||
               error.toString();
 
-            console.log(resMessage);
+            setvisible(false)
             setOpenedMessageModal(true);
             setMessage(resMessage);
           }
@@ -56,7 +60,9 @@ function ServiceComponent(props) {
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <Container size={"sm"}>
         <Card shadow="lg">
           <Card.Section

@@ -17,6 +17,7 @@ import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import operationsService from "../services/operations.service";
 import authService from "../services/authService";
+import Chargement from "./Chargement";
 
 function ResumeRechargeComponent(props) {
   const currentUser = authService.getCurrentUser();
@@ -25,9 +26,11 @@ function ResumeRechargeComponent(props) {
   const [transactionId, setTransactionId] = useState("");
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
   const [Message, setMessage] = useState("");
+  const [visible, setvisible] = useState(false)
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
+    setvisible(true)
 
     operationsService
       .addUserOperation({
@@ -42,7 +45,7 @@ function ResumeRechargeComponent(props) {
       })
       .then(
         (data) => {
-          console.log(data);
+          setvisible(false)
           setOpenedMessageModal(true);
           setMessage(data.data.message);
         },
@@ -54,7 +57,7 @@ function ResumeRechargeComponent(props) {
             error.message ||
             error.toString();
 
-          console.log(resMessage);
+         setvisible(false)
           setOpenedMessageModal(true);
           setMessage(resMessage);
           // alert(resMessage);
@@ -72,7 +75,9 @@ function ResumeRechargeComponent(props) {
   }, []);
 
   return (
-    <Box>
+    <Box sx={{position:'relative'}}>
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <Grid style={{ justifyContent: "space-around" }}>
         <Grid.Col md={8}>
           <Card shadow="lg" p="lg" radius="md" withBorder>

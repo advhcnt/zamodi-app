@@ -24,6 +24,7 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import authService from "../services/authService";
 import authHeader from './../services/auth-header'
+import Chargement from "../component/Chargement";
 
 
 
@@ -84,8 +85,6 @@ function LoginPage(props) {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     setErrMsg("");
@@ -113,8 +112,9 @@ function LoginPage(props) {
   });
 
   const handleSubmit = async (e) => {
+    setvisible(true);
     e.preventDefault();
-    setloading(true);
+    // setvisible(true);
     if (user && pwd && pwd.length >= 8) {
       authService.login(user, pwd).then(
         (data) => {
@@ -125,7 +125,7 @@ function LoginPage(props) {
             navigate("/dashboard");
             // window.location.reload();
           } else {
-            setloading(false);
+            setvisible(false);
             setErrMsg(data.message);
           }
         },
@@ -137,15 +137,21 @@ function LoginPage(props) {
             error.message ||
             error.toString();
 
-          setloading(false);
+            setvisible(false);
           setErrMsg(resMessage);
         }
       );
     }
   };
 
+  const [visible, setvisible] = useState(false)
+
   return (
-    <Box style={{ maxWidth: "100vw" }}>
+    <Box style={{ maxWidth: "100vw", position: 'relative' }}>
+
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
+
       <Grid className={"secondplaceLogin"}>
         {/* Première partie */}
         <Grid.Col
@@ -193,7 +199,7 @@ function LoginPage(props) {
                   }
                   required
                   size={"sm"}
-                  placeholder="hello@mantine.dev"
+                  placeholder="username"
                   variant={"filled"}
                   value={user}
                   onChange={(event) => setUser(event.target.value)}
