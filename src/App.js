@@ -15,6 +15,7 @@ import RechargeComponent from "./component/RechargeComponent";
 import ProfileComponent from "./component/ProfileComponent";
 import authService from "./services/authService";
 import authHeader from './services/auth-header'
+import AdminDashboard from "./pages/Admin/AdminDashboardPage";
 
 function App(props) {
   
@@ -26,6 +27,7 @@ function App(props) {
     <div>
       <Routes>
         <Route path="/" element={<FirstPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/dashboard" element={<DashboardPage />}>
           <Route index element={<DashboardComponent />} />
           <Route path="profile" element={<ProfileComponent />} />
@@ -36,6 +38,7 @@ function App(props) {
           <Route path="partager" element={<PartagerComponent />} />
           <Route path="service" element={<ServiceComponent />}/>
         </Route>
+       
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
       </Routes>

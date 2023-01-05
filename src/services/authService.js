@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import  { API_URL } from "./http-common";
+import { API_URL } from "./http-common";
 
 // const API_URL = "http://localhost:8080/api/auth/";
 
@@ -12,7 +12,7 @@ class AuthService {
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
-
+        console.log(response.data);
         return response.data;
       });
   }
@@ -30,7 +30,7 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    return JSON.parse(localStorage.getItem("user"));
   }
 }
 

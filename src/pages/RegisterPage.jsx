@@ -120,7 +120,9 @@ function RegisterPage(props) {
       authService.register(user, mail, pwd).then(
         (data) => {
           if (data.status === 200 || data.state === "success") {
-            navigate("/login");
+            setvisible(false);
+            console.log(data);
+            // navigate("/login");
             // window.location.reload();
           } else {
             setvisible(false);
