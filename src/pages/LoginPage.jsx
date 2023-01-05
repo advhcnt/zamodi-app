@@ -25,7 +25,9 @@ import { useDispatch } from "react-redux";
 import authService from "../services/authService";
 import authHeader from './../services/auth-header'
 import Chargement from "../component/Chargement";
-
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import jwt_decode from 'jwt-decode'
+import axios from "axios";
 
 
 const useStyles = createStyles((theme) => ({
@@ -137,7 +139,7 @@ function LoginPage(props) {
             error.message ||
             error.toString();
 
-            setvisible(false);
+          setvisible(false);
           setErrMsg(resMessage);
         }
       );
@@ -146,6 +148,38 @@ function LoginPage(props) {
 
   const [visible, setvisible] = useState(false)
 
+
+  const loginGoogle = useGoogleLogin({
+    onSuccess: async tokenResponse => {
+      try {
+        const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: {
+            "Authorization": `Bearer ${tokenResponse.access_token}`
+          }
+        })
+
+        console.log('info user ', res.data)
+      } catch (error) {
+        console.log(error)
+      }
+
+
+
+
+      var decoded = jwt_decode(tokenResponse.credential)
+      console.log('decodage du token', decoded)
+      // email = decoded.email
+      // email verify = decoded.verify_email
+      // familiname = decoded.family_name
+      // given_name = decoded.given_name
+      // piture = decoded.picture
+    },
+    onError: (error) => {
+      console.log('Login Failed');
+    }
+
+
+  });
   return (
     <Box style={{ maxWidth: "100vw", position: 'relative' }}>
 
@@ -270,7 +304,26 @@ function LoginPage(props) {
               my="lg"
             />
             <Group position="apart" mt="xl">
-              <Image src={facebook} alt="facebook" width={25} />
+              <Button onClick={loginGoogle}>
+                <Image src={facebook} alt="facebook" width={25} />
+              </Button>
+
+
+              {/* <GoogleLogin
+                onSuccess={credentialResponse => {
+                  console.log(credentialResponse);
+                  var decoded = jwt_decode(credentialResponse.credential)
+                  console.log('decodage du token',decoded)
+                  // email = decoded.email
+                  // email verify = decoded.verify_email
+                  // familiname = decoded.family_name
+                  // given_name = decoded.given_name
+                  // piture = decoded.picture
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />; */}
             </Group>
             <Group position="apart" mt="xl">
               <Anchor
@@ -306,6 +359,7 @@ function LoginPage(props) {
                 width={"100%"}
                 marginX={"auto"}
               />
+
             </Box>
             <Box
               style={{

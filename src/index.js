@@ -5,16 +5,24 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import  store  from "./store";
+import store from "./store";
+import { I18nProvider, LOCALES } from "./i18n";
+import { FormattedMessage } from "react-intl";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <I18nProvider locale={LOCALES.ENGLISH}>
+      <Provider store={store}>
+        <BrowserRouter>
+        <GoogleOAuthProvider clientId="164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com">
+          <App />
+          </GoogleOAuthProvider>;
+        </BrowserRouter>
+      </Provider>
+    </I18nProvider>
   </React.StrictMode>
 );
 

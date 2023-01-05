@@ -24,6 +24,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import authService from "../services/authService";
 import Chargement from "../component/Chargement";
+import { verifyEmail } from "../utils/fonctions";
 
 
 const useStyles = createStyles((theme) => ({
@@ -77,7 +78,10 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
+// const verifyEmail = (email)=> {
+//   var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+//   return regex.test(email);
+// }
 function RegisterPage(props) {
   const errRef = useRef();
   const [user, setUser] = useState({ valeur: '', erreur: false });
@@ -116,7 +120,7 @@ function RegisterPage(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user.valeur && user.valeur !== "") {
-      if (mail.valeur && mail.valeur !== '') {
+      if (mail.valeur && mail.valeur !== '' && verifyEmail(mail.valeur)) {
         if (pwd.valeur && pwd.valeur.length >= 8) {
           if (condition.valeur) {
             setvisible(true);
@@ -237,7 +241,7 @@ function RegisterPage(props) {
                   }
                   required
                   size={"sm"}
-                  placeholder="hello@mantine.dev"
+                  placeholder="exemple@zamodi.com"
                   variant={"filled"}
                   value={mail.valeur}
                   onChange={(event) => setMail({ valeur: event.currentTarget.value, erreur: false })}

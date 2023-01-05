@@ -15,6 +15,7 @@ import { IconArrowRight } from "@tabler/icons";
 import ResumeComponent from "./ResumeComponent";
 import operation from './../services/operations.service'
 import authService from "../services/authService";
+import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
 
 
 function EchangeComponent(props) {
@@ -39,16 +40,15 @@ function EchangeComponent(props) {
   }, [])
 
   const handleEchange = () => {
-    let phoneNumberRegex = /^\(?[\d]{3}\)?[\s-]?[\d]{3}[\s-]?[\d]{4}$/;
-    let amountRegex = /^\d+(\.\d{2})?$/;
+   
 
     if (montant && jai && jeveux && numero && numeroConfirm) {
 
-      if (numero === numeroConfirm) {
+      if (numero === numeroConfirm && verifyPhoneNumber(numero)) {
 
         if (jeveux !== jai) {
 
-          if (amountRegex.test(montant)) {
+          if (verifyAmount(montant)) {
             seterror(false,'');
             setvalide(true)
 

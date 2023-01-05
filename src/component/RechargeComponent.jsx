@@ -16,6 +16,7 @@ import { IconArrowsLeftRight, IconChevronDown, IconX } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import ResumeRechargeComponent from "./ResumeRechargeComponent";
 import authService from "../services/authService";
+import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
 
 function RechargeComponent(props) {
   const currentUser = authService.getCurrentUser();
@@ -34,13 +35,10 @@ function RechargeComponent(props) {
 
   const handleRecharge = () => {
 
-    let phoneNumberRegex = /^\(?[\d]{3}\)?[\s-]?[\d]{3}[\s-]?[\d]{4}$/;
-    let amountRegex = /^\d+(\.\d{2})?$/;
-
     if (montant && jai && jeveux && numero && numeroConfirm && operation) {
-      if (numero === numeroConfirm) {
+      if (numero === numeroConfirm && verifyPhoneNumber(numero)) {
         if (jeveux !== jai) {
-          if (amountRegex.test(montant)) {
+          if (verifyAmount(montant)) {
             seterror(false, "");
             setValideRecharge(true);
           } else {
@@ -53,7 +51,7 @@ function RechargeComponent(props) {
           seterror({
             statut: true,
             message:
-            `Tu ne peux pas avoir ${jai.split(' ')[0].toUpperCase() } et recevoir ${jeveux.split(' ')[0].toUpperCase() }`,
+              `Tu ne peux pas avoir ${jai.split(' ')[0].toUpperCase()} et recevoir ${jeveux.split(' ')[0].toUpperCase()}`,
           });
         }
       } else {
@@ -71,7 +69,7 @@ function RechargeComponent(props) {
           <Grid.Col md={10}>
             {error.statut && (
               <Notification
-              my={30}
+                my={30}
                 icon={<IconX size={18} />}
                 color="red"
                 onClick={() => seterror(false, "")}

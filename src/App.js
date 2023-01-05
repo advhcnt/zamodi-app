@@ -16,7 +16,6 @@ import ProfileComponent from "./component/ProfileComponent";
 import authService from "./services/authService";
 import authHeader from './services/auth-header'
 import AdminDashboard from "./pages/Admin/AdminDashboardPage";
-
 function App(props) {
   
   useEffect(() => {
@@ -25,6 +24,7 @@ function App(props) {
   }, [])
   return (
     <div>
+{/* google auth token 164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com */}
       <Routes>
         <Route path="/" element={<FirstPage />} />
         <Route path="/admin" element={<AdminDashboard />} />
