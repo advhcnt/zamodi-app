@@ -80,14 +80,14 @@ const useStyles = createStyles((theme) => ({
 
 function RegisterPage(props) {
   const errRef = useRef();
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [mail, setMail] = useState("");
+  const [user, setUser] = useState({ valeur: '', erreur: false });
+  const [pwd, setPwd] = useState({ valeur: '', erreur: false });
+  const [mail, setMail] = useState({ valeur: '', erreur: false });
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [visible, setvisible] = useState(false);
-
+  const [condition, setcondition] = useState({valeur:false,erreur:false})
   const navigation = useNavigate();
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
@@ -115,39 +115,64 @@ function RegisterPage(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setvisible(true);
-    if (user && pwd && pwd.length >= 8) {
-      authService.register(user, mail, pwd).then(
-        (data) => {
-          if (data.status === 200 || data.state === "success") {
-            setvisible(false);
-            console.log(data);
-            // navigate("/login");
-            // window.location.reload();
-          } else {
-            setvisible(false);
-            setErrMsg(data.message);
-          }
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+    if (user.valeur && user.valeur !== "") {
+      if (mail.valeur && mail.valeur !== '') {
+        if (pwd.valeur && pwd.valeur.length >= 8) {
+          if (condition.valeur) {
+            setvisible(true);
+            authService.register(user.valeur, mail.valeur, pwd.valeur).then(
+              (data) => {
+                if (data.status === 200 || data.state === "success") {
+                  setvisible(false);
+                  console.log(data);
+                  // navigate("/login");
+                  // window.location.reload();
+                } else {
+                  setvisible(false);
+                  setErrMsg(data.message);
+                }
+              },
+              (error) => {
+                const resMessage =
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                  error.message ||
+                  error.toString();
 
-          setvisible(false);
-          setErrMsg(resMessage);
+                setvisible(false);
+                setErrMsg(resMessage);
+              }
+            );
+          }
+          else {
+            setcondition({ ...condition, erreur: "Veillez accepter les termes et conditions d'utilisation" })
+
+          }
         }
-      );
+        else {
+          setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" })
+         
+        }
+      }
+      else {
+        setMail({ ...mail, erreur: "Veillez entrer un mail valide" })
+
+      }
+
+    } else {
+      setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" })
+
     }
   };
 
+
+
+
   return (
     <div style={{ maxWidth: "100vw", overflow: "hidden", maxHeight: "100vh", position: 'relative' }}>
-       {/* LAZY LOAD */}
-       <Chargement visible={visible} />
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <Grid
         className={"secondplaceLogin"}
         style={{ maxHeight: "102vh", overflow: "hidden" }}
@@ -196,8 +221,9 @@ function RegisterPage(props) {
                   radius="32px"
                   variant={"filled"}
                   placeholder="Your name"
-                  value={user}
-                  onChange={(event) => setUser(event.currentTarget.value)}
+                  value={user.valeur}
+                  onChange={(event) => setUser({ valeur: event.currentTarget.value, erreur: false })}
+                  error={user.erreur && (<>{user.erreur}</>)}
                 />
 
                 <TextInput
@@ -213,9 +239,9 @@ function RegisterPage(props) {
                   size={"sm"}
                   placeholder="hello@mantine.dev"
                   variant={"filled"}
-                  value={mail}
-                  onChange={(event) => setMail(event.currentTarget.value)}
-                  // error={form.errors.email && "Invalid email"}
+                  value={mail.valeur}
+                  onChange={(event) => setMail({ valeur: event.currentTarget.value, erreur: false })}
+                  error={mail.erreur && (<>{mail.erreur}</>)}
                 />
 
                 <PasswordInput
@@ -231,12 +257,12 @@ function RegisterPage(props) {
                   required
                   placeholder="Your password"
                   variant={"filled"}
-                  value={pwd}
-                  onChange={(event) => setPwd(event.currentTarget.value)}
-                  // error={
-                  //   form.errors.password &&
-                  //   "Password should include at least 6 characters"
-                  // }
+                  value={pwd.valeur}
+                  onChange={(event) => setPwd({ valeur: event.currentTarget.value, erreur: false })}
+                  error={
+                    pwd.erreur &&
+                    (<>{pwd.erreur}</>)
+                  }
                 />
 
                 {type === "register" && (
@@ -244,11 +270,15 @@ function RegisterPage(props) {
                     style={{ display: "flex", alignItems: "center", gap: 5 }}
                   >
                     <Checkbox
-                      checked={form.values.terms}
+                      checked={condition.valeur}
                       size={15}
                       className={"lesCheckbox"}
                       onChange={(event) =>
-                        form.setFieldValue("terms", event.currentTarget.checked)
+                        setcondition({valeur:event.currentTarget.checked,erreur:false})
+                      }
+                      error={
+                        condition.erreur &&
+                        (<>{condition.erreur}</>)
                       }
                     />
                     <Text size={10}>
@@ -266,6 +296,7 @@ function RegisterPage(props) {
                       >
                         politique de confidentialité
                       </Link>
+
                     </Text>
                   </div>
                 )}
