@@ -112,6 +112,7 @@ function DashboardComponent(props) {
     operationsService.getUserOperationDetails().then(
       (data) => {
         const dataResponse = data.data;
+        console.log(dataResponse)
         setoperationsDetails({ ...dataResponse })
         console.log('coucou la team 1', dataResponse)
         // console.log('coucou la team ', operationsDetails)

@@ -450,7 +450,7 @@ function HearderLayout(props) {
                       </div>
 
                       <Avatar
-                        src={user.image}
+                        src={currentUser.message.photo?currentUser.message.photo:user.image}
                         alt={user.name}
                         radius="xl"
                         size={20}
