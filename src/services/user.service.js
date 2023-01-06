@@ -10,17 +10,26 @@ class UserService {
     return axios.get(API_URL + '/user');
   }
 
-  addAvis(){
+  addAvis() {
     return axios.post(API_URL + '/user',)
   }
 
-  updateUser(identifiant,data){
-    return axios.put(API_URL + '/client/'+identifiant,data)
+  updateUser(identifiant, data) {
+    return axios.put(API_URL + '/client/' + identifiant, data)
+  }
+
+
+  changeImage(file) {
+    return axios.post(API_URL + '/client/upload', file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }}
+      )
   }
 
 
 
-  
+
 }
 
 export default new UserService();

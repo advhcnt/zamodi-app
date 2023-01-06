@@ -39,8 +39,8 @@ function ProfileComponent(props) {
           email !== "" &&
           username.length > 5)
       ) {
-        let data = (password.length >= 8)?{username:username,email:email,password:password}:{username:username,email:email}
-        userService.updateUser(currentUser._id,data).then(
+        let data = (password.length >= 8) ? { username: username, email: email, password: password } : { username: username, email: email }
+        userService.updateUser(currentUser._id, data).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
               console.log(data)
@@ -67,6 +67,48 @@ function ProfileComponent(props) {
       alert("rien 2");
     }
   };
+
+
+
+
+
+  const [file, setFile] = useState(null);
+
+
+  const handleImageSubmit = () => {
+
+    const formData = new FormData();
+    formData.append('zamodi', file);
+
+    console.log(file)
+
+    userService.changeImage(formData).then(
+      (data) => {
+        console.log(data)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+
+  };
+
+
+  const [ImageLink, setImageLink] = useState(false)
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    setImageLink(URL.createObjectURL(event.target.files[0]))
+
+    handleImageSubmit()
+  };
+
+
+
+
+  const UploadChange = () => {
+    document.getElementById('champUpload').click();
+  }
 
   const { classes, cx } = useStyles();
   return (
@@ -95,9 +137,13 @@ function ProfileComponent(props) {
                   justifyContent: "center",
                 }}
               >
-                <Avatar size={90} sx={{ borderRadius: "360px" }} />
+                <Avatar size={90} sx={{ borderRadius: "360px" }} src={ImageLink} />
               </Box>
-              <Button bg={"yellow"} c={"white"} shadow={"xl"}>
+
+
+              <input type="file" onChange={handleFileChange} hidden id="champUpload" />
+
+              <Button bg={"yellow"} c={"white"} shadow={"xl"} onClick={UploadChange}>
                 Ajouter une photo
               </Button>
 
