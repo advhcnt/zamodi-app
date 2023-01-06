@@ -30,8 +30,8 @@ function AdminDashboard(props) {
           
           </Box>
           <Box style={{ paddingInline: "20px" }}>
-            {/* <Outlet /> */}
-           <HomeAdmin />
+            <Outlet />
+           {/* <HomeAdmin /> */}
           </Box>
         </Grid.Col>
       </Grid>

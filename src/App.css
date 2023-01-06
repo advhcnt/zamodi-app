@@ -130,3 +130,8 @@ body{
   bottom: 0;
   overflow: hidden;
 }
+
+
+.spanButton:hover{
+  cursor: pointer;
+}

@@ -110,12 +110,11 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const data = [
   { link: "/admin", label: "Dashboard", icon: IconHome },
-  { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
-  { link: "recharge", label: "Recharge", icon: IconWallet },
+  { link: "echange", label: "Echange", icon: IconArrowsLeftRight },
+  { link: "recharge", label: "Recharges ", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
-  { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "partager", label: "Partager l'application", icon: IconShare },
-  { link: "service", label: "Noter le service", icon: IconStar },
+  { link: "contact", label: "Tickets Clients", icon: IconAlertOctagon },
+  { link: "avis", label: "Avis clients", icon: IconStar },
 ];
 
 function SidebarAdminLayout() {
