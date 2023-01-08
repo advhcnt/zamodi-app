@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  Card,
-  Container,
   Group,
   Image,
   Paper,
@@ -13,7 +11,6 @@ import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import { createStyles } from "@mantine/core";
-import { IconDots, IconDotsVertical } from "@tabler/icons";
 import { useToggle } from "@mantine/hooks";
 import operationsService from "../services/operations.service";
 
@@ -31,12 +28,12 @@ const useStyles = createStyles((theme) => ({
     transition: "box-shadow 150ms ease, transform 100ms ease",
     boxShadow: "unset",
   },
-  paddingBox:{
-    paddinInline:150,
+  paddingBox: {
+    paddinInline: 150,
     [theme.fn.largerThan("md")]: {
-      marginInline:0,
+      marginInline: 0,
     },
-  }
+  },
 }));
 function HistoriqueComponent(props) {
   const { classes, theme } = useStyles();
@@ -48,9 +45,9 @@ function HistoriqueComponent(props) {
     operationsService.getUserOperation().then(
       (data) => {
         const dataR = data.data;
-        console.log(data.data)
-        let achat = dataR.filter((item) => item.OperationKind === "achat")
-        let echange = dataR.filter((item) => item.OperationKind === "echange")
+        console.log(data.data);
+        let achat = dataR.filter((item) => item.OperationKind === "achat");
+        let echange = dataR.filter((item) => item.OperationKind === "echange");
 
         setachatTable([...achat]);
         setechangeTable([...echange]);
@@ -70,42 +67,46 @@ function HistoriqueComponent(props) {
         <Text size={"xl"} fw={400} c={"black"}>
           Historique des {historiqueType}
         </Text>
-        <Paper withBorder>
-          <Button
-            mx={10}
-            my={5}
-            className={
-              historiqueType === "echanges" ? "ArrierePlan" : "ArrierePlanNeutre"
-            }
-            // "ArrierePlan"
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              color: "white",
-              fontSize: 11,
-            }}
-            onClick={toggle}
-          >
-            Historiques des échanges
-          </Button>
-          <Button
-            mx={3}
-            my={5}
-            className={
-              historiqueType === "recharges"
-                ? "ArrierePlan"
-                : "ArrierePlanNeutre"
-            }
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              color: "white",
-              fontSize: 11,
-            }}
-            onClick={toggle}
-          >
-            Historiques des recharges
-          </Button>
+        <Paper withBorder sx={{ dsplay: "flex" }}>
+          <Box sx={{ display: "flex" }}>
+            <Button
+              mx={10}
+              my={5}
+              className={
+                historiqueType === "echanges"
+                  ? "ArrierePlan"
+                  : "ArrierePlanNeutre"
+              }
+              // "ArrierePlan"
+              style={{
+                padding: "10px",
+                borderRadius: "8px",
+                color: "white",
+                fontSize: 11,
+              }}
+              onClick={toggle}
+            >
+              Historiques des échanges
+            </Button>
+            <Button
+              mx={3}
+              my={5}
+              className={
+                historiqueType === "recharges"
+                  ? "ArrierePlan"
+                  : "ArrierePlanNeutre"
+              }
+              style={{
+                padding: "10px",
+                borderRadius: "8px",
+                color: "white",
+                fontSize: 11,
+              }}
+              onClick={toggle}
+            >
+              Historiques des recharges
+            </Button>
+          </Box>
         </Paper>
       </Group>
 
@@ -157,12 +158,12 @@ function HistoriqueComponent(props) {
                   width: "100%",
                 }}
               >
-                 <Box>
+                <Box>
                   <Image
                     src={
-                      item.jai.split(' ')[0]==="Mtn"
+                      item.jai.split(" ")[0] === "Mtn"
                         ? mtnLogo
-                        : item.jai.split(' ')[0]==='Moov'
+                        : item.jai.split(" ")[0] === "Moov"
                         ? moovLogo
                         : sbinLogo
                     }
@@ -173,9 +174,9 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jeveux.split(' ')[0]==="Mtn"
+                      item.jeveux.split(" ")[0] === "Mtn"
                         ? mtnLogo
-                        : item.jeveux.split(' ')[0]==='Moov'
+                        : item.jeveux.split(" ")[0] === "Moov"
                         ? moovLogo
                         : sbinLogo
                     }
@@ -235,7 +236,7 @@ function HistoriqueComponent(props) {
               </Box>
               <Box>
                 <Text size="sm" mt={7} fw={700} c="dark">
-                Type d'opération
+                  Type d'opération
                 </Text>
               </Box>
               {/* <Box>
@@ -264,11 +265,11 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jai.split(' ')[0]==="Mtn"
-                      ? mtnLogo
-                      : item.jai.split(' ')[0]==='Moov'
-                      ? moovLogo
-                      : sbinLogo
+                      item.jai.split(" ")[0] === "Mtn"
+                        ? mtnLogo
+                        : item.jai.split(" ")[0] === "Moov"
+                        ? moovLogo
+                        : sbinLogo
                     }
                     style={{ height: "100%", width: "100%" }}
                     alt={`Logo ${item.jai}`}
@@ -277,9 +278,9 @@ function HistoriqueComponent(props) {
                 <Box>
                   <Image
                     src={
-                      item.jeveux.split(' ')[0]==="Mtn"
+                      item.jeveux.split(" ")[0] === "Mtn"
                         ? mtnLogo
-                        : item.jeveux.split(' ')[0]==='Moov'
+                        : item.jeveux.split(" ")[0] === "Moov"
                         ? moovLogo
                         : sbinLogo
                     }

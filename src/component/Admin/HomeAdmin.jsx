@@ -6,7 +6,6 @@ import Echange from './Echange';
 function HomeAdmin(props) {
     return (
         <Box>
-            <DetailsComponent />
 
             <Echange />
         </Box>

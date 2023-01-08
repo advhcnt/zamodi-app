@@ -29,8 +29,19 @@ class AuthService {
     });
   }
 
+  // register(data) {
+  //   return axios.post(API_URL + "/auth/register", data);
+  // }
+
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("user"));
+  }
+
+
+  loginWithSocial(data){
+
+    return axios.post(API_URL + "/auth/loginbysociallink",data);
+
   }
 }
 

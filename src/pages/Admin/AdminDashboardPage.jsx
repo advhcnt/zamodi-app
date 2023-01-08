@@ -1,9 +1,8 @@
-import { Box, createStyles, Grid, Text } from "@mantine/core";
+import { Box, createStyles, Grid } from "@mantine/core";
 import React from "react";
 import { Outlet } from "react-router-dom";
-import HomeAdmin from "../../component/Admin/HomeAdmin";
+import DetailsComponent from "../../component/Admin/DetailsComponent";
 import HearderAdminLayout from "../../layout/HeaderAdmin";
-import HearderLayout from "../../layout/HearderLayout";
 import SidebarAdminLayout from "../../layout/SidebarAdmin";
 
 const useStyles = createStyles((theme) => ({
@@ -15,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function AdminDashboard(props) {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   return (
     <Box>
       <Grid style={{ height: "100vh", overflowX: "hidden" }} gutter={1}>
@@ -24,14 +23,19 @@ function AdminDashboard(props) {
           <SidebarAdminLayout />
         </Grid.Col>
 
-        <Grid.Col md={10} style={{ backgroundColor: "#f7f7f7",right:0,left:0 }}>
-          <Box >
+        <Grid.Col
+          md={10}
+          style={{ backgroundColor: "#f7f7f7", right: 0, left: 0 }}
+        >
+          <Box>
             <HearderAdminLayout />
-          
+          </Box>
+          <Box my={25}>
+            <DetailsComponent />
           </Box>
           <Box style={{ paddingInline: "20px" }}>
             <Outlet />
-           {/* <HomeAdmin /> */}
+            {/* <HomeAdmin /> */}
           </Box>
         </Grid.Col>
       </Grid>

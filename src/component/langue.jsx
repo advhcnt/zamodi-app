@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { createStyles, UnstyledButton, Menu, Image, Group } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons';
-import images from './images';
+import gb from "./../assets/gb.svg";
+import fr from "./../assets/fr.svg";
 
 const data = [
-  { label: 'English', image: images.english },
-  { label: 'German', image: images.german },
-  { label: 'Italian', image: images.italian },
-  { label: 'French', image: images.french },
-  { label: 'Polish', image: images.polish },
+  {
+    label: "Fr",
+    image: fr,
+  },
+  {
+    label: "En",
+    image: gb,
+  },
 ];
 
-const useStyles = createStyles((theme, { opened }: { opened: boolean }) => ({
+const useStyles = createStyles((theme, { opened }) => ({
   control: {
-    width: 200,
+    width: 100,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -52,13 +56,14 @@ export function LanguagePicker() {
   const [selected, setSelected] = useState(data[0]);
   const items = data.map((item) => (
     <Menu.Item
-      icon={<Image src={item.image} width={18} height={18} />}
+      icon={<Image src={item.image} width={18} height={18} radius={"xl"} />}
       onClick={() => setSelected(item)}
       key={item.label}
     >
       {item.label}
     </Menu.Item>
   ));
+
 
   return (
     <Menu
@@ -70,7 +75,7 @@ export function LanguagePicker() {
       <Menu.Target>
         <UnstyledButton className={classes.control}>
           <Group spacing="xs">
-            <Image src={selected.image} width={22} height={22} />
+            <Image src={selected.image} width={22} height={22} radius={"xl"} />
             <span className={classes.label}>{selected.label}</span>
           </Group>
           <IconChevronDown size={16} className={classes.icon} stroke={1.5} />

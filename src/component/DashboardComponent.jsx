@@ -17,7 +17,6 @@ import graphOrange from "./../assets/grapheOrange.png";
 import graphBlanc from "./../assets/graphBlanc.png";
 import grapheData from "./../assets/data/chatData";
 import Graphe from "./Graphe";
-import HistoriqueComponent from "./HistoriqueComponent";
 import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
 

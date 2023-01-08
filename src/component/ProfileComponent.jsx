@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   Container,
   createStyles,
   Divider,
@@ -20,6 +19,11 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
+  },
+  centrer: {
+    justifySelf: "center",
+    alignSelf: "center",
+    textAlign: "center",
   },
 }));
 
@@ -39,11 +43,14 @@ function ProfileComponent(props) {
           email !== "" &&
           username.length > 5)
       ) {
-        let data = (password.length >= 8) ? { username: username, email: email, password: password } : { username: username, email: email }
+        let data =
+          password.length >= 8
+            ? { username: username, email: email, password: password }
+            : { username: username, email: email };
         userService.updateUser(currentUser._id, data).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
-              console.log(data)
+              console.log(data);
               authHeader(data.accessToken);
             } else {
               setErrMsg(data.message);
@@ -68,47 +75,36 @@ function ProfileComponent(props) {
     }
   };
 
-
-
-
-
   const [file, setFile] = useState(null);
 
-
   const handleImageSubmit = () => {
-
     const formData = new FormData();
-    formData.append('zamodi', file);
+    formData.append("zamodi", file);
 
-    console.log(file)
+    console.log(file);
 
     userService.changeImage(formData).then(
       (data) => {
-        console.log(data)
+        console.log(data);
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
-    )
-
+    );
   };
 
-
-  const [ImageLink, setImageLink] = useState(false)
+  const [ImageLink, setImageLink] = useState(false);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
-    setImageLink(URL.createObjectURL(event.target.files[0]))
+    setImageLink(URL.createObjectURL(event.target.files[0]));
 
-    handleImageSubmit()
+    handleImageSubmit();
   };
 
-
-
-
   const UploadChange = () => {
-    document.getElementById('champUpload').click();
-  }
+    document.getElementById("champUpload").click();
+  };
 
   const { classes, cx } = useStyles();
   return (
@@ -137,15 +133,37 @@ function ProfileComponent(props) {
                   justifyContent: "center",
                 }}
               >
-                <Avatar size={90} sx={{ borderRadius: "360px" }} src={ImageLink} />
+                <Avatar
+                  size={90}
+                  sx={{ borderRadius: "360px" }}
+                  src={ImageLink}
+                />
               </Box>
+              <Box
+                my={10}
+                sx={{
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  hidden
+                  id="champUpload"
+                />
 
-
-              <input type="file" onChange={handleFileChange} hidden id="champUpload" />
-
-              <Button bg={"yellow"} c={"white"} shadow={"xl"} onClick={UploadChange}>
-                Ajouter une photo
-              </Button>
+                <Button
+                 
+                  c={"white"}
+                  shadow={"xl"}
+                  onClick={UploadChange}
+                  className={"BgYellow "+classes.centrer}
+                >
+                  Ajouter une photo
+                </Button>
+              </Box>
 
               <Box my={30}>
                 <Text ml={20} c={"white"} fw={"bold"}>
@@ -166,9 +184,18 @@ function ProfileComponent(props) {
                   Notification{" "}
                 </Text>
               </Box>
-              <Button bg={"yellow"} c={"white"} shadow={"xl"}>
-                Supprimer le compte
-              </Button>
+              <Box
+                my={10}
+                sx={{
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Button className="BgYellow" c={"white"} shadow={"xl"}>
+                  Supprimer le compte
+                </Button>
+              </Box>
             </Grid.Col>
             <Grid.Col sm={9}>
               <Text fw={900}>Mon compte</Text>

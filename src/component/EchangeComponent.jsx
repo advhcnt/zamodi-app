@@ -102,7 +102,7 @@ function EchangeComponent(props) {
                     </Text>
                     <TextInput
 
-                      placeholder="Your name"
+                      placeholder="Montant"
                       withAsterisk
                       className={"ombre"}
                       width={"100%"}

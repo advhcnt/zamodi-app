@@ -19,29 +19,22 @@ import {
   IconSearch,
   IconTrash,
   IconSettings,
-  IconChevronDown,
-  IconHeart,
-  IconMessage,
   IconBell,
   IconAlignCenter,
 } from "@tabler/icons";
-import { MantineLogo } from "@mantine/ds";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import {
   IconStar,
-  IconSwitchHorizontal,
   IconLogout,
   IconArrowsLeftRight,
   IconWallet,
-  IconShare,
   IconAlertOctagon,
   IconFileText,
   IconHome,
 } from "@tabler/icons";
-import gb from "./../assets/gb.svg";
-import fr from "./../assets/fr.svg";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
+import { LanguagePicker } from "../component/langue";
 
 const user = {
   name: "J. Spoonfgf",
@@ -50,30 +43,20 @@ const user = {
     "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80",
 };
 
-const langues = [
-  {
-    libelle: "Fr",
-    flag: fr,
-  },
-  {
-    libelle: "En",
-    flag: gb,
-  },
-];
+
 
 const DrawerData = [
-  { link: "/dashboard", label: "Dashboard", icon: IconHome },
-  { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
+  { link: "/admin", label: "Dashboard", icon: IconHome },
+  { link: "echange", label: "Echange", icon: IconArrowsLeftRight },
   { link: "recharge", label: "Recharge", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
-  { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "partager", label: "Partager l'application", icon: IconShare },
-  { link: "service", label: "Noter le service", icon: IconStar },
+  { link: "contact", label: "Tickets clients", icon: IconAlertOctagon },
+  { link: "avis", label: "Avis clients", icon: IconStar },
 ];
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
-  
+
   return {
     link2: {
       ...theme.fn.focusStyles(),
@@ -277,6 +260,7 @@ function HearderAdminLayout(props) {
       style={{ display: "flex", width: "100%" }}
       onClick={(event) => {
         event.preventDefault();
+        closeDrawer();
         setActiveDrawerLink(item.label);
         setDivActive(item.label);
       }}
@@ -361,53 +345,7 @@ function HearderAdminLayout(props) {
                 size={"sm"}
                 style={{ width: "40vw" }}
               />
-              <Menu
-                width={260}
-                position="bottom-end"
-                transition="pop-top-right"
-                onClose={() => setUserMenuOpened(false)}
-                onOpen={() => setUserMenuOpened(true)}
-              >
-                <Menu.Target>
-                  <UnstyledButton
-                    className={cx(classes.langue, {
-                      [classes.userActive]: userMenuOpened,
-                    })}
-                  >
-                    <Group spacing={7}>
-                      <Avatar
-                        src={langues[0].flag}
-                        alt={langues[0].libelle}
-                        radius="xl"
-                        size={20}
-                      />
-                      <Text
-                        weight={500}
-                        size="sm"
-                        sx={{ lineHeight: 1 }}
-                        mr={3}
-                      >
-                        {langues[0].libelle}
-                      </Text>
-                      <IconChevronDown size={12} stroke={1.5} />
-                    </Group>
-                  </UnstyledButton>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Menu.Item>
-                    <div style={{ display: "flex", gap: 3 }}>
-                      {" "}
-                      <Avatar
-                        src={langues[1].flag}
-                        alt={langues[0].libelle}
-                        radius="xl"
-                        size={20}
-                      />{" "}
-                      Anglais
-                    </div>
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+              <LanguagePicker />
               <IconBell className={"EcritVert "} /> {/* Utilisateur */}{" "}
             </Box>
 
@@ -490,9 +428,9 @@ function HearderAdminLayout(props) {
       </Header>
 
       <Drawer
-        transition="rotate-left"
-        transitionDuration={2500}
-        transitionTimingFunction="ease"
+        // transition="rotate-left"
+        // transitionDuration={2500}
+        // transitionTimingFunction="ease"
         opened={drawerOpened}
         onClose={closeDrawer}
         size="100%"
