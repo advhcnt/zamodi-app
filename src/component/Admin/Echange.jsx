@@ -10,6 +10,7 @@ import {
   Select,
   Table,
   Text,
+  Textarea,
   useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -55,10 +56,9 @@ function Echange(props) {
   const theme = useMantineTheme();
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
-  const [afficheModal, setafficheModal] = useState(false);
 
-  const handleUpdate = () => {
-    setafficheModal(true);
+  const handleChange = () => {
+    close();
   };
 
   return (
@@ -194,7 +194,7 @@ function Echange(props) {
         overlayOpacity={0.55}
         overlayBlur={3}
       >
-        <div >
+        <div>
           <div style={{ marginBottom: theme.spacing.sm }}>
             <h2>Mise à jour </h2>
           </div>
@@ -209,7 +209,15 @@ function Echange(props) {
               data={["En Attente", "Valide", "Annulée"]}
             />
 
-            <Group  position={'center'} my={20}>
+            <Textarea
+              my={15}
+              label="Message "
+              autosize
+              minRows={2}
+              maxRows={4}
+            />
+
+            <Group position={"center"} my={20} onClick={handleChange}>
               <Button>Valider</Button>
             </Group>
           </Box>
