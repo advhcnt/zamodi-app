@@ -13,6 +13,7 @@ import {
   Avatar,
   UnstyledButton,
   Paper,
+  Indicator,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -279,6 +280,8 @@ function HearderLayout(props) {
 
   const navigation = useNavigate();
 
+  const [countNotifications, setcountNotifications] = useState(11)
+
 
   return (
     <>
@@ -335,7 +338,9 @@ function HearderLayout(props) {
               {/* Menu pour le choix de la langue */}
              
               <LanguagePicker />
-              <IconBell className={"EcritVert "} />{" "}
+              <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
+              <IconBell className={"EcritVert spanButton"} onClick={()=>navigate('notifications')} />{" "}
+              </Indicator>
               {/* cloche de notification */}{" "}
             </Box>
 

@@ -70,7 +70,14 @@ function Echange(props) {
         <Text variant={"title"} fz={"xl"} fw={900} my={10}>
           Liste des échanges clients
         </Text>
-        <Table sx={{ minWidth: 700 }}>
+        <Table sx={{ minWidth: 700 }} 
+        striped 
+        highlightOnHover 
+        withBorder 
+        withColumnBorders 
+        horizontalSpacing="md" 
+        verticalSpacing="md" 
+        fontSize="md">
           <thead
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
@@ -114,7 +121,7 @@ function Echange(props) {
                 </Menu>
               </td>
             </tr>
-            <tr key="row.nameszx">
+            <tr key="row.nameszx" py={200}>
               <td>anne</td>
               <td>anne@gmail.com</td>
               <td>Echange</td>

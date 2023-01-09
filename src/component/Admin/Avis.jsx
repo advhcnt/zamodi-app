@@ -24,11 +24,10 @@ const useStyles = createStyles((theme) => ({
       left: 0,
       right: 0,
       bottom: 0,
-      borderBottom: `1px solid ${
-        theme.colorScheme === "dark"
+      borderBottom: `1px solid ${theme.colorScheme === "dark"
           ? theme.colors.dark[3]
           : theme.colors.gray[2]
-      }`,
+        }`,
     },
   },
 
@@ -49,7 +48,15 @@ function Avis(props) {
         sx={{ height: 300 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
-        <Table sx={{ minWidth: 700 }}>
+        <Table sx={{ minWidth: 700 }}
+          striped
+          highlightOnHover
+          withBorder
+          withColumnBorders
+          horizontalSpacing="md"
+          verticalSpacing="md"
+          fontSize="md"
+        >
           <thead
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >

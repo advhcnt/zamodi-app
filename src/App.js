@@ -22,6 +22,8 @@ import Tickets from "./component/Admin/Tickets";
 import Recharge from "./component/Admin/Recharge";
 import Echange from "./component/Admin/Echange";
 import Avis from "./component/Admin/Avis";
+import { Error404 } from "./pages/errors/Error404";
+import { NotificationsPage } from "./pages/NotificationsPage";
 function App(props) {
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -46,6 +48,7 @@ function App(props) {
           <Route index element={<DashboardComponent />} />
           <Route path="profile" element={<ProfileComponent />} />
           <Route path="echange" element={<EchangeComponent />} />
+          <Route path="notifications"  element={<NotificationsPage />} />
           <Route path="recharge" element={<RechargeComponent />} />
           <Route path="historique" element={<HistoriqueComponent />} />
           <Route path="contact" element={<ContactComponent />} />
@@ -55,6 +58,7 @@ function App(props) {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </div>
   );
