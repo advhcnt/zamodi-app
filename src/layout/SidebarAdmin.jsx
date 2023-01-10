@@ -110,8 +110,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 const data = [
   { link: "/admin", label: "Dashboard", icon: IconHome },
-  { link: "echange", label: "Echange", icon: IconArrowsLeftRight },
-  { link: "recharge", label: "Recharges ", icon: IconWallet },
+  { link: "operations", label: "Operations", icon: IconArrowsLeftRight },
   { link: "historique", label: "Historique", icon: IconFileText },
   { link: "contact", label: "Tickets Clients", icon: IconAlertOctagon },
   { link: "avis", label: "Avis clients", icon: IconStar },

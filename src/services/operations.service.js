@@ -5,6 +5,10 @@ import { API_URL } from "./http-common";
 
 class OperationService {
 
+  getAllOperations() {
+    // return axios.get(API_URL + "/operations/user/" + identifiant);
+    return axios.get(API_URL + "/operations" );
+  }
 
   getUserOperation() {
     // return axios.get(API_URL + "/operations/user/" + identifiant);

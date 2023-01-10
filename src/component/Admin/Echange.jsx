@@ -2,6 +2,7 @@ import {
   ActionIcon,
   Box,
   Button,
+  Center,
   createStyles,
   Group,
   Menu,
@@ -18,10 +19,13 @@ import {
   IconChevronDown,
   IconDotsVertical,
   IconEdit,
-  IconLock,
+  IconEye,
   IconTrash,
 } from "@tabler/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import notificationsService from "../../services/admin/notificationsService";
+import operationsService from "../../services/operations.service";
+import Chargement from "../Chargement";
 import { UpdatedModal } from "./UpdateModale";
 
 const useStyles = createStyles((theme) => ({
@@ -52,17 +56,106 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Echange(props) {
-  const [opened, { close, open }] = useDisclosure(false);
+  const [opened, updateModale] = useDisclosure(false);
+  const [openedShow, ouvrir] = useDisclosure(false);
   const theme = useMantineTheme();
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
+  const [operations, setoperations] = useState(false);
+  const [operation, setoperation] = useState(false);
+  const [statut, setstatut] = useState(false);
+  const [visible, setvisible] = useState(false);
 
-  const handleChange = () => {
-    close();
+  useEffect(() => {
+    operationsService.getAllOperations().then(
+      (data) => {
+        const liste = data.data.data;
+        console.log(liste);
+        setoperations([...liste]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, []);
+
+  // Pour fermer le modal permettant la muise à jour
+  const handleChange = (identifiant) => {
+    const resultat = operations.find(
+      (item) => item.transactionId === identifiant
+    );
+    setoperation({ ...resultat });
+    updateModale.open();
+  };
+  // Pour checker le state d'une demande
+  const checkState = (state) => {
+    if (state === "En attente") {
+      return "attente";
+    } else if (state === "Valide") {
+      return "valide";
+    } else {
+      return "annule";
+    }
+  };
+
+  // Pour ouvrir le modal permettant d'afficher les details
+  const afficheOperation = (identifiant) => {
+    const resultat = operations.find(
+      (item) => item.transactionId === identifiant
+    );
+    setoperation({ ...resultat });
+
+    ouvrir.open();
+  };
+
+  // Pour la mise à jour d'une demande(creation de notification)
+  const handleNotification = () => {};
+
+  useEffect(() => {
+    if (operation && operation) setoperation({ ...operation, statut: statut });
+  }, [statut]);
+
+  const handleMessage = (message) => {
+    if (message && message !== "")
+      setoperation({ ...operation, notification: message });
+    console.log(operation);
+  };
+
+  // Soumission de la notification
+  const handleSubmit = () => {
+    setvisible(true);
+    updateModale.close();
+    try {
+      notificationsService.addNotifications(operation).then(
+        (data) => {
+          setvisible(false);
+          console.log(data);
+          operationsService.getAllOperations().then(
+            (data) => {
+              const liste = data.data.data;
+              console.log(liste);
+              setoperations([...liste]);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        },
+        (error) => {
+          setvisible(false);
+          console.log(error);
+        }
+      );
+    } catch (error) {
+      setvisible(false);
+      console.log(error);
+    }
   };
 
   return (
     <>
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <ScrollArea
         sx={{ height: 300 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
@@ -70,14 +163,16 @@ function Echange(props) {
         <Text variant={"title"} fz={"xl"} fw={900} my={10}>
           Liste des échanges clients
         </Text>
-        <Table sx={{ minWidth: 700 }} 
-        striped 
-        highlightOnHover 
-        withBorder 
-        withColumnBorders 
-        horizontalSpacing="md" 
-        verticalSpacing="md" 
-        fontSize="md">
+        <Table
+          sx={{ minWidth: 700 }}
+          striped
+          highlightOnHover
+          withBorder
+          withColumnBorders
+          horizontalSpacing="md"
+          verticalSpacing="md"
+          fontSize="md"
+        >
           <thead
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
@@ -92,93 +187,63 @@ function Echange(props) {
             </tr>
           </thead>
           <tbody>
-            <tr key="row.namfge">
-              <td>adv</td>
-              <td>advhcnt23@gmail.com</td>
-              <td>Echange</td>
-              <td>123456789</td>
-              <td>
-                <span className={"attente"}>En attente</span>
-              </td>
-              <td>2/12/2022</td>
-              <td>
-                <Menu withinPortal position="bottom-end" shadow="sm">
-                  <Menu.Target>
-                    <ActionIcon>
-                      <IconDotsVertical size={16} />
-                    </ActionIcon>
-                  </Menu.Target>
+            {operations ? (
+              <>
+                {operations.map((item) => (
+                  <tr key={item.transactionId}>
+                    <td>{item.username.toUpperCase()}</td>
+                    <td>
+                      <a
+                        href={`mailto:${item.email}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        {item.email}
+                      </a>{" "}
+                    </td>
+                    <td>{item.OperationKind.toUpperCase()}</td>
+                    <td>{item.transactionId}</td>
+                    <td>
+                      <span className={checkState(item.statut)}>
+                        {item.statut.toUpperCase()==='EN ATTENTE'?'ATTENTE':item.statut.toUpperCase()}
+                      </span>
+                    </td>
+                    <td>
+                      {item.updatedAt.split("T")[0]} à{" "}
+                      {item.updatedAt.split("T")[1].split(".")[0]}
+                    </td>
+                    <td>
+                      <Menu withinPortal position="bottom-end" shadow="sm">
+                        <Menu.Target>
+                          <ActionIcon>
+                            <IconDotsVertical size={16} />
+                          </ActionIcon>
+                        </Menu.Target>
 
-                  <Menu.Dropdown>
-                    <Menu.Item icon={<IconEdit size={14} />} onClick={open}>
-                      Modifier
-                    </Menu.Item>
-                    <Menu.Item icon={<IconLock size={14} />}>Blocker</Menu.Item>
-                    <Menu.Item icon={<IconTrash size={14} />} color="red">
-                      Supprimer
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </td>
-            </tr>
-            <tr key="row.nameszx" py={200}>
-              <td>anne</td>
-              <td>anne@gmail.com</td>
-              <td>Echange</td>
-              <td>123456489</td>
-              <td>
-                <span className={"valide"}>Validé</span>
-              </td>
-              <td>2/01/2022</td>
-              <td>
-                <Menu withinPortal position="bottom-end" shadow="sm">
-                  <Menu.Target>
-                    <ActionIcon>
-                      <IconDotsVertical size={16} />
-                    </ActionIcon>
-                  </Menu.Target>
-
-                  <Menu.Dropdown>
-                    <Menu.Item icon={<IconEdit size={14} />} onClick={open}>
-                      Modifier
-                    </Menu.Item>
-                    <Menu.Item icon={<IconLock size={14} />}>Blocker</Menu.Item>
-                    <Menu.Item icon={<IconTrash size={14} />} color="red">
-                      Supprimer
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </td>
-            </tr>
-            <tr key="row.namescx">
-              <td>yves</td>
-              <td>yves@gmail.com</td>
-              <td>Echange</td>
-              <td>123456189</td>
-              <td>
-                <span className={"annule"}>Annulée</span>
-              </td>
-              <td>2/01/2022</td>
-              <td>
-                <Menu withinPortal position="bottom-end" shadow="sm">
-                  <Menu.Target>
-                    <ActionIcon>
-                      <IconDotsVertical size={16} />
-                    </ActionIcon>
-                  </Menu.Target>
-
-                  <Menu.Dropdown>
-                    <Menu.Item icon={<IconEdit size={14} />} onClick={open}>
-                      Modifier
-                    </Menu.Item>
-                    <Menu.Item icon={<IconLock size={14} />}>Blocker</Menu.Item>
-                    <Menu.Item icon={<IconTrash size={14} />} color="red">
-                      Supprimer
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </td>
-            </tr>
+                        <Menu.Dropdown>
+                          <Menu.Item
+                            icon={<IconEdit size={14} />}
+                            onClick={() => handleChange(item.transactionId)}
+                          >
+                            Modifier
+                          </Menu.Item>
+                          <Menu.Item
+                            icon={<IconEye size={14} />}
+                            onClick={() => afficheOperation(item.transactionId)}
+                          >
+                            Afficher
+                          </Menu.Item>
+                          <Menu.Item icon={<IconTrash size={14} />} color="red">
+                            Supprimer
+                          </Menu.Item>
+                        </Menu.Dropdown>
+                      </Menu>
+                    </td>
+                  </tr>
+                ))}{" "}
+              </>
+            ) : (
+              <Text>En attente</Text>
+            )}
           </tbody>
         </Table>
       </ScrollArea>
@@ -192,7 +257,7 @@ function Echange(props) {
         closeOnClickOutside={false}
         withCloseButton={true}
         opened={opened}
-        onClose={close}
+        onClose={updateModale.close}
         overlayColor={
           theme.colorScheme === "dark"
             ? theme.colors.dark[9]
@@ -211,9 +276,10 @@ function Echange(props) {
               placeholder="Pick one"
               rightSection={<IconChevronDown size={14} />}
               rightSectionWidth={30}
-              defaultValue={"En Attente"}
+              defaultValue={operation.statut}
+              onChange={setstatut}
               styles={{ rightSection: { pointerEvents: "none" } }}
-              data={["En Attente", "Valide", "Annulée"]}
+              data={["En attente", "Valide", "Annule"]}
             />
 
             <Textarea
@@ -222,12 +288,158 @@ function Echange(props) {
               autosize
               minRows={2}
               maxRows={4}
+              onChange={(event) => handleMessage(event.currentTarget.value)}
             />
 
-            <Group position={"center"} my={20} onClick={handleChange}>
+            <Group position={"center"} my={20} onClick={handleSubmit}>
               <Button>Valider</Button>
             </Group>
           </Box>
+        </div>
+      </Modal>
+
+      {/* Detail modal */}
+      <Modal
+        centered
+        closeOnClickOutside={false}
+        withCloseButton={true}
+        opened={openedShow}
+        onClose={ouvrir.close}
+        overlayColor={
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[9]
+            : theme.colors.gray[2]
+        }
+        overlayOpacity={0.55}
+        overlayBlur={3}
+      >
+        <div>
+          <div style={{ marginBottom: theme.spacing.sm }}>
+            <Center>
+              <h2> Détails sur l'opération</h2>
+            </Center>
+          </div>
+          {operation ? (
+            <Box>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Username:
+                </strong>{" "}
+                {operation.username}
+              </Text>
+
+              <Text>
+                {" "}
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Email:
+                </strong>{" "}
+                <a
+                  href={`mailto:${operation.email}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  {operation.email}
+                </a>{" "}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Opération:{" "}
+                </strong>
+                {operation.OperationKind.toUpperCase()}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Montant:
+                </strong>
+                {operation.montant}F cfa
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Réseau de départ:{" "}
+                </strong>
+                {operation.jai.toUpperCase()}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Réseau d'arriver:{" "}
+                </strong>
+                {operation.jeveux.toUpperCase()}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Message:{" "}
+                </strong>
+                {operation.notification}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Description:{" "}
+                </strong>
+                {operation.Description}
+              </Text>
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Lecture:{" "}
+                </strong>
+                {!operation.readNotification?"Non":'Oui'}
+              </Text>
+              
+              <Text>
+                <strong
+                  style={{
+                    margin: "5px 20px 5px 20px",
+                  }}
+                >
+                  Date:
+                </strong>
+                {operation.updatedAt.split("T")[0]} à{" "}
+                {operation.updatedAt.split("T")[1].split(".")[0]}
+              </Text>
+
+              <Group position={"center"} my={20} onClick={ouvrir.close}>
+                <Button variant="light" color="red">
+                  Fermer
+                </Button>
+              </Group>
+            </Box>
+          ) : (
+            <Text>En cours de chargement</Text>
+          )}
         </div>
       </Modal>
     </>

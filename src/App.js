@@ -39,8 +39,7 @@ function App(props) {
           <Route index element={<HomeAdmin />} />
           <Route path="historique" element={<Historique />} />
           <Route path="contact" element={<Tickets />} />
-          <Route path="recharge" element={<Recharge />} />
-          <Route path="echange" element={<Echange />} />
+          <Route path="operations" element={<Echange />} />
           <Route path="avis" element={<Avis />} />
 
         </Route>
