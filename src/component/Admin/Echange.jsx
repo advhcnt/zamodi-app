@@ -42,11 +42,10 @@ const useStyles = createStyles((theme) => ({
       left: 0,
       right: 0,
       bottom: 0,
-      borderBottom: `1px solid ${
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[3]
-          : theme.colors.gray[2]
-      }`,
+      borderBottom: `1px solid ${theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : theme.colors.gray[2]
+        }`,
     },
   },
 
@@ -70,7 +69,6 @@ function Echange(props) {
     operationsService.getAllOperations().then(
       (data) => {
         const liste = data.data.data;
-        console.log(liste);
         setoperations([...liste]);
       },
       (error) => {
@@ -109,16 +107,18 @@ function Echange(props) {
   };
 
   // Pour la mise à jour d'une demande(creation de notification)
-  const handleNotification = () => {};
+  const handleNotification = () => { };
 
   useEffect(() => {
     if (operation && operation) setoperation({ ...operation, statut: statut });
   }, [statut]);
 
   const handleMessage = (message) => {
-    if (message && message !== "")
+    if (message && message !== "") {
       setoperation({ ...operation, notification: message });
-    console.log(operation);
+    }
+
+
   };
 
   // Soumission de la notification
@@ -129,11 +129,11 @@ function Echange(props) {
       notificationsService.addNotifications(operation).then(
         (data) => {
           setvisible(false);
-          console.log(data);
+
           operationsService.getAllOperations().then(
             (data) => {
               const liste = data.data.data;
-              console.log(liste);
+
               setoperations([...liste]);
             },
             (error) => {
@@ -187,7 +187,7 @@ function Echange(props) {
             </tr>
           </thead>
           <tbody>
-            {operations ? (
+            {operations !== false ? (
               <>
                 {operations.map((item) => (
                   <tr key={item.transactionId}>
@@ -204,7 +204,7 @@ function Echange(props) {
                     <td>{item.transactionId}</td>
                     <td>
                       <span className={checkState(item.statut)}>
-                        {item.statut.toUpperCase()==='EN ATTENTE'?'ATTENTE':item.statut.toUpperCase()}
+                        {item.statut.toUpperCase() === 'EN ATTENTE' ? 'ATTENTE' : item.statut.toUpperCase()}
                       </span>
                     </td>
                     <td>
@@ -242,7 +242,9 @@ function Echange(props) {
                 ))}{" "}
               </>
             ) : (
-              <Text>En attente</Text>
+              <tr>
+                <td colSpan={7} > <Text ta={'center'}> Pas d'opérations</Text> </td>
+              </tr>
             )}
           </tbody>
         </Table>
@@ -292,7 +294,7 @@ function Echange(props) {
             />
 
             <Group position={"center"} my={20} onClick={handleSubmit}>
-              <Button>Valider</Button>
+              <Button className={'ArrierePlan'} sx={{ color: "white" }}>Valider</Button>
             </Group>
           </Box>
         </div>
@@ -416,9 +418,9 @@ function Echange(props) {
                 >
                   Lecture:{" "}
                 </strong>
-                {!operation.readNotification?"Non":'Oui'}
+                {!operation.readNotification ? "Non" : 'Oui'}
               </Text>
-              
+
               <Text>
                 <strong
                   style={{

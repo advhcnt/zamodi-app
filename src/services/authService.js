@@ -17,6 +17,21 @@ class AuthService {
       });
   }
 
+  isAdmin() {
+    return axios.get(API_URL + "/auth/userrole/")
+  }
+
+  RefreshToken(identifiant) {
+    return axios
+      .get(API_URL + "/auth/refresh/" + identifiant)
+      .then((response) => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        return response.data;
+      });
+  }
+
   logout() {
     localStorage.removeItem("user");
   }
@@ -38,9 +53,9 @@ class AuthService {
   }
 
 
-  loginWithSocial(data){
+  loginWithSocial(data) {
 
-    return axios.post(API_URL + "/auth/loginbysociallink",data);
+    return axios.post(API_URL + "/auth/loginbysociallink", data);
 
   }
 }

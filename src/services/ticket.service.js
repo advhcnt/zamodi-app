@@ -21,8 +21,8 @@ class TicketService{
     return axios.delete(API_URL + "/ticket/" + identifiant);
   }
 
-  updateUserTicket(identifiant) {
-    return axios.put(API_URL + "/ticket/" + identifiant);
+  updateUserTicket(identifiant,data) {
+    return axios.put(API_URL + "/ticket/" + identifiant,data);
   }
 }
 

@@ -121,9 +121,12 @@ function LoginPage(props) {
         (data) => {
           if (data.status === 200 || data.state === "success") {
             authHeader(data.accessToken);
-
-            navigate("/dashboard");
-            // window.location.reload();
+            if(data.isAdmin)
+            {
+              navigate("/admin");
+            }else{
+              navigate("/dashboard");
+            }
           } else {
             setvisible(false);
             setErrMsg(data.message);

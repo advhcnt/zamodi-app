@@ -15,3 +15,4 @@ export const verifyEmail = (email)=> {
     return phoneNumberRegex.test(number)
     
   }
+
