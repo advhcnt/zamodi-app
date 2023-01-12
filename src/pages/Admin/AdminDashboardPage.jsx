@@ -21,6 +21,7 @@ function AdminDashboard(props) {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log('page loaded')
     authService.isAdmin().then(
       (data) => {
         setAdmin(data.data.isAdmin)
