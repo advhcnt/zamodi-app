@@ -7,7 +7,7 @@ import { API_URL } from './http-common';
 class UserService {
 
   getUserData() {
-    return axios.get(API_URL + '/user');
+    return axios.get(API_URL + '/client');
   }
 
   addAvis() {

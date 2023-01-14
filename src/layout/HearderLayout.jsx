@@ -370,6 +370,7 @@ function HearderLayout(props) {
                         >
                           {currentUser.message.username}
                         </Text>
+                        
                         <Text
                           weight={500}
                           size="xs"

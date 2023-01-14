@@ -24,6 +24,7 @@ import { useDispatch } from "react-redux";
 import authService from "../services/authService";
 import Chargement from "../component/Chargement";
 import { verifyEmail } from "../utils/fonctions";
+import authHeader from "./../services/auth-header";
 import { LoginSocialFacebook } from "reactjs-social-login";
 import jwt_decode from "jwt-decode";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -129,11 +130,40 @@ function RegisterPage(props) {
             authService.register(user.valeur, mail.valeur, pwd.valeur).then(
               (data) => {
                 if (data.status === 200 || data.state === "success") {
-                  setvisible(false);
-                  console.log(data);
-                  // navigate("/login");
-                  // window.location.reload();
-                } else {
+                  // setvisible(false);
+                  // console.log(data);
+                //  Login
+
+                authService.login(user.valeur,  pwd.valeur).then(
+                  (data) => {
+                    if (data.status === 200 || data.state === "success") {
+                      authHeader(data.accessToken);
+                      if(data.isAdmin)
+                      {
+                        navigate("/admin");
+                      }else{
+                        navigate("/dashboard");
+                      }
+                    } else {
+                      setvisible(false);
+                      setErrMsg(data.message);
+                    }
+                  },
+                  (error) => {
+                    const resMessage =
+                      (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                      error.message ||
+                      error.toString();
+          
+                    setvisible(false);
+                    setErrMsg(resMessage);
+                  }
+                );
+                // login
+
+              } else {
                   setvisible(false);
                   setErrMsg(data.message);
                 }

@@ -44,6 +44,15 @@ class AuthService {
     });
   }
 
+  registerAdmin(username, email, password,isAdmin=true) {
+    return axios.post(API_URL + "/auth/admin/register", {
+      username,
+      email,
+      password,
+      isAdmin
+    });
+  }
+
   // register(data) {
   //   return axios.post(API_URL + "/auth/register", data);
   // }

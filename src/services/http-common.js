@@ -8,5 +8,5 @@ export default axios.create({
 });
 
 
-// export const API_URL = 'http://127.0.0.1:8000/zamodi-api';
-export const API_URL = "https://backend-zamodi.onrender.com/zamodi-api";
+export const API_URL = 'http://127.0.0.1:8000/zamodi-api';
+// export const API_URL = "https://backend-zamodi.onrender.com/zamodi-api";
