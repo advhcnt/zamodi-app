@@ -6,9 +6,11 @@ import {
   createStyles,
   Divider,
   Grid,
+  Notification,
   Text,
   TextInput,
 } from "@mantine/core";
+import { IconCheck, IconX } from "@tabler/icons";
 import React, { useState } from "react";
 import authHeader from "../services/auth-header";
 import authService from "../services/authService";
@@ -31,8 +33,11 @@ function ProfileComponent(props) {
   const currentUser = authService.getCurrentUser().message;
   const [username, setusername] = useState(currentUser.username);
   const [email, setemail] = useState(currentUser.email);
+  const [avatar, setavatar] = useState(currentUser.photo);
   const [password, setpassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [erreur, seterreur] = useState({ state: false, message: "" });
+  const [succes, setsucces] = useState({ state: false, message: "" });
 
   const handleSubmit = () => {
     if ((username && email) || (password && username && email)) {
@@ -50,8 +55,17 @@ function ProfileComponent(props) {
         userService.updateUser(currentUser._id, data).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
-              console.log(data);
-              authHeader(data.accessToken);
+              if (data.data.message._doc.status === "success") {
+                var item = JSON.parse(localStorage.getItem("user"));
+                item.message.username = data.data.message._doc.username;
+                item.message.email = data.data.message._doc.email;
+                localStorage.setItem("user", JSON.stringify(item));
+                setsucces({
+                  state: true,
+                  message: "Informations mise à jour avec succès",
+                });
+                authHeader(data.accessToken);
+              }
             } else {
               setErrMsg(data.message);
             }
@@ -81,14 +95,33 @@ function ProfileComponent(props) {
     const formData = new FormData();
     formData.append("zamodi", file);
 
-    console.log(file);
-
     userService.changeImage(formData).then(
       (data) => {
         console.log(data);
+        if (data.data.status === "success") {
+          var item = JSON.parse(localStorage.getItem("user"));
+          item.message.photo = data.data.message._doc.photo;
+          localStorage.setItem("user", JSON.stringify(item));
+          setsucces({
+            state: true,
+            message: data.data.message._doc.description,
+          });
+        } else {
+          seterreur({
+            state: true,
+            message: "Une erreur est survenue lors du traitement de la requete",
+          });
+        }
       },
       (error) => {
-        console.log(error);
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setErrMsg(resMessage);
       }
     );
   };
@@ -98,6 +131,7 @@ function ProfileComponent(props) {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
     setImageLink(URL.createObjectURL(event.target.files[0]));
+    setavatar(URL.createObjectURL(event.target.files[0]));
 
     handleImageSubmit();
   };
@@ -107,8 +141,29 @@ function ProfileComponent(props) {
   };
 
   const { classes, cx } = useStyles();
+
   return (
     <Box>
+      {setsucces.state && (
+        <Notification
+          icon={<IconCheck size={18} />}
+          color="teal"
+          title="Teal notification"
+          onClose={() => setsucces({ state: false, message: "" })}
+        >
+          {setsucces.message}
+        </Notification>
+      )}
+
+      {seterreur.state && (
+        <Notification
+          icon={<IconX size={18} />}
+          color="red"
+          onClose={() => seterreur({ state: false, message: "" })}
+        >
+          {seterreur.message}
+        </Notification>
+      )}
       <Box sx={{ height: "100px" }} className={"ArrierePlan"}></Box>
       <Box shadow={"xl"}>
         <Container size={"sm"}>
@@ -133,11 +188,7 @@ function ProfileComponent(props) {
                   justifyContent: "center",
                 }}
               >
-                <Avatar
-                  size={90}
-                  sx={{ borderRadius: "360px" }}
-                  src={ImageLink}
-                />
+                <Avatar size={90} sx={{ borderRadius: "360px" }} src={avatar} />
               </Box>
               <Box
                 my={10}
@@ -155,11 +206,10 @@ function ProfileComponent(props) {
                 />
 
                 <Button
-                 
                   c={"white"}
                   shadow={"xl"}
                   onClick={UploadChange}
-                  className={"BgYellow "+classes.centrer}
+                  className={"BgYellow " + classes.centrer}
                 >
                   Ajouter une photo
                 </Button>

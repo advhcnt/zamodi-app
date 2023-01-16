@@ -373,8 +373,8 @@ function HearderAdminLayout(props) {
                           sx={{ lineHeight: 1 }}
                           mr={3}
                         >
-                          {/* {currentUser.message.username} */}
-                          toto
+                          {currentUser.message.username}
+                        
                         </Text>
                         <Text
                           weight={500}
@@ -388,10 +388,12 @@ function HearderAdminLayout(props) {
                       </div>
 
                       <Avatar
-                        src={user.image}
-                        alt={user.name}
+                        src={ currentUser.message.photo
+                          ? currentUser.message.photo
+                          : ''}
+                        alt={'photo de pofile'}
                         radius="xl"
-                        size={20}
+                        size={40}
                       />
                     </Group>
                   </UnstyledButton>

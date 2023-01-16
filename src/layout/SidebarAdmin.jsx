@@ -10,6 +10,7 @@ import {
   IconAlertOctagon,
   IconFileText,
   IconHome,
+  IconUserPlus,
 } from "@tabler/icons";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -114,6 +115,7 @@ const data = [
   { link: "historique", label: "Historique", icon: IconFileText },
   { link: "contact", label: "Tickets Clients", icon: IconAlertOctagon },
   { link: "avis", label: "Avis clients", icon: IconStar },
+  { link: "register-admin", label: "Ajouter Admin", icon: IconUserPlus },
 ];
 
 function SidebarAdminLayout() {
