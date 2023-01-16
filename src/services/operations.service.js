@@ -15,6 +15,11 @@ class OperationService {
     return axios.get(API_URL + "/operations/user");
   }
 
+  SommeOperation() {
+    // return axios.get(API_URL + "/operations/user/" + identifiant);
+    return axios.get(API_URL + "/operations/somme-operation");
+  }
+
   getUserOperationDetails() {
     // return axios.get(API_URL + "/operations/user/" + identifiant);
     return axios.get(API_URL + "/operations/details");

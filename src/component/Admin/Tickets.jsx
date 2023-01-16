@@ -118,7 +118,7 @@ function Tickets(props) {
       <Chargement visible={visible} />
 
       <ScrollArea
-        sx={{ height: 300 }}
+        sx={{ height: 600 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
 

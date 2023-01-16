@@ -63,7 +63,7 @@ function Recharge(props) {
   return (
     <>
       <ScrollArea
-        sx={{ height: 300 }}
+        sx={{ height: 600 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
         <Text variant={"title"} fz={"xl"} fw={900} my={10}>

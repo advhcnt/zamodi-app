@@ -104,6 +104,8 @@ function DashboardComponent(props) {
   const [chartData, setChartData] = useState(grapheData);
   const [operationsDetails, setoperationsDetails] = useState({})
   const [historique, sethistorique] = useState([])
+  const [ExBu, setExBu] = useState({})
+
 
 
   useEffect(() => {
@@ -121,9 +123,22 @@ function DashboardComponent(props) {
     operationsService.getUserOperation().then(
       (data) => {
         let dataR = data.data;
+        console.log(dataR)
         sethistorique([...dataR])
       }
     );
+
+    operationsService.SommeOperation().then(
+      (data)=>{
+        console.log(data.data)
+        setExBu({...data.data})
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+
+
 
 
   }, []);
@@ -137,6 +152,7 @@ function DashboardComponent(props) {
             <Grid>
              
               <Grid.Col md={4}>
+               
                 <div className={classes.item}>
                   <div>
                     <Image
@@ -230,10 +246,10 @@ function DashboardComponent(props) {
                     <Grid>
                       <Grid.Col span={4}>
                         <Text size="sm" mt={7} fw={700}>
-                          10.000 Fcfa
+                        {ExBu.Achat} Fcfa
                         </Text>
                         <Text size="xs" mt={1} c="dimmed">
-                          lorem ipsum
+                         en Achats
                         </Text>
                       </Grid.Col>
                       <Grid.Col span={8}>
@@ -251,10 +267,10 @@ function DashboardComponent(props) {
                     <Grid>
                       <Grid.Col span={4}>
                         <Text size="sm" mt={7} fw={700}>
-                          10.000 Fcfa
+                        {ExBu.Echange} Fcfa
                         </Text>
                         <Text size="xs" mt={1} c="dimmed">
-                          lorem ipsumFDGFGF
+                          en Echange
                         </Text>
                       </Grid.Col>
                       <Grid.Col span={8} style={{ padding: 0 }}>
