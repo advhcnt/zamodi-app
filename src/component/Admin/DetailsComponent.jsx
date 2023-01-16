@@ -1,58 +1,70 @@
 import { Box, createStyles, Grid, Image, Text } from "@mantine/core";
-import React from "react";
+import React, { useEffect } from "react";
 import mtnLogo from "./../../assets/momo.png";
 import moovLogo from "./../../assets/flooz.png";
 import sbinLogo from "./../../assets/celtiis.png";
+import operationsService from "../../services/operations.service";
 
 const useStyles = createStyles((theme) => ({
-    card: {
-      backgroundColor:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[6]
-          : theme.colors.gray[0],
+  card: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[6]
+        : theme.colors.gray[0],
+  },
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 700,
+  },
+  secondCard: {
+    display: "flex",
+    alignItems: "space-between",
+    paddingLeft: "2vw",
+    marginBlock: "2vh",
+    borderRadius: theme.radius.md,
+    height: 80,
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+    transition: "box-shadow 150ms ease, transform 100ms ease",
+    boxShadow: "unset",
+  },
+
+  item: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "2vw",
+    // justifyContent: "space-around",
+    gap: 10,
+    justifyItems: "center",
+    textAlign: "center",
+    borderRadius: theme.radius.md,
+    height: 80,
+    backgroundColor:
+      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
+    transition: "box-shadow 150ms ease, transform 100ms ease",
+
+    "&:hover": {
+      boxShadow: `${theme.shadows.md} !important`,
     },
-  
-    title: {
-      fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-      fontWeight: 700,
-    },
-    secondCard: {
-      display: "flex",
-      alignItems: "space-between",
-      paddingLeft: "2vw",
-      marginBlock: "2vh",
-      borderRadius: theme.radius.md,
-      height: 80,
-      backgroundColor:
-        theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-      transition: "box-shadow 150ms ease, transform 100ms ease",
-      boxShadow: "unset",
-    },
-  
-    item: {
-      display: "flex",
-      alignItems: "center",
-      paddingLeft: "2vw",
-      // justifyContent: "space-around",
-      gap: 10,
-      justifyItems: "center",
-      textAlign: "center",
-      borderRadius: theme.radius.md,
-      height: 80,
-      backgroundColor:
-        theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-      transition: "box-shadow 150ms ease, transform 100ms ease",
-  
-      "&:hover": {
-        boxShadow: `${theme.shadows.md} !important`,
-      },
-    },
-  }));
+  },
+}));
 
 
 function DetailsComponent(props) {
 
-    const { classes, theme } = useStyles();
+  const { classes, theme } = useStyles();
+
+  useEffect(() => {
+    operationsService.globalInfo().then(
+      (data) => {
+        console.log(data)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }, [])
   return (
     <Box my={40}>
       <Grid>
@@ -130,7 +142,7 @@ function DetailsComponent(props) {
                 300 Fcfa
               </Text>
               <Text size="xs" mt={1} c="dimmed">
-               Clients
+                Clients
               </Text>
             </div>
           </div>
