@@ -1,5 +1,5 @@
-import { Box, createStyles, Grid, Image, Text } from "@mantine/core";
-import React, { useEffect } from "react";
+import { Avatar, Box, createStyles, Grid, Image, Text } from "@mantine/core";
+import React, { useEffect, useState } from "react";
 import mtnLogo from "./../../assets/momo.png";
 import moovLogo from "./../../assets/flooz.png";
 import sbinLogo from "./../../assets/celtiis.png";
@@ -50,21 +50,29 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-
 function DetailsComponent(props) {
-
   const { classes, theme } = useStyles();
+  const [celtiis, setceltiis] = useState({});
+  const [mtn, setmtn] = useState({});
+  const [moov, setmoov] = useState({});
+  const [user, setuser] = useState(0);
 
   useEffect(() => {
     operationsService.globalInfo().then(
       (data) => {
-        console.log(data)
+        const detail = data.data;
+        
+        setceltiis({ ...detail.Celtiis });
+        setmtn({ ...detail.Mtn });
+        setmoov({ ...detail.Moov });
+        setuser(detail.utilisateurs);
+        console.log(detail);
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
-    )
-  }, [])
+    );
+  }, []);
   return (
     <Box my={40}>
       <Grid>
@@ -79,7 +87,7 @@ function DetailsComponent(props) {
             </div>
             <div>
               <Text size="sm" mt={7} fw={700}>
-                1000 Fcfa
+                {mtn.montant} Fcfa
               </Text>
               <Text size="xs" mt={1} c="dimmed">
                 Toutes les dépenses
@@ -99,7 +107,7 @@ function DetailsComponent(props) {
             </div>
             <div>
               <Text size="sm" mt={7} fw={700}>
-                500 Fcfa
+                {moov.montant} Fcfa
               </Text>
               <Text size="xs" mt={1} c="dimmed">
                 Toutes les dépenses
@@ -119,7 +127,7 @@ function DetailsComponent(props) {
             </div>
             <div>
               <Text size="sm" mt={7} fw={700}>
-                300 Fcfa
+                {celtiis.montant} Fcfa
               </Text>
               <Text size="xs" mt={1} c="dimmed">
                 Toutes les dépenses
@@ -131,15 +139,11 @@ function DetailsComponent(props) {
         <Grid.Col md={3}>
           <div className={classes.item}>
             <div>
-              <Image
-                src={sbinLogo}
-                style={{ height: "100%", width: "100%" }}
-                alt={"Logo mtn"}
-              />
+              <Avatar size={50} radius={360}/>
             </div>
             <div>
               <Text size="sm" mt={7} fw={700}>
-                300 Fcfa
+                {user} 
               </Text>
               <Text size="xs" mt={1} c="dimmed">
                 Clients
