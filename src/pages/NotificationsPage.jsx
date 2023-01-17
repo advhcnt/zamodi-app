@@ -3,10 +3,58 @@ import { Notifications } from '../component/NotificationsComponent';
 import notificationsService from '../services/notifications.service';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { Avatar, Badge, Box, Button, Center, Group, Modal, Paper, Text, TypographyStylesProvider, createStyles, useMantineTheme } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+
+
+const useStyles = createStyles((theme) => ({
+    comment: {
+        padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
+        marginBlock: 20,
+        '&:hover': {
+            cursor: 'pointer'
+        }
+    },
+
+    body: {
+        paddingLeft: 54,
+        paddingTop: theme.spacing.sm,
+        fontSize: theme.fontSizes.sm,
+    },
+
+    content: {
+        '& > p:last-child': {
+            marginBottom: 0,
+        },
+    },
+}));
 
 export function NotificationsPage(props) {
 
     const [notification, setnotification] = useState([])
+    const [operation, setoperation] = useState(false);
+    const [openedShow, ouvrir] = useDisclosure(false);
+    const theme = useMantineTheme();
+    const { classes } = useStyles();
+
+    // Pour ouvrir le modal permettant d'afficher les details
+    const afficheOperation = (identifiant) => {
+        const resultat = notification.find(
+            (item) => item.transactionId === identifiant
+        );
+        setoperation({ ...resultat });
+
+        setTimeout(() => {
+            notificationsService.lireNotification(operation._id).then(
+                (data) => { console.log('lue') },
+                (error) => { console.log('error') }
+            )
+        }, 500);
+
+
+
+        ouvrir.open();
+    };
 
     useEffect(() => {
         notificationsService.listeNotification().then(
@@ -24,13 +72,171 @@ export function NotificationsPage(props) {
             {notification.map((item) => (
                 <>
                     {item.statut !== 'En attente' && (
-                        <Notifications element={item} />
+                        <Paper withBorder radius="md" className={classes.comment} onClick={() => afficheOperation(item.transactionId)} >
+                            <Group>
+                                <Avatar alt={'zamodiapp'} radius="xl" />
+                                <div>
+                                    <Text size="sm">ZAMODI TEAM</Text>
+                                    <Text size="xs" color={item.statut === 'Valide' ? 'green' : 'red'}>
+                                        {item.statut} {!item.readNotification && (<Badge color={'red'}>NL</Badge>)}
+                                    </Text>
+                                </div>
+                            </Group>
+                            <TypographyStylesProvider className={classes.body}>
+                                <div className={classes.content} dangerouslySetInnerHTML={{ __html: item.notification }} />
+                            </TypographyStylesProvider>
+                        </Paper>
                     )}
                 </>
 
             ))
 
             }
+
+            {/* Detail modal */}
+            <Modal
+                centered
+                closeOnClickOutside={false}
+                withCloseButton={true}
+                opened={openedShow}
+                onClose={ouvrir.close}
+                overlayColor={
+                    theme.colorScheme === "dark"
+                        ? theme.colors.dark[9]
+                        : theme.colors.gray[2]
+                }
+                overlayOpacity={0.55}
+                overlayBlur={3}
+            >
+                <div>
+                    <div style={{ marginBottom: theme.spacing.sm }}>
+                        <Center>
+                            <h2> Détails sur l'opération</h2>
+                        </Center>
+                    </div>
+                    {operation ? (
+                        <Box>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Username:
+                                </strong>{" "}
+                                {operation.username}
+                            </Text>
+
+                            <Text>
+                                {" "}
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Email:
+                                </strong>{" "}
+                                <a
+                                    href={`mailto:${operation.email}`}
+                                    style={{ textDecoration: "none" }}
+                                >
+                                    {operation.email}
+                                </a>{" "}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Opération:{" "}
+                                </strong>
+                                {operation.OperationKind.toUpperCase()}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Montant:
+                                </strong>
+                                {operation.montant}F cfa
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Réseau de départ:{" "}
+                                </strong>
+                                {operation.jai.toUpperCase()}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Réseau d'arriver:{" "}
+                                </strong>
+                                {operation.jeveux.toUpperCase()}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Message:{" "}
+                                </strong>
+                                {operation.notification}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Description:{" "}
+                                </strong>
+                                {operation.Description}
+                            </Text>
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Lecture:{" "}
+                                </strong>
+                                {!operation.readNotification ? "Non" : 'Oui'}
+                            </Text>
+
+                            <Text>
+                                <strong
+                                    style={{
+                                        margin: "5px 20px 5px 20px",
+                                    }}
+                                >
+                                    Date:
+                                </strong>
+                                {operation.updatedAt.split("T")[0]} à{" "}
+                                {operation.updatedAt.split("T")[1].split(".")[0]}
+                            </Text>
+
+                            <Group position={"center"} my={20} onClick={ouvrir.close}>
+                                <Button variant="light" color="red">
+                                    Fermer
+                                </Button>
+                            </Group>
+                        </Box>
+                    ) : (
+                        <Text>En cours de chargement</Text>
+                    )}
+                </div>
+            </Modal>
 
         </>
     );

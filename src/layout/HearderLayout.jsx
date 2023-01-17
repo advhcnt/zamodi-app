@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createStyles,
   Header,
@@ -37,6 +37,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 import { LanguagePicker } from "../component/langue";
+import notificationsService from "../services/notifications.service";
 
 const user = {
   name: "J. Spoonfgf",
@@ -75,7 +76,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       fontWeight: 500,
       marginTop: "80px",
     },
-    
+
     user: {
       color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
       padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
@@ -280,7 +281,22 @@ function HearderLayout(props) {
 
   const navigation = useNavigate();
 
-  const [countNotifications, setcountNotifications] = useState(11)
+  const [countNotifications, setcountNotifications] = useState(0)
+
+  useEffect(() => {
+    notificationsService.listeNotification().then(
+      (data) => {
+
+        const retour = data.data;
+        const compteurTable = retour.filter((item)=>!item.readNotification && item.statut !== 'En attente')
+        console.log('taille',compteurTable.length)
+        setcountNotifications(parseInt(compteurTable.length));
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }, [])
 
 
   return (
@@ -322,7 +338,7 @@ function HearderLayout(props) {
 
             <Box
               className={classes.NavhiddenMobile}
-              // style={{ display: "flex", gap: 20, alignItems: "center" }}
+            // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
                 icon={<IconSearch size={14} />}
@@ -336,11 +352,17 @@ function HearderLayout(props) {
                 style={{ width: "40vw" }}
               />
               {/* Menu pour le choix de la langue */}
-             
+
               <LanguagePicker />
-              <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
-              <IconBell className={"EcritVert spanButton"} onClick={()=>navigate('notifications')} />{" "}
-              </Indicator>
+              {countNotifications > 0 ? (
+                <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
+                  <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
+
+                </Indicator>
+              ) : (
+                <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
+              )}
+
               {/* cloche de notification */}{" "}
             </Box>
 
@@ -370,7 +392,7 @@ function HearderLayout(props) {
                         >
                           {currentUser.message.username}
                         </Text>
-                        
+
                         <Text
                           weight={500}
                           size="xs"
@@ -438,7 +460,7 @@ function HearderLayout(props) {
         className={classes.hiddenDesktop}
         zIndex={1000000}
         lockScroll={true}
-        // closeOnEscape
+      // closeOnEscape
       >
         <Box>
           <Image src={ZamodiLogo} />

@@ -25,6 +25,7 @@ import Avis from "./component/Admin/Avis";
 import { Error404 } from "./pages/errors/Error404";
 import { NotificationsPage } from "./pages/NotificationsPage";
 import RegisterAdmin from "./component/Admin/RegisterAdmin";
+import DetailsNotificationClient from "./pages/DetailsNotificationClient";
 function App(props) {
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -50,7 +51,8 @@ function App(props) {
           <Route index element={<DashboardComponent />} />
           <Route path="profile" element={<ProfileComponent />} />
           <Route path="echange" element={<EchangeComponent />} />
-          <Route path="notifications"  element={<NotificationsPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
+          <Route path="details/:identifiant" element={<DetailsNotificationClient />} />
           <Route path="recharge" element={<RechargeComponent />} />
           <Route path="historique" element={<HistoriqueComponent />} />
           <Route path="contact" element={<ContactComponent />} />

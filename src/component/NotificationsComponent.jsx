@@ -1,9 +1,13 @@
 import { createStyles, Text, Avatar, Group, TypographyStylesProvider, Paper } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   comment: {
     padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
-    marginBlock: 20
+    marginBlock: 20,
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
 
   body: {
@@ -28,12 +32,13 @@ const data = {
   }
 }
 
-export function Notifications({ element }) {
+export function Notifications({ element,afficheOperation }) {
 
   const { postedAt, body, author } = data;
   const { classes } = useStyles();
+  const navigate = useNavigate()
   return (
-    <Paper withBorder radius="md" className={classes.comment}>
+    <Paper withBorder radius="md" className={classes.comment} onClick={afficheOperation} >
       <Group>
         <Avatar src={author.image} alt={author.name} radius="xl" />
         <div>
