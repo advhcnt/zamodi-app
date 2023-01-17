@@ -139,9 +139,13 @@ function Tableau(props) {
       </td>
     </tr>
   ));
+  const [scrolled, setScrolled] = useState(false);
 
   return (
-    <ScrollArea>
+    <ScrollArea
+    sx={{ height: 400 }}
+    onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+  >
       <TextInput
         placeholder="Search by any field"
         mb="md"
