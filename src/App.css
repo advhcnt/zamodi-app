@@ -171,3 +171,7 @@ background-color: #fab005;
     color: #fff;
     
   };
+
+  .pointer{
+    cursor: pointer;
+  }

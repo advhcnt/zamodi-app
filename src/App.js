@@ -40,6 +40,7 @@ function App(props) {
         <Route path="/admin" element={<AdminDashboard />}>
           <Route index element={<HomeAdmin />} />
           <Route path="historique" element={<Historique />} />
+          <Route path="notifications" element={<NotificationsPage />} />
           <Route path="contact" element={<Tickets />} />
           <Route path="operations" element={<Echange />} />
           <Route path="profile" element={<ProfileComponent />} />

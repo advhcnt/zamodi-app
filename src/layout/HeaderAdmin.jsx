@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createStyles,
   Header,
@@ -13,6 +13,7 @@ import {
   Avatar,
   UnstyledButton,
   Paper,
+  Indicator,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -35,6 +36,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 import { LanguagePicker } from "../component/langue";
+import notificationAdminService from './../services/admin/notificationsService'
 
 const user = {
   name: "J. Spoonfgf",
@@ -293,6 +295,20 @@ function HearderAdminLayout(props) {
 
   const navigation = useNavigate();
 
+  const [countNotifications, setcountNotifications] = useState(0)
+
+  useEffect(() => {
+    notificationAdminService.listNotifications().then(
+      (data) => {
+        setcountNotifications(data.data.nombre);
+      },
+      (error)=>{
+          console.log(error)
+      }
+  )
+  }, [])
+  
+
   return (
     <>
       <Header height={70} mb={30}>
@@ -346,7 +362,14 @@ function HearderAdminLayout(props) {
                 style={{ width: "40vw" }}
               />
               <LanguagePicker />
-              <IconBell className={"EcritVert "} /> {/* Utilisateur */}{" "}
+              {countNotifications > 0 ? (
+                <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
+                  <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
+
+                </Indicator>
+              ) : (
+                <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
+              )}
             </Box>
 
             {/* Langue */}

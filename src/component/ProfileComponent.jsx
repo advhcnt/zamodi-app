@@ -97,31 +97,66 @@ function ProfileComponent(props) {
 
     userService.changeImage(formData).then(
       (data) => {
-        console.log(data);
-        if (data.data.status === "success") {
-          var item = JSON.parse(localStorage.getItem("user"));
-          item.message.photo = data.data.message._doc.photo;
-          localStorage.setItem("user", JSON.stringify(item));
-          setsucces({
-            state: true,
-            message: data.data.message._doc.description,
-          });
-        } else {
-          seterreur({
-            state: true,
-            message: "Une erreur est survenue lors du traitement de la requete",
-          });
-        }
+        userService.changeImage(formData).then(
+          (data) => {
+            if (data.data.status === "success") {
+              var item = JSON.parse(localStorage.getItem("user"));
+              item.message.photo = data.data.message._doc.photo;
+              localStorage.setItem("user", JSON.stringify(item));
+              setsucces({
+                state: true,
+                message: data.data.message._doc.description,
+              });
+            } else {
+              seterreur({
+                state: true,
+                message:
+                  "Une erreur est survenue lors du traitement de la requete",
+              });
+            }
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+
+            setErrMsg(resMessage);
+          }
+        );
       },
       (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+        userService.changeImage(formData).then(
+          (data) => {
+            if (data.data.status === "success") {
+              var item = JSON.parse(localStorage.getItem("user"));
+              item.message.photo = data.data.message._doc.photo;
+              localStorage.setItem("user", JSON.stringify(item));
+              setsucces({
+                state: true,
+                message: data.data.message._doc.description,
+              });
+            } else {
+              seterreur({
+                state: true,
+                message:
+                  "Une erreur est survenue lors du traitement de la requete",
+              });
+            }
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
 
-        setErrMsg(resMessage);
+            setErrMsg(resMessage);
+          }
+        );
       }
     );
   };

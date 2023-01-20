@@ -9,6 +9,10 @@ class Notifications {
     addNotifications(data){
         return axios.post(API_URL+'/admin/addnotification',data);
     }
+
+    listNotifications(data){
+        return axios.get(API_URL+'/admin/notification');
+    }
 }
 
 

@@ -9,6 +9,7 @@ import {
   Grid,
   Box,
   createStyles,
+  Card,
 } from "@mantine/core";
 import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
@@ -33,13 +34,6 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#20986e",
     width: "100%",
     marginTop: "3vh",
-  },
-  partieChamp: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    justifyItems: "center",
-    height: "100vh",
   },
   partieNeutre: {
     backgroundColor: "#20986e",
@@ -110,11 +104,12 @@ function RegisterAdmin(props) {
   });
 
   const handleSubmit = async (e) => {
+    setvisible(true)
     e.preventDefault();
     if (user.valeur && user.valeur !== "") {
       if (mail.valeur && mail.valeur !== "" && verifyEmail(mail.valeur)) {
         if (pwd.valeur && pwd.valeur.length >= 8) {
-          if (condition.valeur) {
+         
             setvisible(true);
             authService
               .registerAdmin(user.valeur, mail.valeur, pwd.valeur)
@@ -122,9 +117,9 @@ function RegisterAdmin(props) {
                 (data) => {
                   if (data.status === 200 || data.state === "success") {
                     setvisible(false);
-                    console.log(data);
-                    // navigate("/login");
-                    // window.location.reload();
+                   setMail({ valeur: "", erreur: false });
+                   setPwd({ valeur: "", erreur: false });
+                   setUser({ valeur: "", erreur: false });
                   } else {
                     setvisible(false);
                     setErrMsg(data.message);
@@ -142,47 +137,33 @@ function RegisterAdmin(props) {
                   setErrMsg(resMessage);
                 }
               );
-          } else {
-            setcondition({
-              ...condition,
-              erreur: "Veillez accepter les termes et conditions d'utilisation",
-            });
-          }
         } else {
+          setvisible(false);
           setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" });
         }
       } else {
+        setvisible(false);
         setMail({ ...mail, erreur: "Veillez entrer un mail valide" });
       }
     } else {
+      setvisible(false);
       setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" });
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "100vw",
-        overflow: "hidden",
-        maxHeight: "100vh",
-        position: "relative",
-      }}
-    >
+    <div>
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
-      <Grid
-        className={"secondplaceLogin"}
-        style={{ maxHeight: "102vh", overflow: "hidden" }}
-      >
+      <Grid>
         {/* Partie une */}
         <Grid.Col
           md={8}
           order={2}
           orderMd={1}
-          className={` ${classes.partieChamp}`}
           mx={"auto"}
         >
-          <Box style={{ width: "70%" }}>
+          <Card style={{ width: "70%" }} p={50}>
             <Text size={20} weight={900} ta={"center"}>
               Créer un compte pour Administrateur
             </Text>
@@ -276,7 +257,7 @@ function RegisterAdmin(props) {
                 {upperFirst("Créer le compte")}
               </Button>
             </form>
-          </Box>
+          </Card>
         </Grid.Col>
       </Grid>
     </div>
