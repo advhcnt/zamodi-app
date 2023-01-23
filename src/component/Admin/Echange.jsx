@@ -208,8 +208,8 @@ function Echange(props) {
                       </span>
                     </td>
                     <td>
-                      {item.updatedAt.split("T")[0]} à{" "}
-                      {item.updatedAt.split("T")[1].split(".")[0]}
+                      {item.createdAt.split("T")[0]} à{" "}
+                      {item.createdAt.split("T")[1].split(".")[0]}
                     </td>
                     <td>
                       <Menu withinPortal position="bottom-end" shadow="sm">

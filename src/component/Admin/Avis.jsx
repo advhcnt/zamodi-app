@@ -7,8 +7,16 @@ import {
   Table,
   Text,
 } from "@mantine/core";
-import { IconDotsVertical, IconEdit, IconLock, IconTrash } from "@tabler/icons";
-import React, { useState } from "react";
+import {
+  IconDotsVertical,
+  IconEdit,
+  IconEye,
+  IconEyeOff,
+  IconLock,
+  IconTrash,
+} from "@tabler/icons";
+import React, { useEffect, useState } from "react";
+import AvisService from "./../../services/avis.service";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -24,10 +32,11 @@ const useStyles = createStyles((theme) => ({
       left: 0,
       right: 0,
       bottom: 0,
-      borderBottom: `1px solid ${theme.colorScheme === "dark"
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
           ? theme.colors.dark[3]
           : theme.colors.gray[2]
-        }`,
+      }`,
     },
   },
 
@@ -38,7 +47,46 @@ const useStyles = createStyles((theme) => ({
 
 function Avis(props) {
   const { classes, cx } = useStyles();
+  const [Listavis, setListavis] = useState([]);
   const [scrolled, setScrolled] = useState(false);
+
+  // Pour checker le state d'une demande
+  const checkState = (state) => {
+    if (state === "En attente") {
+      return "attente";
+    } else if (state === "Valide") {
+      return "valide";
+    } else {
+      return "caché";
+    }
+  };
+
+  useEffect(() => {
+    AvisService.getAllAvis().then(
+      (data) => {
+        let reponse = data.data.data;
+        console.log(reponse);
+        setListavis([...reponse]);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }, []);
+
+  const handleAfficher = ()=>{
+    alert('Afficher');
+  }
+
+  const handleCacher = ()=>{
+   alert('Cacher');
+  }
+
+  const handleDelete = ()=>{
+   alert('Delete');
+   
+  }
+
   return (
     <Box>
       <Text variant={"title"} fz={"xl"} fw={900} my={10}>
@@ -48,7 +96,8 @@ function Avis(props) {
         sx={{ height: 300 }}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
-        <Table sx={{ minWidth: 700 }}
+        <Table
+          sx={{ minWidth: 700 }}
           striped
           highlightOnHover
           withBorder
@@ -66,41 +115,67 @@ function Avis(props) {
               <th>Note</th>
               <th>Message</th>
               <th>Dates</th>
+              <th>Etat</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr key="row.namfge">
-              <td>adv</td>
-              <td>advhcnt23@gmail.com</td>
-              <td>5</td>
-              <td>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Necessitatibus commodi odit debitis voluptas illum ut?
-                </p>
-              </td>
-              <td>12/12/2022</td>
-              <td>
-                <Menu withinPortal position="bottom-end" shadow="sm">
-                  <Menu.Target>
-                    <ActionIcon>
-                      <IconDotsVertical size={16} />
-                    </ActionIcon>
-                  </Menu.Target>
+            {setListavis.length > 0 ? (
+              <>
+                {Listavis.map((item) => (
+                  <tr key="">
+                    <td>{item.username}</td>
+                    <td>{item.email}</td>
+                    <td>{item._doc.note}</td>
+                    <td>
+                      <p>{item._doc.description}</p>
+                    </td>
+                    <td>
+                      {item._doc.createdAt.split("T")[0]} à{" "}
+                      {item._doc.createdAt.split("T")[1].split(".")[0]}
+                    </td>
+                    <td>
+                      <span className={checkState(item._doc.state)}>
+                        {item._doc.state.toUpperCase() === "EN ATTENTE"
+                          ? "ATTENTE"
+                          : item._doc.state.toUpperCase()}
+                      </span>
+                    </td>
+                    <td>
+                      <Menu withinPortal position="bottom-end" shadow="sm">
+                        <Menu.Target>
+                          <ActionIcon>
+                            <IconDotsVertical size={16} />
+                          </ActionIcon>
+                        </Menu.Target>
 
-                  <Menu.Dropdown>
-                    <Menu.Item icon={<IconEdit size={14} />}>
-                      Modifier
-                    </Menu.Item>
-                    <Menu.Item icon={<IconLock size={14} />}>Blocker</Menu.Item>
-                    <Menu.Item icon={<IconTrash size={14} />} color="red">
-                      Supprimer
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-              </td>
-            </tr>
+                        <Menu.Dropdown>
+                          <Menu.Item icon={<IconEye size={14} />} 
+                          onClick={handleAfficher}
+                          >
+                            Afficher
+                          </Menu.Item>
+                          <Menu.Item icon={<IconEyeOff size={14} />}
+                          onClick={handleCacher}
+                          >
+                            Blocker
+                          </Menu.Item>
+                          <Menu.Item icon={<IconTrash size={14} />} color="red"
+                          onClick={handleDelete}
+                          >
+                            Supprimer
+                          </Menu.Item>
+                        </Menu.Dropdown>
+                      </Menu>
+                    </td>
+                  </tr>
+                ))}
+              </>
+            ) : (
+              <>
+                <Text ta={"center"}>Il n'y a pas de note actuellement</Text>
+              </>
+            )}
           </tbody>
         </Table>
       </ScrollArea>
