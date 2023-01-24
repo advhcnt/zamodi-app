@@ -68,3 +68,119 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+
+
+let upload = multer({
+    dest: "uploads/"
+})
+AssetsRouter.post("/", upload.single('file'), async (req, res) => {
+    let storedFiles: any = {};
+    console.log("FILE")
+    if (req.file) {
+        let file = req.file as Express.Multer.File
+        console.log("file", req.file)
+        //check if file is valid
+        // then move it to final destination
+        // and mark it as uploaded in storedFiles array
+        let errors: any = {};
+        let matchRequiredExts = VALID_MIMES.find((mime) => file.mimetype.match(mime)) != undefined;
+        if (!matchRequiredExts) {
+            errors.mimetype = "MIME Type not supported";
+        }
+        if (file.size > MAX_FILE_SIZE) {
+            errors.size = "FIle size too big";
+        }
+        if (Object.keys(errors).length > 0) {
+            // this file errored. we push errors lets remove it.
+            storedFiles[file.originalname] = errors;
+            fs.rmSync(file.path);
+        }
+        else {
+            //rename file,
+            // move it to final directory,
+            // push name to storedFile object.
+            let renamed = randomFileName(file.originalname);
+            //console.log("renamed", renamed)
+            fs.readFile(file.path, async (err, data) => {
+                const url = await uploadFile(data, renamed)
+                fs.rmSync(file.path);
+                return res.json(restSuccess(url));
+            })
+            //deletefile
+        }
+    }
+})
+14 h 33
+const VALID_MIMES = [
+    /^text\/.*$/,
+    /^image\/.*$/,
+    /^audio\/.*$/,
+    /^video\/.*$/,
+    /^application\/pdf/,
+    /^application\/msword/,
+    /^application\/vnd.*$/
+]
+const MAX_FILE_SIZE = process.env.MAX_FILE_SIZE ? parseFloat(process.env.MAX_FILE_SIZE) : 1024 * 1024 * 250 // Maximum Uploadable size: 256Mbytes
+
+
+export const randomFileName = (fileName: string, size?: number) => {
+    const ext = path.extname(fileName)
+    const name = crypto
+        .randomBytes(size || 20)
+        .toString('base64')
+        .slice(0, size)
+    return name + ext
+}
+
+
+
+AssetsRouter.post("/:directory", upload.array('content', 8), (req, res) => {
+    //if (req.user && req.params.directory.includes(req.user._id)) {
+    let directory = req.params.directory;
+    let completeUrl = path.join("uploads", directory);
+    if (!fs.existsSync(completeUrl)) {
+        fs.mkdirSync(completeUrl);
+    }
+    let storedFiles: any = {};
+    if (req.files?.length) {
+        let files = req.files as Express.Multer.File[]
+        // Its an array of files from a single form field
+        files.forEach((file, i, arr) => {
+            //check if file is valid
+            // then move it to final destination
+            // and mark it as uploaded in storedFiles array
+            let errors: any = {};
+            let matchRequiredExts = VALID_MIMES.find((mime) => file.mimetype.match(mime)) != undefined;
+            if (!matchRequiredExts) {
+                errors.mimetype = "MIME Type not supported";
+            }
+            if (file.size > MAX_FILE_SIZE) {
+                errors.size = "FIle size too big";
+            }
+            if (Object.keys(errors).length > 0) {
+                // this file errored. we push errors lets remove it.
+                storedFiles[file.originalname] = errors;
+                fs.rmSync(file.path);
+            }
+            else {
+                //rename file,
+                // move it to final directory,
+                // push name to storedFile object.
+                let renamed = randomFileName(file.originalname);
+                console.log("renamed", renamed)
+                storedFiles[file.originalname] = `${API_BASE_URL}/assets/${directory.replace("/", ".")}.${renamed}`;
+                const newPath = path.join("uploads", directory, renamed)
+                fs.renameSync(file.path, newPath);
+            }
+        })
+        return res.json(restSuccess(storedFiles));
+    }
+    return res.status(401).json(restError("No file uploaded", undefined));
+    /*     } else {
+            return res.status(401).json(restError("Upload authorized on this directory", undefined))
+        } */
+})
