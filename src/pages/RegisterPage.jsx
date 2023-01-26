@@ -120,6 +120,8 @@ function RegisterPage(props) {
     },
   });
 
+
+  // Fonction pour l'inscription
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (user.valeur && user.valeur !== "") {

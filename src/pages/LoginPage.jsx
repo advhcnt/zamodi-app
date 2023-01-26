@@ -25,6 +25,10 @@ import authHeader from "./../services/auth-header";
 import Chargement from "../component/Chargement";
 
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import { verifyEmail } from "../utils/fonctions";
+import PasswordForgotComponent from "../component/PasswordForgotComponent";
+import EnterCodeComponent from "../component/EnterCodeComponent";
+import NewPasswordComponent from "../component/NewPasswordComponent";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -79,10 +83,13 @@ const useStyles = createStyles((theme) => ({
 
 function LoginPage(props) {
   const errRef = useRef();
-  const [user, setUser] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-  const [pageKing, setpageKing] = useState("login");
+  const [user, setUser] = useState({ valeur: "", erreur: false });
+  const [pwd, setPwd] = useState({ valeur: "", erreur: false });
+  const [errMsg, setErrMsg] = useState(false);
+  const [pageKing, setpageKing] = useState("EnterCode");
+  const [visible, setvisible] = useState(false);
+  const [client, setclient] = useState("");
+  const [Code, SetCode] = useState('')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -112,37 +119,41 @@ function LoginPage(props) {
     setvisible(true);
     e.preventDefault();
     // setvisible(true);
-    if (user && pwd && pwd.length >= 8) {
-      authService.login(user, pwd).then(
-        (data) => {
-          if (data.status === 200 || data.state === "success") {
-            authHeader(data.accessToken);
-            if (data.isAdmin) {
-              navigate("/admin");
+    if (user.valeur) {
+      if (pwd.valeur && pwd.valeur.length >= 8) {
+        authService.login(user.valeur, pwd.valeur).then(
+          (data) => {
+            if (data.status === 200 || data.state === "success") {
+              authHeader(data.accessToken);
+              if (data.isAdmin) {
+                navigate("/admin");
+              } else {
+                navigate("/dashboard");
+              }
             } else {
-              navigate("/dashboard");
+              setvisible(false);
+              setErrMsg(data.message);
             }
-          } else {
-            setvisible(false);
-            setErrMsg(data.message);
-          }
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+          },
+          (error) => {
+            const resMessage =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
 
-          setvisible(false);
-          setErrMsg(resMessage);
-        }
-      );
+            setvisible(false);
+            setErrMsg(resMessage);
+          }
+        );
+      } else {
+        setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" });
+      }
+    } else {
+      setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" });
     }
   };
-
-  const [visible, setvisible] = useState(false);
 
   const googleAuth = () => {
     window.open(
@@ -150,6 +161,41 @@ function LoginPage(props) {
       "_self"
     );
   };
+
+  // Fonction pour demander le code de restauration
+  // const handlePassword = () => {
+  //   if (user.valeur && verifyEmail(user.valeur)) {
+  //     setvisible(true);
+  //     try {
+  //       authService.forgetPassword(user.valeur).then(
+  //         (data) => {
+  //           setvisible(false);
+  //           let response = data.data;
+  //           if (response.state === "success") {
+  //             setpageKing("EnterCode");
+  //           }
+  //         },
+  //         (error) => {
+  //           setvisible(false);
+  //           console.log(error);
+  //         }
+  //       );
+  //     } catch (error) {
+  //       const resMessage =
+  //         (error.response &&
+  //           error.response.data &&
+  //           error.response.data.message) ||
+  //         error.message ||
+  //         error.toString();
+
+  //       setvisible(false);
+  //       setErrMsg(resMessage);
+  //     }
+  //   } else {
+  //     setUser({ ...user, erreur: "Veillez entrer un mail valide" });
+  //   }
+  // };
+
   return (
     <Box style={{ maxWidth: "100vw", position: "relative" }}>
       {/* LAZY LOAD */}
@@ -163,7 +209,7 @@ function LoginPage(props) {
           orderMd={1}
           className={` ${classes.partieChamp}`}
         >
-          {pageKing === "login" ? (
+          {pageKing === "login" && (
             <Box className={classes.boxStyle}>
               <Image
                 src={ZamodiLogo}
@@ -201,13 +247,14 @@ function LoginPage(props) {
                         className={classes.lesIcones}
                       />
                     }
-                    required
                     size={"sm"}
                     placeholder="username"
                     variant={"filled"}
-                    value={user}
-                    onChange={(event) => setUser(event.target.value)}
-                    error={form.errors.email && "Invalid email"}
+                    value={user.valeur}
+                    onChange={(event) =>
+                      setUser({ valeur: event.target.value, erreur: false })
+                    }
+                    error={user.erreur && <>{user.erreur}</>}
                   />
 
                   <PasswordInput
@@ -220,26 +267,14 @@ function LoginPage(props) {
                         className={classes.lesIcones}
                       />
                     }
-                    required
                     placeholder="Your password"
                     variant={"filled"}
-                    value={pwd}
-                    onChange={(event) => setPwd(event.target.value)}
-                    error={
-                      form.errors.password &&
-                      "Password should include at least 6 characters"
+                    value={pwd.valeur}
+                    onChange={(event) =>
+                      setPwd({ valeur: event.target.value, erreur: false })
                     }
+                    error={pwd.erreur && <>{pwd.erreur}</>}
                   />
-
-                  {type === "register" && (
-                    <Checkbox
-                      label="I accept terms and conditions"
-                      checked={form.values.terms}
-                      onChange={(event) =>
-                        form.setFieldValue("terms", event.currentTarget.checked)
-                      }
-                    />
-                  )}
                 </Stack>
 
                 <Group position="apart" mt="xl">
@@ -250,7 +285,10 @@ function LoginPage(props) {
                     onClick={() => toggle()}
                     size="xs"
                   >
-                    <span  style={{ color: "#20986e" }} onClick={()=>setpageKing('forgotpassword')}>
+                    <span
+                      style={{ color: "#20986e" }}
+                      onClick={() => setpageKing("forgotpassword")}
+                    >
                       Mot de passe oublier
                     </span>
                   </Anchor>
@@ -437,79 +475,25 @@ function LoginPage(props) {
                 </Anchor>
               </Group>
             </Box>
-          ) : (
-            <Box className={classes.boxStyle}>
-              <Image
-                src={ZamodiLogo}
-                width={"70%"}
-                mb={"8%"}
-                className={classes.hiddenMobile}
-              />
-              <Image src={ZamodiLogo} className={classes.logo} />
+          )}
 
-              <Text size={25} weight={900}>
-                Mot depasse oublié
-              </Text>
-              <Text size={"xs"} mb={"8%"}>
-                Inséré votre mail pour recevoir le code de confirmation
-              </Text>
-              <Text
-                ta={"center"}
-                c={"red"}
-                ref={errRef}
-                className={errMsg ? "errmsg" : "offscreen"}
-                aria-live="assertive"
-              >
-                {errMsg}
-              </Text>
-              <form onSubmit={handleSubmit}>
-                <Stack>
-                  <TextInput
-                    radius="32px"
-                    icon={
-                      <IconMail
-                        size={20}
-                        color={"#20986e"}
-                        className={classes.lesIcones}
-                      />
-                    }
-                    required
-                    size={"sm"}
-                    placeholder="Votre mail"
-                    variant={"filled"}
-                    value={user}
-                    onChange={(event) => setUser(event.target.value)}
-                    error={form.errors.email && "Invalid email"}
-                  />
-                </Stack>
-                <Button
-                  size="xs"
-                  fw={"xs"}
-                  type="submit"
-                  radius={"lg"}
-                  className={classes.loginButton}
-                >
-                  {upperFirst("Recevoir le code")}
-                </Button>
-              </form>
-              <Group position="apart" mt="xl">
-                <Anchor
-                  component="button"
-                  type="button"
-                  color="dimmed"
-                  style={{ color: "black" }}
-                  size="xs"
-                >
-                  <span
-                    className="pointer"
-                    style={{ color: "#20986e", marginInline: 10 }}
-                    onClick={() => setpageKing("login")}
-                  >
-                    Me connecter avec mot de passe
-                  </span>
-                </Anchor>
-              </Group>
-            </Box>
+          {pageKing === "forgotpassword" && (
+            <PasswordForgotComponent
+              setpageKing={setpageKing}
+              setclient={setclient}
+            />
+          )}
+
+          {pageKing === "EnterCode" && (
+            <EnterCodeComponent email={client} setpageKing={setpageKing} />
+          )}
+
+          {pageKing === "AddNewPass" && (
+            <EnterCodeComponent email={client} setpageKing={setpageKing} SetCode={SetCode}/>
+          )}
+
+          {pageKing === "NewPassword" && (
+            <NewPasswordComponent email={client} setpageKing={setpageKing} code={Code} />
           )}
         </Grid.Col>
 
