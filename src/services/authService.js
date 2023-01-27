@@ -14,6 +14,14 @@ class AuthService {
   {
     return axios.post(API_URL + "/auth/check-code",{email:email,code:code});
   }
+
+  NewPassword(code, email, newPassword, confirmPassword)
+  {
+    return axios.post(API_URL + "/auth/new-password",{code:code, email:email, newPassword:newPassword, confirmPassword:confirmPassword});
+  }
+
+
+
   login(username, password) {
     return axios
       .post(API_URL + "/auth/login", { username, password })

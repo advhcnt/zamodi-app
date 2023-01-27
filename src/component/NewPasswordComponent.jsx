@@ -70,6 +70,7 @@ import {
     },
   }));
   function NewPasswordComponent({ setpageKing, email,code }) {
+
     const [visible, setvisible] = useState(false);
     const [errMsg, setErrMsg] = useState(false);
     const [pwd, setPwd] = useState({ valeur: "", erreur: false });
@@ -81,13 +82,13 @@ import {
       if (pwd.valeur && verifyEmail(pwd.valeur)) {
         setvisible(true);
         try {
-          authService.NewPassword(pwd.valeur).then(
+          authService.NewPassword(email,code,pwd.valeur,pwdConfirm.valeur).then(
             (data) => {
               setvisible(false);
               let response = data.data;
               console.log(response);
               if (response.state === "success") {
-                setpageKing("EnterCode");
+                setpageKing("login");
               }
             },
             (error) => {
@@ -126,10 +127,10 @@ import {
           <Image src={ZamodiLogo} className={classes.logo} />
   
           <Text size={25} weight={900}>
-            Mot depasse oublié
+            Nouveau mot de passe 
           </Text>
           <Text size={"xs"} mb={"8%"}>
-            Inséré votre mail pour recevoir le code de confirmation
+            Inséré vos nouveaux mots de passe 
           </Text>
           <Text
             ta={"center"}
@@ -141,7 +142,7 @@ import {
           </Text>
           <form>
             <Stack>
-              <TextInput
+              <PasswordInput
                 radius="32px"
                 icon={
                   <IconLock
@@ -151,8 +152,8 @@ import {
                   />
                 }
                 size={"sm"}
-                type={'password'}
-                placeholder="Votre mail"
+               
+                placeholder="Entrer votre nouveau mot de passe"
                 variant={"filled"}
                 value={pwd.valeur}
                 onChange={(event) =>
@@ -171,7 +172,7 @@ import {
                         className={classes.lesIcones}
                       />
                     }
-                    placeholder="Your password"
+                    placeholder="Confirmer mot de passe"
                     variant={"filled"}
                     value={pwdConfirm.valeur}
                     onChange={(event) =>
@@ -187,7 +188,7 @@ import {
               className={classes.loginButton}
               onClick={handlePassword}
             >
-              {upperFirst("Recevoir le code")}
+              {upperFirst("Mettre à jour ")}
             </Button>
           </form>
           <Group position="apart" mt="xl">

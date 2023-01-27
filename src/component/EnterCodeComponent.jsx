@@ -71,12 +71,12 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function EnterCodeComponent({ setpageKing, email }) {
+function EnterCodeComponent({ setpageKing, email,SetCode }) {
+
   const [visible, setvisible] = useState(false);
   const [errMsg, setErrMsg] = useState(false);
   const [code, setCode] = useState({ valeur: "", erreur: false });
   const { classes } = useStyles();
-  const navigate = useNavigate();
 
   // Fonction pour demander le code de restauration
   const handleCode = () => {
@@ -89,6 +89,7 @@ function EnterCodeComponent({ setpageKing, email }) {
             let response = data.data;
             console.log(response);
             if (response.state === "success") {
+              SetCode(code.valeur)
               setpageKing("NewPassword");
             }
           },

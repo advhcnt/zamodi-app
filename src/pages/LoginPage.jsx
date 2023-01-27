@@ -7,7 +7,6 @@ import {
   Group,
   Button,
   Divider,
-  Checkbox,
   Anchor,
   Stack,
   Grid,
@@ -25,7 +24,6 @@ import authHeader from "./../services/auth-header";
 import Chargement from "../component/Chargement";
 
 import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
-import { verifyEmail } from "../utils/fonctions";
 import PasswordForgotComponent from "../component/PasswordForgotComponent";
 import EnterCodeComponent from "../component/EnterCodeComponent";
 import NewPasswordComponent from "../component/NewPasswordComponent";
@@ -86,10 +84,10 @@ function LoginPage(props) {
   const [user, setUser] = useState({ valeur: "", erreur: false });
   const [pwd, setPwd] = useState({ valeur: "", erreur: false });
   const [errMsg, setErrMsg] = useState(false);
-  const [pageKing, setpageKing] = useState("EnterCode");
+  const [pageKing, setpageKing] = useState("login");
   const [visible, setvisible] = useState(false);
-  const [client, setclient] = useState("");
-  const [Code, SetCode] = useState('')
+  const [client, setclient] = useState(false);
+  const [Code, SetCode] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -98,22 +96,7 @@ function LoginPage(props) {
 
   const { classes } = useStyles();
   const [type, toggle] = useToggle(["login", "register"]);
-  const form = useForm({
-    initialValues: {
-      email: "",
-      name: "",
-      password: "",
-      terms: true,
-    },
-
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
-    },
-  });
+ 
 
   const handleSubmit = async (e) => {
     setvisible(true);
@@ -161,40 +144,6 @@ function LoginPage(props) {
       "_self"
     );
   };
-
-  // Fonction pour demander le code de restauration
-  // const handlePassword = () => {
-  //   if (user.valeur && verifyEmail(user.valeur)) {
-  //     setvisible(true);
-  //     try {
-  //       authService.forgetPassword(user.valeur).then(
-  //         (data) => {
-  //           setvisible(false);
-  //           let response = data.data;
-  //           if (response.state === "success") {
-  //             setpageKing("EnterCode");
-  //           }
-  //         },
-  //         (error) => {
-  //           setvisible(false);
-  //           console.log(error);
-  //         }
-  //       );
-  //     } catch (error) {
-  //       const resMessage =
-  //         (error.response &&
-  //           error.response.data &&
-  //           error.response.data.message) ||
-  //         error.message ||
-  //         error.toString();
-
-  //       setvisible(false);
-  //       setErrMsg(resMessage);
-  //     }
-  //   } else {
-  //     setUser({ ...user, erreur: "Veillez entrer un mail valide" });
-  //   }
-  // };
 
   return (
     <Box style={{ maxWidth: "100vw", position: "relative" }}>
@@ -485,12 +434,12 @@ function LoginPage(props) {
           )}
 
           {pageKing === "EnterCode" && (
-            <EnterCodeComponent email={client} setpageKing={setpageKing} />
+            <EnterCodeComponent email={client} setpageKing={setpageKing} SetCode={SetCode} />
           )}
 
-          {pageKing === "AddNewPass" && (
+          {/* {pageKing === "AddNewPass" && (
             <EnterCodeComponent email={client} setpageKing={setpageKing} SetCode={SetCode}/>
-          )}
+          )} */}
 
           {pageKing === "NewPassword" && (
             <NewPasswordComponent email={client} setpageKing={setpageKing} code={Code} />

@@ -1,5 +1,4 @@
 import { useToggle, upperFirst } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
@@ -92,10 +91,9 @@ function RegisterPage(props) {
   const [mail, setMail] = useState({ valeur: "", erreur: false });
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [visible, setvisible] = useState(false);
   const [condition, setcondition] = useState({ valeur: false, erreur: false });
-  const navigation = useNavigate();
+ 
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
 
@@ -103,22 +101,7 @@ function RegisterPage(props) {
     setErrMsg("");
   }, [user, pwd]);
 
-  const form = useForm({
-    initialValues: {
-      email: "",
-      name: "",
-      password: "",
-      terms: true,
-    },
-
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
-      password: (val) =>
-        val.length <= 6
-          ? "Password should include at least 6 characters"
-          : null,
-    },
-  });
+ 
 
 
   // Fonction pour l'inscription
