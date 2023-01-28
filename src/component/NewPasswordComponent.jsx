@@ -79,7 +79,7 @@ import {
   
     // Fonction pour demander le code de restauration
     const handlePassword = () => {
-      if (pwd.valeur && verifyEmail(pwd.valeur)) {
+      if (pwd.valeur && pwdConfirm.valeur && pwdConfirm.valeur===pwd.valeur && pwdConfirm.valeur.length>=8) {
         setvisible(true);
         try {
           authService.NewPassword(email,code,pwd.valeur,pwdConfirm.valeur).then(
@@ -103,12 +103,13 @@ import {
               error.response.data.message) ||
             error.message ||
             error.toString();
+            
   
           setvisible(false);
           setErrMsg(resMessage);
         }
       } else {
-        setPwd({ ...pwd, erreur: "Veillez entrer un mail valide" });
+        setPwd({ ...pwd, erreur: "Veillez revoir vos mots de passe" });
       }
     };
   

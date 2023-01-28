@@ -15,7 +15,7 @@ class AuthService {
     return axios.post(API_URL + "/auth/check-code",{email:email,code:code});
   }
 
-  NewPassword(code, email, newPassword, confirmPassword)
+  NewPassword( email,code, newPassword, confirmPassword)
   {
     return axios.post(API_URL + "/auth/new-password",{code:code, email:email, newPassword:newPassword, confirmPassword:confirmPassword});
   }
