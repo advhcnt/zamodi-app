@@ -79,10 +79,10 @@ import {
   
     // Fonction pour demander le code de restauration
     const handlePassword = () => {
-      if (pwd.valeur && verifyEmail(pwd.valeur)) {
+      if (pwd.valeur && pwdConfirm.valeur && pwdConfirm.valeur===pwd.valeur && pwd.valeur.length >= 8) {
         setvisible(true);
         try {
-          authService.NewPassword(email,code,pwd.valeur,pwdConfirm.valeur).then(
+          authService.NewPassword(code,email,pwd.valeur,pwdConfirm.valeur).then(
             (data) => {
               setvisible(false);
               let response = data.data;

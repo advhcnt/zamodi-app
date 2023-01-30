@@ -13,22 +13,26 @@ import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <I18nProvider locale={LOCALES.ENGLISH}>
       <Provider store={store}>
         <BrowserRouter>
-        <GoogleOAuthProvider clientId="164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com">
-        <ModalsProvider labels={{ confirm: 'Submit', cancel: 'Cancel' }}>
-        <MantineProvider withNormalizeCSS withGlobalStyles>
-      <NotificationsProvider position="top-right" zIndex={2077} autoClose={4000}>
-          <App />
-          </NotificationsProvider>
-    </MantineProvider>
-          </ModalsProvider>
-          </GoogleOAuthProvider>;
+          <GoogleOAuthProvider clientId="164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com">
+            <ModalsProvider labels={{ confirm: "Submit", cancel: "Cancel" }}>
+              <MantineProvider withNormalizeCSS withGlobalStyles>
+                <NotificationsProvider
+                  position="top-right"
+                  zIndex={2077}
+                  autoClose={4000}
+                >
+                  <App />
+                </NotificationsProvider>
+              </MantineProvider>
+            </ModalsProvider>
+          </GoogleOAuthProvider>
+          ;
         </BrowserRouter>
       </Provider>
     </I18nProvider>
