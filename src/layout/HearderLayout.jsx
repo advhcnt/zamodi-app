@@ -23,6 +23,9 @@ import {
   IconBell,
   IconAlignCenter,
   IconArrowsLeftRight,
+  IconCheck,
+  IconX,
+  IconInfoCircle,
 } from "@tabler/icons";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import {
@@ -38,6 +41,8 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 import { LanguagePicker } from "../component/langue";
 import notificationsService from "../services/notifications.service";
+import { openConfirmModal } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 
 const user = {
   name: "J. Spoonfgf",
@@ -296,7 +301,58 @@ function HearderLayout(props) {
         console.log(error)
       }
     )
-  }, [])
+  }, []);
+
+
+
+  const openDeleteModal = () =>
+    openConfirmModal({
+      title: 'Delete your profile',
+      centered: true,
+      children: (
+        <Text size="sm">
+          Are you sure you want to delete your profile? This action is destructive and you will have
+          to contact support to restore your data.
+        </Text>
+      ),
+      labels: { confirm: 'Delete account', cancel: "No don't delete it" },
+      confirmProps: { color: 'red' },
+      onCancel: () => {
+        SuccessNotification('Suppression de compte','Suppression de compte annulée avec succès',1);
+      },
+      onConfirm: () => {
+        authService.deleteAccount().then(
+          (data)=>{
+            
+            SuccessNotification('Suppression de compte','Votre compte a été supprimé avec succès')
+            setTimeout(() => {
+              logOut()
+            }, 2000);
+          },
+          (error)=>{
+            ErrorNotification('Suppression de compte',error);
+          }
+        )
+      },
+    });
+    
+
+    const SuccessNotification = (titre,texte,kind=false) => {
+      showNotification({
+        title: titre,
+        message: texte,
+        icon:kind?<IconInfoCircle size={16} /> : <IconCheck size={16} />,
+        autoClose: 2000,
+      })};
+
+      const ErrorNotification = (titre,texte) => {
+        showNotification({
+          color:'red',
+          title: titre,
+          message: texte,
+          icon:<IconX size={16} />,
+          autoClose: 2000,
+        })};
 
 
   return (
@@ -436,6 +492,7 @@ function HearderLayout(props) {
                   <Menu.Item
                     color="red"
                     icon={<IconTrash size={14} stroke={1.5} />}
+                    onClick={openDeleteModal}
                   >
                     Delete account
                   </Menu.Item>

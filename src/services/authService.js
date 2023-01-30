@@ -5,11 +5,14 @@ import { API_URL } from "./http-common";
 // const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {
-
+deleteAccount(){
+  return axios.get(API_URL + "/auth/delete-account");
+}
   forgetPassword(email)
   {
     return axios.post(API_URL + "/auth/forgot-pass",{email:email});
   }
+
   reinitialisationCode(email,code)
   {
     return axios.post(API_URL + "/auth/check-code",{email:email,code:code});
