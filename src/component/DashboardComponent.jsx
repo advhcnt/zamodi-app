@@ -15,7 +15,7 @@ import sbinLogo from "./../assets/celtiis.png";
 import Tableau from "./Tableau";
 import graphOrange from "./../assets/grapheOrange.png";
 import graphBlanc from "./../assets/graphBlanc.png";
-import grapheData from "./../assets/data/chatData";
+import {grapheMoisData,grapheSemaineData,grapheAnneeData} from "./../assets/data/chatData";
 import Graphe from "./Graphe";
 import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
@@ -101,7 +101,9 @@ const useStyles = createStyles((theme) => ({
 
 function DashboardComponent(props) {
   const { classes, theme } = useStyles();
-  const [chartData, setChartData] = useState(grapheData);
+  const [chartMoisData, setChartMoisData] = useState(grapheMoisData);
+  const [chartAnneeData, setChartAnneeData] = useState(grapheAnneeData);
+  const [chartSemaineData, setChartSemaineData] = useState(grapheSemaineData);
   const [operationsDetails, setoperationsDetails] = useState({})
   const [historique, sethistorique] = useState([])
   const [ExBu, setExBu] = useState({})
@@ -219,30 +221,32 @@ function DashboardComponent(props) {
             <Grid>
               <Grid.Col md={6}>
                 <Card>
-                  <Tabs defaultValue="gallery" color="#20986e" center>
-                    <Tabs.List position={"center"}>
+                  <Tabs defaultValue="semaine" color="#20986e" center>
+                    <Tabs.List position={"center"} >
                       <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
                       <Tabs.Tab value="mois">Mois</Tabs.Tab>
                       <Tabs.Tab value="annees">Années</Tabs.Tab>
                     </Tabs.List>
 
                     <Tabs.Panel value="semaine" pt="xs">
-                      {/* <Graphe chartData={chartData} /> */}
+                      <Graphe chartData={chartSemaineData} titre={'Dépense de la semaine'} text={'Dépense sur la semaine N°'} />
                     </Tabs.Panel>
 
                     <Tabs.Panel value="mois" pt="xs">
-                      Graphe du mois
+                    <Graphe chartData={chartMoisData} titre={'Dépense du mois'} text={'Dépense dans le mois N°'} />
+
                     </Tabs.Panel>
 
                     <Tabs.Panel value="annees" pt="xs">
-                      Graphe de l'année
+                    <Graphe chartData={chartAnneeData} titre={"Dépense de l'année"} text={'Dépense sur l\'année'} />
+
                     </Tabs.Panel>
                   </Tabs>
                 </Card>
               </Grid.Col>
               <Grid.Col md={6}>
-                <Card>
-                  <Paper withBorder radius="md" p="xs">
+                <Card >
+                  <Paper withBorder radius="md" p="xs" my={28}>
                     <Grid>
                       <Grid.Col span={4}>
                         <Text size="sm" mt={7} fw={700}>
@@ -263,7 +267,7 @@ function DashboardComponent(props) {
                     </Grid>
                   </Paper>
 
-                  <Paper withBorder radius="md" p="xs" my={15}>
+                  <Paper withBorder radius="md" p="xs" my={28}>
                     <Grid>
                       <Grid.Col span={4}>
                         <Text size="sm" mt={7} fw={700}>

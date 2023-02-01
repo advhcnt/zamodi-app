@@ -1,35 +1,45 @@
 // utils/Data.js
- const Data = [
-    {
-      id: 1,
-      year: 2016,
-      userGain: 80000,
-      userLost: 823
-    },
-    {
-      id: 2,
-      year: 2017,
-      userGain: 45677,
-      userLost: 345
-    },
-    {
-      id: 3,
-      year: 2018,
-      userGain: 78888,
-      userLost: 555
-    },
-    {
-      id: 4,
-      year: 2019,
-      userGain: 90000,
-      userLost: 4555
-    },
-    {
-      id: 5,
-      year: 2020,
-      userGain: 4300,
-      userLost: 234
-    }
-  ];
+ export const grapheMoisData = {
+  labels:['Janvier ','Février','Mars ','Avril '],
+  datasets:[{
+    data:[8,7,8,6,8,7,5,6],
+    backgroundColor:'transparent',
+    borderColor:'red',
+    pointBorderColor:'transparent',
+    pointBorderWidth:4,
+    tension:0.5
 
-  export default Data;
+
+  }]
+ }
+
+
+
+ export const grapheSemaineData = {
+  labels:['Semaine 1 ','Semaine 2 ','Semaine 3 ','Semaine 4 '],
+  datasets:[{
+    data:[8,7,8,6,8,7,5,6],
+    backgroundColor:'transparent',
+    borderColor:'red',
+    pointBorderColor:'transparent',
+    pointBorderWidth:4,
+    tension:0.5
+
+
+  }]
+ }
+
+
+ export const grapheAnneeData = {
+  labels:['2020 ','2021 ','2022 ','2023 '],
+  datasets:[{
+    data:[8,7,8,6,8,7,5,6],
+    backgroundColor:'transparent',
+    borderColor:'red',
+    pointBorderColor:'transparent',
+    pointBorderWidth:4,
+    tension:0.5
+
+
+  }]
+ }
