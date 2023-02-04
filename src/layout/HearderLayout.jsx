@@ -307,12 +307,12 @@ function HearderLayout(props) {
 
   const openDeleteModal = () =>
     openConfirmModal({
-      title: 'Delete your profile',
+      title: 'Supprimer votre profil',
       centered: true,
       children: (
         <Text size="sm">
-          Are you sure you want to delete your profile? This action is destructive and you will have
-          to contact support to restore your data.
+          Voulez-vous vraiment supprimer votre profil ? Cette action est destructrice et vous aurez
+          pour contacter le support technique afin de restaurer vos données.
         </Text>
       ),
       labels: { confirm: 'Delete account', cancel: "No don't delete it" },
