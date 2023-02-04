@@ -16,11 +16,13 @@ import {
   TypographyStylesProvider,
   createStyles,
   useMantineTheme,
+  Image,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import authService from "../services/authService";
 import { Navigate, useNavigate } from "react-router-dom";
 import notificationAdminService from "./../services/admin/notificationsService.js";
+import blankTable from "./../assets/canvas-pana.png";
 const useStyles = createStyles((theme) => ({
   comment: {
     padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
@@ -108,40 +110,67 @@ export function NotificationsPage(props) {
     <>
       {who === "CLIENT" ? (
         <>
-          {notification.map((item) => (
+          {notification.filter((item) => item.statut !== "En attente").length >
+          0 ? (
             <>
-              {item.statut !== "En attente" && (
-                <Paper
-                  withBorder
-                  radius="md"
-                  className={classes.comment}
-                  onClick={() => afficheOperation(item.transactionId)}
-                >
-                  <Group>
-                    <Avatar alt={"zamodiapp"} radius="xl" />
-                    <div>
-                      <Text size="sm">ZAMODI TEAM</Text>
-                      <Text
-                        size="xs"
-                        color={item.statut === "Valide" ? "green" : "red"}
-                      >
-                        {item.statut}{" "}
-                        {!item.readNotification && (
-                          <Badge color={"red"}>NL</Badge>
-                        )}
-                      </Text>
-                    </div>
-                  </Group>
-                  <TypographyStylesProvider className={classes.body}>
-                    <div
-                      className={classes.content}
-                      dangerouslySetInnerHTML={{ __html: item.notification }}
-                    />
-                  </TypographyStylesProvider>
-                </Paper>
-              )}
+              {notification.map((item) => (
+                <>
+                  {item.statut !== "En attente" && (
+                    <Paper
+                      withBorder
+                      radius="md"
+                      className={classes.comment}
+                      onClick={() => afficheOperation(item.transactionId)}
+                    >
+                      <Group>
+                        <Avatar alt={"zamodiapp"} radius="xl" />
+                        <div>
+                          <Text size="sm">ZAMODI TEAM</Text>
+                          <Text
+                            size="xs"
+                            color={item.statut === "Valide" ? "green" : "red"}
+                          >
+                            {item.statut}{" "}
+                            {!item.readNotification && (
+                              <Badge color={"red"}>NL</Badge>
+                            )}
+                          </Text>
+                        </div>
+                      </Group>
+                      <TypographyStylesProvider className={classes.body}>
+                        <div
+                          className={classes.content}
+                          dangerouslySetInnerHTML={{
+                            __html: item.notification,
+                          }}
+                        />
+                      </TypographyStylesProvider>
+                    </Paper>
+                  )}
+                </>
+              ))}
             </>
-          ))}
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={blankTable}
+                  width={200}
+                  alt="table vide"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                />
+              </Box>
+              <Text ta={"center"} c="green">
+                Vous n'avez pas de notifications actuellement
+              </Text>
+            </>
+          )}
         </>
       ) : who === "ADMIN" ? (
         <>
@@ -181,7 +210,25 @@ export function NotificationsPage(props) {
               ))}
             </>
           ) : (
-            <><Text ta={'center'} fw={500} fz={'xl'} c={"#20986e"}>Vous n'avez pas de notifications...</Text></>
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={blankTable}
+                  width={200}
+                  alt="table vide"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                />
+              </Box>
+              <Text ta={"center"} c="green">
+                Vous n'avez pas de notifications actuellement
+              </Text>
+            </>
           )}
         </>
       ) : (
