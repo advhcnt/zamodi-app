@@ -116,7 +116,12 @@ thead{
 }
 
 .remplire{
-  color: gold;
+  color: #20986e;
+}
+
+.mantine-1137jyz:checked {
+  background-color: #20986e;
+  border-color: #20986e;
 }
 
 body{

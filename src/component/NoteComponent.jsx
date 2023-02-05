@@ -6,7 +6,7 @@ function NoteComponent({note,niveau,setnote}) {
     return (
         <Box my={10} >
             <Group>
-                <Checkbox  value={note} checked={note===niveau?true:false} onChange={() => setnote(niveau)} />
+                <Checkbox color='#20986e' value={note} checked={note===niveau?true:false} onChange={() => setnote(niveau)} />
                 |
                 {[...Array(5).keys()].map((item)=>(
                      <IconStar className={item<niveau?'remplire':''}  key={item}/>

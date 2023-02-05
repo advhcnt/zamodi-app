@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Group,
-  Image,
-  Paper,
-  Text,
-} from "@mantine/core";
+import { Box, Button, Group, Image, Paper, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -13,6 +6,7 @@ import sbinLogo from "./../assets/celtiis.png";
 import { createStyles } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import operationsService from "../services/operations.service";
+import blankTable from "./../assets/canvas-pana.png";
 
 const useStyles = createStyles((theme) => ({
   secondCard: {
@@ -142,77 +136,101 @@ function HistoriqueComponent(props) {
               </Box> */}
             </Group>
           </Box>
-          {echangeTable.map((item) => (
-            <Paper
-              withBorder
-              radius="md"
-              p="xs"
-              className={classes.secondCard}
-              key={item}
-            >
-              <Group
-                position={"apart"}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Box>
-                  <Image
-                    src={
-                      item.jai.split(" ")[0] === "Mtn"
-                        ? mtnLogo
-                        : item.jai.split(" ")[0] === "Moov"
-                        ? moovLogo
-                        : sbinLogo
-                    }
-                    style={{ height: "100%", width: "100%" }}
-                    alt={`Logo ${item.jai}`}
-                  />
-                </Box>
-                <Box>
-                  <Image
-                    src={
-                      item.jeveux.split(" ")[0] === "Mtn"
-                        ? mtnLogo
-                        : item.jeveux.split(" ")[0] === "Moov"
-                        ? moovLogo
-                        : sbinLogo
-                    }
-                    style={{ height: "100%", width: "100%" }}
-                    alt={`Logo ${item.jeveux}`}
-                  />
-                </Box>
-                <Box>
-                  <Text size="sm" mt={7} fw={400} c="dark">
-                    {item.numero}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text
-                    size="sm"
-                    mt={7}
-                    fw={400}
-                    c="dark"
-                    className="ArrierePlan"
+          {echangeTable.length > 0 ? (
+            <>
+              {echangeTable.map((item) => (
+                <Paper
+                  withBorder
+                  radius="md"
+                  p="xs"
+                  className={classes.secondCard}
+                  key={item}
+                >
+                  <Group
+                    position={"apart"}
                     style={{
-                      padding: "10px",
-                      borderRadius: "8px",
-                      color: "white",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
                     }}
                   >
-                    {item.montant} Fcfa
-                  </Text>
-                </Box>
-                {/* <Box>
+                    <Box>
+                      <Image
+                        src={
+                          item.jai.split(" ")[0] === "Mtn"
+                            ? mtnLogo
+                            : item.jai.split(" ")[0] === "Moov"
+                            ? moovLogo
+                            : sbinLogo
+                        }
+                        style={{ height: "100%", width: "100%" }}
+                        alt={`Logo ${item.jai}`}
+                      />
+                    </Box>
+                    <Box>
+                      <Image
+                        src={
+                          item.jeveux.split(" ")[0] === "Mtn"
+                            ? mtnLogo
+                            : item.jeveux.split(" ")[0] === "Moov"
+                            ? moovLogo
+                            : sbinLogo
+                        }
+                        style={{ height: "100%", width: "100%" }}
+                        alt={`Logo ${item.jeveux}`}
+                      />
+                    </Box>
+                    <Box>
+                      <Text size="sm" mt={7} fw={400} c="dark">
+                        {item.numero}
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text
+                        size="sm"
+                        mt={7}
+                        fw={400}
+                        c="dark"
+                        className="ArrierePlan"
+                        style={{
+                          padding: "10px",
+                          borderRadius: "8px",
+                          color: "white",
+                        }}
+                      >
+                        {item.montant} Fcfa
+                      </Text>
+                    </Box>
+                    {/* <Box>
                   <Text size="xs" mt={1} c="dimmed">
                     <IconDotsVertical size={20} color={"red"} />
                   </Text>
                 </Box> */}
-              </Group>
-            </Paper>
-          ))}
+                  </Group>
+                </Paper>
+              ))}
+            </>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={blankTable}
+                  width={200}
+                  alt="table vide"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                />
+              </Box>
+              <Text ta={"center"} c="green">
+                Vous n'avez encore fait aucun échange.{" "}
+              </Text>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -246,77 +264,101 @@ function HistoriqueComponent(props) {
               </Box> */}
             </Group>
           </Box>
-          {achatTable.map((item) => (
-            <Paper
-              withBorder
-              radius="md"
-              p="xs"
-              className={classes.secondCard}
-              key={item}
-            >
-              <Group
-                position={"apart"}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Box>
-                  <Image
-                    src={
-                      item.jai.split(" ")[0] === "Mtn"
-                        ? mtnLogo
-                        : item.jai.split(" ")[0] === "Moov"
-                        ? moovLogo
-                        : sbinLogo
-                    }
-                    style={{ height: "100%", width: "100%" }}
-                    alt={`Logo ${item.jai}`}
-                  />
-                </Box>
-                <Box>
-                  <Image
-                    src={
-                      item.jeveux.split(" ")[0] === "Mtn"
-                        ? mtnLogo
-                        : item.jeveux.split(" ")[0] === "Moov"
-                        ? moovLogo
-                        : sbinLogo
-                    }
-                    style={{ height: "100%", width: "100%" }}
-                    alt={`Logo ${item.jeveux}`}
-                  />
-                </Box>
-                <Box>
-                  <Text size="sm" mt={7} fw={400} c="dark">
-                    {item.numero}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text
-                    size="sm"
-                    mt={7}
-                    fw={400}
-                    c="dark"
-                    className="ArrierePlan"
+          {achatTable.length > 0 ? (
+            <>
+              {achatTable.map((item) => (
+                <Paper
+                  withBorder
+                  radius="md"
+                  p="xs"
+                  className={classes.secondCard}
+                  key={item}
+                >
+                  <Group
+                    position={"apart"}
                     style={{
-                      padding: "10px",
-                      borderRadius: "8px",
-                      color: "white",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
                     }}
                   >
-                    Achat {item.Description}
-                  </Text>
-                </Box>
-                {/* <Box>
+                    <Box>
+                      <Image
+                        src={
+                          item.jai.split(" ")[0] === "Mtn"
+                            ? mtnLogo
+                            : item.jai.split(" ")[0] === "Moov"
+                            ? moovLogo
+                            : sbinLogo
+                        }
+                        style={{ height: "100%", width: "100%" }}
+                        alt={`Logo ${item.jai}`}
+                      />
+                    </Box>
+                    <Box>
+                      <Image
+                        src={
+                          item.jeveux.split(" ")[0] === "Mtn"
+                            ? mtnLogo
+                            : item.jeveux.split(" ")[0] === "Moov"
+                            ? moovLogo
+                            : sbinLogo
+                        }
+                        style={{ height: "100%", width: "100%" }}
+                        alt={`Logo ${item.jeveux}`}
+                      />
+                    </Box>
+                    <Box>
+                      <Text size="sm" mt={7} fw={400} c="dark">
+                        {item.numero}
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text
+                        size="sm"
+                        mt={7}
+                        fw={400}
+                        c="dark"
+                        className="ArrierePlan"
+                        style={{
+                          padding: "10px",
+                          borderRadius: "8px",
+                          color: "white",
+                        }}
+                      >
+                        Achat {item.Description}
+                      </Text>
+                    </Box>
+                    {/* <Box>
                   <Text size="xs" mt={1} c="dimmed">
                     <IconDotsVertical size={20} color={"red"} />
                   </Text>
                 </Box> */}
-              </Group>
-            </Paper>
-          ))}
+                  </Group>
+                </Paper>
+              ))}
+            </>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  src={blankTable}
+                  width={200}
+                  alt="table vide"
+                  sx={{ alignItems: "center", justifyContent: "center" }}
+                />
+              </Box>
+              <Text ta={"center"} c="green">
+                Vous n'avez encore fait aucun achat.{" "}
+              </Text>
+            </>
+          )}
         </>
       )}
     </Box>

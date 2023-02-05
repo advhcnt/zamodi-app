@@ -265,9 +265,7 @@ function ProfileComponent(props) {
                   </Text>
                 </Box>
                 <Divider my={10} />
-                <Text ml={20} c={"white"}>
-                  Notification{" "}
-                </Text>
+               
               </Box>
               <Box
                 my={10}

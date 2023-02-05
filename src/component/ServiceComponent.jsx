@@ -63,7 +63,7 @@ function ServiceComponent(props) {
     <div style={{ position: 'relative' }}>
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
-      <Container size={"sm"}>
+      <Container size={"md"}>
         <Card shadow="lg">
           <Card.Section
             withBorder
@@ -72,19 +72,19 @@ function ServiceComponent(props) {
             className="ArrierePlan"
           >
             <Box>
-              <Text fz={"sm"} weight={500} ta={"center"} c={"white"}>
+              <Text fz={"lg"} weight={500} ta={"center"} c={"#fff"}>
                 Noter le service
               </Text>
             </Box>
           </Card.Section>
           <Card.Section>
-            <Container>
+            <Container >
               <Paper my={20} shadow={"lg"}>
                 <Group position={"apart"}>
                   <Box sx={{ gap: 3, color: "black", marginLeft: 30 }}>
                     <Text fz={15}>Note globale</Text>
                     <Text fz={45} fw={400} sx={{ alignItems: "center" }}>
-                      <IconStar color="yellow" size={40} /> 94%
+                      <IconStar className="remplire" size={40} /> 94%
                     </Text>
                     <Text fz={10}>2 .115 évaluations</Text>
                   </Box>
