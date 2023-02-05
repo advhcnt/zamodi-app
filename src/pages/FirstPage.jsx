@@ -8,8 +8,10 @@ import {
   Text,
 } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons";
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Chargement from "../component/Chargement";
 import authLogo from "./../assets/authLogo.svg";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 
@@ -46,16 +48,15 @@ const useStyles = createStyles((theme) => ({
     },
   },
   secondplaceBottom2: {
-    height: "15.3vh",
-    marginTop: "11vh",
-   
+    height: "30%",
+    bottom:0,
+    display: "flex",
+
+
     [theme.fn.smallerThan("md")]: {
       marginTop: "4%",
-      
     },
-    [theme.fn.smallerThan("sm")]: {
-      height: "16vh",
-    },
+    
     secondPlacejsx: {
       paddingTop: 70,
       [theme.fn.smallerThan("md")]: {
@@ -68,9 +69,18 @@ const useStyles = createStyles((theme) => ({
 function FirstPage(props) {
   const { classes, cx } = useStyles();
   const navigation = useNavigate();
+  const [visible, setvisible] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setvisible(false);
+    }, 1500);
+  }, []);
 
   return (
-    <Box style={{ maxWidth: "100vw" }}>
+    <Box>
+      {/* LAZY LOAD */}
+      <Chargement visible={visible} />
       <Grid>
         {/* Première partie */}
         <Grid.Col
@@ -86,7 +96,7 @@ function FirstPage(props) {
               alignItems: "center",
               justifyContent: "center",
               justifyItems: "center",
-              height: "100%",
+              height: "100vh",
               width: "100%",
             }}
           >
@@ -142,7 +152,10 @@ function FirstPage(props) {
           //   borderRadius: " 115px 0px 0px 0px "
           // }}
         >
-          <div className={`secondplace ${classes.secondPlacejsx}`}>
+          <div
+            className={`secondplace ${classes.secondPlacejsx}`}
+            style={{ height: "100vh" }}
+          >
             <div
               style={{
                 display: "flex",
@@ -205,10 +218,10 @@ function FirstPage(props) {
                 </Button>
               </Group>
             </Box>
+            <div
+              className={`secondplaceBottom ${classes.secondplaceBottom2}`}
+            ></div>
           </div>
-          <div
-            className={`secondplaceBottom ${classes.secondplaceBottom2}`}
-          ></div>
         </Grid.Col>
       </Grid>
     </Box>
