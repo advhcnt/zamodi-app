@@ -17,11 +17,20 @@
   background-color: rgb(92, 28, 28);
 }
 
+
+.noire , .noire:hover{
+  background-color: #000;
+}
 .EcritVert{
   color: #20986e;
 }
 
 .ArrierePlan
+{
+  background-color: #20986e;
+}
+
+.ArrierePlan:hover
 {
   background-color: #20986e;
 }

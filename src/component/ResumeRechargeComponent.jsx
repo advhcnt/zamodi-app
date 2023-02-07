@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconArrowLeft } from "@tabler/icons";
+import { IconArrowLeft, IconClipboard } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -187,8 +187,8 @@ function ResumeRechargeComponent(props) {
                   <Button
                     size={"sm"}
                     mr={"lg"}
-                    bg={"black"}
-                    onClick={() => props.setValide(false)}
+                    className={'noire'}
+                    onClick={() => props.setValideRecharge(false)}
                   >
                     <IconArrowLeft size={20} mx={3} /> Modifier
                   </Button>
@@ -244,6 +244,7 @@ function ResumeRechargeComponent(props) {
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
                 <Button
+                  px={0}
                   className={"ArrierePlan"}
                   onClick={() => {
                     navigator.clipboard
@@ -260,6 +261,7 @@ function ResumeRechargeComponent(props) {
                       });
                   }}
                 >
+                  <IconClipboard />
                   coller
                 </Button>
               }
@@ -294,6 +296,24 @@ function ResumeRechargeComponent(props) {
               {" "}
               {Message}
             </Text>
+            <Box
+              mt={20}
+              style={{
+                justifyContent: "center",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Button
+                onClick={() => {
+                  props.setreset(true);
+                  props.setValideRecharge(false);
+                }}
+                px={15}
+              >
+                Fermer
+              </Button>
+            </Box>
           </Modal>
         </Grid.Col>
       </Grid>

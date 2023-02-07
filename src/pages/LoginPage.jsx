@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { IconLock, IconMail } from "@tabler/icons";
+import { IconLock, IconMail, IconUser } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
 import { useEffect, useState, useRef } from "react";
 import authService from "../services/authService";
@@ -190,7 +190,7 @@ function LoginPage(props) {
                   <TextInput
                     radius="32px"
                     icon={
-                      <IconMail
+                      <IconUser
                         size={20}
                         color={"#20986e"}
                         className={classes.lesIcones}

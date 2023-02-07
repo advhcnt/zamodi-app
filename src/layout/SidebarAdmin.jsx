@@ -165,7 +165,7 @@ function SidebarAdminLayout() {
     <Navbar height={"100%"} width={"auto"} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          <Image src={ZamodiLogo} size={28} />
+          <Image src={ZamodiLogo} width={200} />
         </Group>
         {links}
       </Navbar.Section>

@@ -520,7 +520,7 @@ function HearderLayout(props) {
       // closeOnEscape
       >
         <Box>
-          <Image src={ZamodiLogo} />
+          <Image src={ZamodiLogo} width={200} />
         </Box>
         <Box>{linksDrawer}</Box>
 

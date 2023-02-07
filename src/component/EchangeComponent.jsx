@@ -31,6 +31,7 @@ function EchangeComponent(props) {
     statut: false,
     message: ''
   });
+  const [Reset, setreset] = useState(false);
 
   useEffect(() => {
 
@@ -38,6 +39,16 @@ function EchangeComponent(props) {
     console.log(operations)
 
   }, [])
+
+  useEffect(() => {
+    if(Reset){
+      setMontant('');
+      setnumero('')
+      setnumeroConfirm('')
+      setjeveux('')
+      setjai('')
+    }
+  },[Reset])
 
   const handleEchange = () => {
    
@@ -222,7 +233,7 @@ function EchangeComponent(props) {
         </Grid>
       )}
 
-      {valide && <ResumeComponent setValide={setvalide} numero={numero} jai={jai} jeveux={jeveux} montant={montant} />}
+      {valide && <ResumeComponent setreset={setreset} setValide={setvalide} numero={numero} jai={jai} jeveux={jeveux} montant={montant} />}
     </Container>
   );
 }

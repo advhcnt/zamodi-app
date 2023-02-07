@@ -332,7 +332,7 @@ function HearderAdminLayout(props) {
               {" "}
               <Image
                 src={ZamodiLogo}
-                size={30}
+                width={200}
                 className={classes.hiddenDesktop}
               />
               <Text

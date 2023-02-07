@@ -1,8 +1,6 @@
 import {
-  ActionIcon,
   Card,
   Container,
-  Menu,
   Text,
   TextInput,
   Box,
@@ -17,6 +15,7 @@ import { IconArrowRight } from "@tabler/icons";
 import ResumeRechargeComponent from "./ResumeRechargeComponent";
 import authService from "../services/authService";
 import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
+import { useEffect } from "react";
 
 function RechargeComponent(props) {
   const currentUser = authService.getCurrentUser();
@@ -32,6 +31,7 @@ function RechargeComponent(props) {
   });
 
   const [valideRecharge, setValideRecharge] = useState(false);
+  const [Reset, setreset] = useState(false);
 
   const handleRecharge = () => {
 
@@ -61,6 +61,15 @@ function RechargeComponent(props) {
       seterror({ statut: true, message: "Veillez remplir les champs" });
     }
   };
+
+  useEffect(() => {
+   if(Reset){
+    setMontant('');
+    setnumeroConfirm('');
+    setnumero('')
+   }
+  }, [Reset])
+  
 
   return (
     <Container size={"sm"}>
@@ -242,6 +251,8 @@ function RechargeComponent(props) {
           jeveux={jeveux}
           montant={montant}
           operation={operation}
+          setValideRecharge={setValideRecharge}
+          setreset = {setreset}
         />
       )}
     </Container>

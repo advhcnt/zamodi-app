@@ -1,20 +1,16 @@
 import {
-  ActionIcon,
   Card,
-  Container,
-  Menu,
   Text,
   TextInput,
   Box,
   Grid,
-  Select,
   Button,
   Image,
   Modal,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconArrowLeft } from "@tabler/icons";
+import { IconArrowLeft, IconClipboard } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
@@ -22,6 +18,7 @@ import sbinLogo from "./../assets/celtiis.png";
 import operationsService from "../services/operations.service";
 import authService from "../services/authService";
 import Chargement from "./Chargement";
+import { useNavigate } from "react-router-dom";
 
 function ResumeComponent(props) {
   const currentUser = authService.getCurrentUser();
@@ -31,6 +28,7 @@ function ResumeComponent(props) {
   const [transactionId, setTransactionId] = useState("");
   const [Message, setMessage] = useState("");
   const [visible, setvisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
@@ -174,9 +172,10 @@ function ResumeComponent(props) {
               >
                 <Group position={"center"}>
                   <Button
+                    id="retour"
                     size={"sm"}
                     mr={"lg"}
-                    bg={"black"}
+                    className={'noire'}
                     onClick={() => props.setValide(false)}
                   >
                     <IconArrowLeft size={20} mx={3} /> Modifier
@@ -233,17 +232,24 @@ function ResumeComponent(props) {
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
                 <Button
+                px={0}
                   className={"ArrierePlan"}
-                  onClick={()=>{navigator.clipboard
-                    .readText()
-                    .then((text) => {
-                      setTransactionId(text);
-                      console.log("Pasted content: ", text);
-                    })
-                    .catch((err) => {
-                      console.error("Failed to read clipboard contents: ", err);
-                    })}}
+                  onClick={() => {
+                    navigator.clipboard
+                      .readText()
+                      .then((text) => {
+                        setTransactionId(text);
+                        console.log("Pasted content: ", text);
+                      })
+                      .catch((err) => {
+                        console.error(
+                          "Failed to read clipboard contents: ",
+                          err
+                        );
+                      });
+                  }}
                 >
+                   <IconClipboard  />
                   coller
                 </Button>
               }
@@ -278,6 +284,27 @@ function ResumeComponent(props) {
               {" "}
               {Message}
             </Text>
+
+            <Box
+              mt={20}
+              style={{
+                justifyContent: "center",
+                alignContent: "center",
+                textAlign: "center",
+              }}
+            >
+              <Button
+                className={"ArrierePlan"}
+                onClick={() => {
+                  props.setreset(true);
+                  props.setValide(false);
+                }}
+
+                px={15}
+              >
+                Fermer
+              </Button>
+            </Box>
           </Modal>
         </Grid.Col>
       </Grid>
