@@ -19,6 +19,7 @@ import {grapheMoisData,grapheSemaineData,grapheAnneeData} from "./../assets/data
 import Graphe from "./Graphe";
 import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
+import GrapheComponent from "./GrapheComponent";
 
 // const tableData = [
 //   {
@@ -221,6 +222,7 @@ function DashboardComponent(props) {
             <Grid>
               <Grid.Col md={6}>
                 <Card>
+                  <GrapheComponent />
                   <Tabs defaultValue="semaine" color="#20986e" center>
                     <Tabs.List position={"center"} >
                       <Tabs.Tab value="semaine">Semaines</Tabs.Tab>

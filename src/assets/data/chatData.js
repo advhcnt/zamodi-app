@@ -1,3 +1,16 @@
+import operationsService from "../../services/operations.service";
+let data = [];
+operationsService.getUserOperation().then(
+  (data) => {
+    const dataR = data.data;
+    data= [...dataR];
+    console.log("Historique ", data);
+  },
+  (error) => {
+    console.log(error);
+  }
+);
+
 // utils/Data.js
  export const grapheMoisData = {
   labels:['Janvier ','Février','Mars ','Avril '],
