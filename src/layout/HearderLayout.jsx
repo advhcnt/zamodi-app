@@ -468,7 +468,7 @@ function HearderLayout(props) {
                         }
                         alt={user.name}
                         radius="xl"
-                        size={20}
+                       width={400}
                       />
                     </Group>
                   </UnstyledButton>

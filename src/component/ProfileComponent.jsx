@@ -15,6 +15,8 @@ import React, { useState } from "react";
 import authHeader from "../services/auth-header";
 import authService from "../services/authService";
 import userService from "../services/user.service";
+import { useEffect } from "react";
+import { showNotification, updateNotification } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   ProfileLogo: {
@@ -92,6 +94,7 @@ function ProfileComponent(props) {
   const [file, setFile] = useState(null);
 
   const handleImageSubmit = () => {
+    TraitementNotification(false, false, false)
     const formData = new FormData();
     formData.append("zamodi", file);
 
@@ -107,12 +110,14 @@ function ProfileComponent(props) {
                 state: true,
                 message: data.data.message._doc.description,
               });
+              TraitementNotification(true, data.data.message._doc.description, true)
             } else {
               seterreur({
                 state: true,
                 message:
                   "Une erreur est survenue lors du traitement de la requete",
               });
+              TraitementNotification(true, 'Une erreur est survenue lors du traitement de la requete', false)
             }
           },
           (error) => {
@@ -163,19 +168,55 @@ function ProfileComponent(props) {
 
   const [ImageLink, setImageLink] = useState(false);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-    setImageLink(URL.createObjectURL(event.target.files[0]));
-    setavatar(URL.createObjectURL(event.target.files[0]));
+  // const handleFileChange = (event) => {
+  //   setFile(event.target.files[0]);
+  //   setImageLink(URL.createObjectURL(event.target.files[0]));
+  //   setavatar(URL.createObjectURL(event.target.files[0]));
 
-    handleImageSubmit();
-  };
+  //   handleImageSubmit();
+  // };
 
   const UploadChange = () => {
     document.getElementById("champUpload").click();
   };
 
   const { classes, cx } = useStyles();
+
+  const TraitementNotification = (etat, message, success) => {
+    if (etat===false && message===false) {
+      showNotification({
+        id: 'load-data',
+        loading: true,
+        title: 'Traitement en cours',
+        message: 'Mise à jour de votre photo en cours',
+        autoClose: false,
+        disallowClose: true,
+      });
+    }
+
+    if (etat) {
+      updateNotification({
+        id: 'load-data',
+        color: success ? 'teal' : 'red',
+        title: 'Traitement terminé',
+        message: message,
+        icon: success ? <IconCheck size={16} /> : <IconX size={16} />,
+        autoClose: 2000,
+      });
+    }
+  }
+
+
+  useEffect(() => {
+
+    if (file) {
+      setImageLink(URL.createObjectURL(file));
+      setavatar(URL.createObjectURL(file));
+
+      handleImageSubmit();
+    }
+
+  }, [file])
 
   return (
     <Box>
@@ -235,7 +276,7 @@ function ProfileComponent(props) {
               >
                 <input
                   type="file"
-                  onChange={handleFileChange}
+                  onChange={(e) => setFile(e.target.files[0])}
                   hidden
                   id="champUpload"
                 />
@@ -265,7 +306,7 @@ function ProfileComponent(props) {
                   </Text>
                 </Box>
                 <Divider my={10} />
-               
+
               </Box>
               <Box
                 my={10}
