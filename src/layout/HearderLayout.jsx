@@ -293,8 +293,8 @@ function HearderLayout(props) {
       (data) => {
 
         const retour = data.data;
-        const compteurTable = retour.filter((item)=>!item.readNotification && item.statut !== 'En attente')
-        console.log('taille',compteurTable.length)
+        const compteurTable = retour.filter((item) => !item.readNotification && item.statut !== 'En attente')
+        console.log('taille', compteurTable.length)
         setcountNotifications(parseInt(compteurTable.length));
       },
       (error) => {
@@ -318,41 +318,43 @@ function HearderLayout(props) {
       labels: { confirm: 'Delete account', cancel: "No don't delete it" },
       confirmProps: { color: 'red' },
       onCancel: () => {
-        SuccessNotification('Suppression de compte','Suppression de compte annulée avec succès',1);
+        SuccessNotification('Suppression de compte', 'Suppression de compte annulée avec succès', 1);
       },
       onConfirm: () => {
         authService.deleteAccount().then(
-          (data)=>{
-            
-            SuccessNotification('Suppression de compte','Votre compte a été supprimé avec succès')
+          (data) => {
+
+            SuccessNotification('Suppression de compte', 'Votre compte a été supprimé avec succès')
             setTimeout(() => {
               logOut()
             }, 2000);
           },
-          (error)=>{
-            ErrorNotification('Suppression de compte',error);
+          (error) => {
+            ErrorNotification('Suppression de compte', error);
           }
         )
       },
     });
-    
 
-    const SuccessNotification = (titre,texte,kind=false) => {
-      showNotification({
-        title: titre,
-        message: texte,
-        icon:kind?<IconInfoCircle size={16} /> : <IconCheck size={16} />,
-        autoClose: 2000,
-      })};
 
-      const ErrorNotification = (titre,texte) => {
-        showNotification({
-          color:'red',
-          title: titre,
-          message: texte,
-          icon:<IconX size={16} />,
-          autoClose: 2000,
-        })};
+  const SuccessNotification = (titre, texte, kind = false) => {
+    showNotification({
+      title: titre,
+      message: texte,
+      icon: kind ? <IconInfoCircle size={16} /> : <IconCheck size={16} />,
+      autoClose: 2000,
+    })
+  };
+
+  const ErrorNotification = (titre, texte) => {
+    showNotification({
+      color: 'red',
+      title: titre,
+      message: texte,
+      icon: <IconX size={16} />,
+      autoClose: 2000,
+    })
+  };
 
 
   return (
@@ -407,9 +409,15 @@ function HearderLayout(props) {
                 size={"sm"}
                 style={{ width: "40vw" }}
               />
+
+
               {/* Menu pour le choix de la langue */}
 
               <LanguagePicker />
+
+
+              {/* cloche de notification */}{" "}
+
               {countNotifications > 0 ? (
                 <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
                   <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
@@ -418,12 +426,20 @@ function HearderLayout(props) {
               ) : (
                 <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
               )}
-
-              {/* cloche de notification */}{" "}
             </Box>
 
             {/* Client info */}
-            <Box>
+            <Box display={'flex'} sx={{ alignItems: 'center' }}>
+              <Box className={classes.hiddenDesktop} >
+                {countNotifications > 0 ? (
+                  <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
+                    <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
+
+                  </Indicator>
+                ) : (
+                  <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
+                )}</Box>
+
               {" "}
               <Menu
                 width={"300px"}
@@ -438,7 +454,7 @@ function HearderLayout(props) {
                       [classes.userActive]: userMenuOpened,
                     })}
                   >
-                    <Group spacing={7}>
+                    <Group spacing={7} position="center">
                       <div>
                         <Text
                           weight={500}
@@ -461,6 +477,7 @@ function HearderLayout(props) {
                       </div>
 
                       <Avatar
+                       className={classes.NavhiddenMobile}
                         src={
                           currentUser.message.photo
                             ? currentUser.message.photo
@@ -468,7 +485,7 @@ function HearderLayout(props) {
                         }
                         alt={user.name}
                         radius="xl"
-                       width={400}
+                        width={400}
                       />
                     </Group>
                   </UnstyledButton>
