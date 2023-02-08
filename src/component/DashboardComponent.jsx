@@ -107,9 +107,6 @@ const listeMois = ['Janvier ', 'Février', 'Mars ', 'Avril ', 'Mai', 'Juin', 'Ju
 
 function DashboardComponent(props) {
   const { classes, theme } = useStyles();
-  // const [chartMoisData, setChartMoisData] = useState(grapheMoisData);
-  // const [chartAnneeData, setChartAnneeData] = useState(grapheAnneeData);
-  // const [chartSemaineData, setChartSemaineData] = useState(grapheSemaineData);
   const [operationsDetails, setoperationsDetails] = useState({})
   const [historique, sethistorique] = useState([])
   const [ExBu, setExBu] = useState({})
@@ -204,7 +201,7 @@ function DashboardComponent(props) {
           datasets: [{
             data: [...montantAn],
             backgroundColor: 'transparent',
-            borderColor: 'red',
+            borderColor: 'green',
             pointBorderColor: 'transparent',
             pointBorderWidth: 4,
             tension: 0.5
@@ -218,7 +215,7 @@ function DashboardComponent(props) {
           datasets: [{
             data: [...montantMois],
             backgroundColor: 'transparent',
-            borderColor: 'red',
+            borderColor: 'green',
             pointBorderColor: 'transparent',
             pointBorderWidth: 4,
             tension: 0.5
@@ -232,7 +229,7 @@ function DashboardComponent(props) {
           datasets: [{
             data: [...montantSemaine],
             backgroundColor: 'transparent',
-            borderColor: 'red',
+            borderColor: 'green',
             pointBorderColor: 'transparent',
             pointBorderWidth: 4,
             tension: 0.5
