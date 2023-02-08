@@ -2,6 +2,8 @@ import { Box, Tabs } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import operationsService from '../services/operations.service';
 import Graphe from './Graphe';
+import { Text } from '@mantine/core';
+import { IconLoader } from '@tabler/icons';
 
 const listeMois = ['Janvier ', 'Février', 'Mars ', 'Avril ', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Decembre']
 
@@ -15,6 +17,7 @@ function GrapheComponent(props) {
     const [chartSemaineData, setchartSemaineData] = useState({});
     const [chartMoisData, setchartMoisData] = useState({});
     const [chartAnneeData, setchartAnneeData] = useState({});
+    const [visible, setvisible] = useState(false)
 
     useEffect(() => {
         operationsService.getUserOperation().then(
@@ -87,6 +90,7 @@ function GrapheComponent(props) {
 
 
 
+
             },
             (error) => {
                 console.log(error);
@@ -95,14 +99,44 @@ function GrapheComponent(props) {
     }, [dataHistorique]);
 
 
+    useEffect(() => {
+        setvisible(true)
+    }, [setchartSemaineData, setchartMoisData, setchartAnneeData])
+
 
     return (
         <Box>
-            Mois  {dataMois[0]} <br/>
-           Semaine {dataSemaine[0]} <br/>
-           Annee {dataAnnee[0]} <br/>
-           Montant {dataMontant[0]} <br/>
+            Mois  {dataMois[0]} <br />
+            Semaine {dataSemaine[0]} <br />
+            Annee {dataAnnee[0]} <br />
+            Montant {dataMontant[0]} <br />
 
+            {/* {visible ? (
+                <Tabs defaultValue="semaine" color="#20986e" center>
+                    <Tabs.List position={"center"} >
+                        <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
+                        <Tabs.Tab value="mois">Mois</Tabs.Tab>
+                        <Tabs.Tab value="annees">Années</Tabs.Tab>
+                    </Tabs.List>
+
+                    <Tabs.Panel value="semaine" pt="xs">
+                        <Graphe chartData={chartSemaineData} titre={'Dépense de la semaine'} text={'Dépense sur la semaine N°'} />
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="mois" pt="xs">
+                        <Graphe chartData={chartMoisData} titre={'Dépense du mois'} text={'Dépense dans le mois N°'} />
+
+                    </Tabs.Panel>
+
+                    <Tabs.Panel value="annees" pt="xs">
+                        <Graphe chartData={chartAnneeData} titre={"Dépense de l'année"} text={'Dépense sur l\'année'} />
+
+                    </Tabs.Panel>
+                </Tabs>
+
+            ) : (
+                <Text> Graphe en cours de changement <IconLoader /> </Text>
+            )} */}
             {/* <Tabs defaultValue="semaine" color="#20986e" center>
                 <Tabs.List position={"center"} >
                     <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
