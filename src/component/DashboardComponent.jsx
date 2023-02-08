@@ -4,6 +4,7 @@ import {
   createStyles,
   Grid,
   Image,
+  Loader,
   Paper,
   Tabs,
   Text,
@@ -356,7 +357,7 @@ function DashboardComponent(props) {
                         <Graphe chartData={chartSemaineData} titre={'Dépense de la semaine'} text={'Dépense sur la semaine N°'} />
                       ) : (
                         <Box>
-                          <Text color="#20986e" ta={'center'} >Chargement des données <IconLoader /></Text>
+                          <Text color="#20986e" ta={'center'} > <Loader color="green" variant="bars" /></Text>
                         </Box>
 
                       )}
@@ -367,7 +368,7 @@ function DashboardComponent(props) {
                         <Graphe chartData={chartMoisData} titre={'Dépense du mois'} text={'Dépense dans le mois N°'} />
                       ) : (
                         <Box>
-                          <Text color="#20986e" ta={'center'} >Chargement des données <IconLoader /></Text>
+                          <Text color="#20986e" ta={'center'} > <Loader color="green" variant="bars" /></Text>
                         </Box>
 
                       )}
@@ -378,7 +379,7 @@ function DashboardComponent(props) {
                         <Graphe chartData={chartAnneeData} titre={"Dépense de l'année"} text={'Dépense sur l\'année'} />
                       ) : (
                         <Box>
-                          <Text color="#20986e" ta={'center'} >Chargement des données <IconLoader /></Text>
+                          <Text color="#20986e" ta={'center'} > <Loader color="green" variant="bars" /></Text>
                         </Box>
 
                       )}
