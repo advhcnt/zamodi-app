@@ -20,8 +20,7 @@ import graphBlanc from "./../assets/graphBlanc.png";
 import Graphe from "./Graphe";
 import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
-import GrapheComponent from "./GrapheComponent";
-import { IconLoader } from "@tabler/icons";
+
 
 // const tableData = [
 //   {
@@ -170,7 +169,7 @@ function DashboardComponent(props) {
 
         for (let i = 0; i < Years.length; i++) {
           let element = Years[i];
-          if(NewYears.indexOf(element)!= -1){
+          if(NewYears.indexOf(element)!== -1){
             montantAn[NewYears.indexOf(element)] +=parseInt(Montant[i])
           }else{
             NewYears.push(element);
@@ -180,7 +179,7 @@ function DashboardComponent(props) {
 
         for (let i = 0; i < Month.length; i++) {
           let element = Month[i];
-          if(NewMonth.indexOf(element)!= -1){
+          if(NewMonth.indexOf(element)!== -1){
             montantMois[NewMonth.indexOf(element)] +=parseInt(Montant[i])
           }else{
             NewMonth.push(element);
@@ -191,7 +190,7 @@ function DashboardComponent(props) {
 
         for (let i = 0; i < Week.length; i++) {
           let element = Week[i];
-          if(NewWeek.indexOf(element)!= -1){
+          if(NewWeek.indexOf(element)!== -1){
             montantSemaine[NewWeek.indexOf(element)] +=parseInt(Montant[i])
           }else{
             NewWeek.push(element);
