@@ -11,7 +11,8 @@ export const verifyEmail = (email)=> {
 
   
   export const verifyPhoneNumber = (number)=>{
-    let phoneNumberRegex = /^(?:(?:\+|00)229|0)?(?:[1-9][\s.-]*){8}$/;
+    let phoneNumberRegex = /^(?:(?:\+|00)229|0)?([4-9][0-9]){1}(?:[0-9][\s.-]*){6}$/;
+    //  /^(?:(?:\+|00)229|0)?(?:[1-9][\s.-]*){8}$/;
     return phoneNumberRegex.test(number)
     
   }
