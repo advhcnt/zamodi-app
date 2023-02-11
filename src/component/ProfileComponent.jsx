@@ -7,6 +7,7 @@ import {
   Divider,
   Grid,
   Notification,
+  PasswordInput,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -42,6 +43,7 @@ function ProfileComponent(props) {
   const [succes, setsucces] = useState({ state: false, message: "" });
 
   const handleSubmit = () => {
+    TraitementNotification(false, false, false);
     if ((username && email) || (password && username && email)) {
       if (
         (username !== "" && email !== "" && username.length >= 4) ||
@@ -57,6 +59,8 @@ function ProfileComponent(props) {
         userService.updateUser(currentUser._id, data).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
+              console.log(data);
+              TraitementNotification(true, data.data.description, true);
               if (data.data.message._doc.status === "success") {
                 var item = JSON.parse(localStorage.getItem("user"));
                 item.message.username = data.data.message._doc.username;
@@ -69,7 +73,8 @@ function ProfileComponent(props) {
                 authHeader(data.accessToken);
               }
             } else {
-              setErrMsg(data.message);
+              // setErrMsg(data.message);
+              TraitementNotification(true, data.data.description, false);
             }
           },
           (error) => {
@@ -80,21 +85,30 @@ function ProfileComponent(props) {
               error.message ||
               error.toString();
 
-            setErrMsg(resMessage);
+            // setErrMsg(resMessage);
+            TraitementNotification(true, data.message, false);
           }
         );
       } else {
-        alert("rien");
+        TraitementNotification(
+          true,
+          "Les informations ne sont pas valides",
+          false
+        );
       }
     } else {
-      alert("rien 2");
+      TraitementNotification(
+        true,
+        "Les champs d'informations sont vides",
+        false
+      );
     }
   };
 
   const [file, setFile] = useState(null);
 
   const handleImageSubmit = () => {
-    TraitementNotification(false, false, false)
+    TraitementNotification(false, false, false);
     const formData = new FormData();
     formData.append("zamodi", file);
 
@@ -103,6 +117,7 @@ function ProfileComponent(props) {
         userService.changeImage(formData).then(
           (data) => {
             if (data.data.status === "success") {
+              // console.log(data)
               var item = JSON.parse(localStorage.getItem("user"));
               item.message.photo = data.data.message._doc.photo;
               localStorage.setItem("user", JSON.stringify(item));
@@ -110,14 +125,13 @@ function ProfileComponent(props) {
                 state: true,
                 message: data.data.message._doc.description,
               });
-              TraitementNotification(true, data.data.message._doc.description, true)
+              TraitementNotification(true, data.data.description, true);
             } else {
-              seterreur({
-                state: true,
-                message:
-                  "Une erreur est survenue lors du traitement de la requete",
-              });
-              TraitementNotification(true, 'Une erreur est survenue lors du traitement de la requete', false)
+              TraitementNotification(
+                true,
+                "Une erreur est survenue lors du traitement de la requete",
+                false
+              );
             }
           },
           (error) => {
@@ -128,7 +142,7 @@ function ProfileComponent(props) {
               error.message ||
               error.toString();
 
-            setErrMsg(resMessage);
+            TraitementNotification(true, resMessage, false);
           }
         );
       },
@@ -139,16 +153,13 @@ function ProfileComponent(props) {
               var item = JSON.parse(localStorage.getItem("user"));
               item.message.photo = data.data.message._doc.photo;
               localStorage.setItem("user", JSON.stringify(item));
-              setsucces({
-                state: true,
-                message: data.data.message._doc.description,
-              });
+              TraitementNotification(true, data.data.description, true);
             } else {
-              seterreur({
-                state: true,
-                message:
-                  "Une erreur est survenue lors du traitement de la requete",
-              });
+              TraitementNotification(
+                true,
+                "Une erreur est survenue lors du traitement de la requete",
+                false
+              );
             }
           },
           (error) => {
@@ -159,7 +170,8 @@ function ProfileComponent(props) {
               error.message ||
               error.toString();
 
-            setErrMsg(resMessage);
+            // setErrMsg(resMessage);
+            TraitementNotification(true, resMessage, false);
           }
         );
       }
@@ -183,12 +195,12 @@ function ProfileComponent(props) {
   const { classes, cx } = useStyles();
 
   const TraitementNotification = (etat, message, success) => {
-    if (etat===false && message===false) {
+    if (etat === false && message === false) {
       showNotification({
-        id: 'load-data',
+        id: "load-data",
         loading: true,
-        title: 'Traitement en cours',
-        message: 'Mise à jour de votre photo en cours',
+        title: "Traitement en cours",
+        message: "Mise à jour de votre photo en cours",
         autoClose: false,
         disallowClose: true,
       });
@@ -196,27 +208,24 @@ function ProfileComponent(props) {
 
     if (etat) {
       updateNotification({
-        id: 'load-data',
-        color: success ? 'teal' : 'red',
-        title: 'Traitement terminé',
+        id: "load-data",
+        color: success ? "teal" : "red",
+        title: "Traitement terminé",
         message: message,
         icon: success ? <IconCheck size={16} /> : <IconX size={16} />,
         autoClose: 2000,
       });
     }
-  }
-
+  };
 
   useEffect(() => {
-
     if (file) {
       setImageLink(URL.createObjectURL(file));
       setavatar(URL.createObjectURL(file));
 
       handleImageSubmit();
     }
-
-  }, [file])
+  }, [file]);
 
   return (
     <Box>
@@ -306,7 +315,6 @@ function ProfileComponent(props) {
                   </Text>
                 </Box>
                 <Divider my={10} />
-
               </Box>
               <Box
                 my={10}
@@ -342,7 +350,7 @@ function ProfileComponent(props) {
 
               <Box my={15}>
                 <Text>Mot de passe</Text>
-                <TextInput
+                <PasswordInput
                   type={"password"}
                   value={password}
                   onChange={(event) => setpassword(event.target.value)}
