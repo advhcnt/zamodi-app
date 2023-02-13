@@ -12,6 +12,7 @@ import {
   Textarea,
   Progress,
   Modal,
+  createStyles,
 } from "@mantine/core";
 import { IconStar } from "@tabler/icons";
 import React, { useState } from "react";
@@ -20,12 +21,30 @@ import NoteComponent from "./NoteComponent";
 import userservice from "./../services/avis.service";
 import Chargement from "./Chargement";
 import { useSetState } from "@mantine/hooks";
+
+
+const useStyles = createStyles((theme) => ({
+  hiddenDesktop: {
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+  HiddenMobile: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  }
+}));
+
+
+
 function ServiceComponent(props) {
+  const { classes, cx } = useStyles();
   const currentUser = authService.getCurrentUser().message;
   const [note, setnote] = useState(0);
   const [description, setdescription] = useState("");
   const [openedMessageModal, setOpenedMessageModal] = useState(false);
-  const [visible, setvisible] = useState(false)
+  const [visible, setvisible] = useState(false);
 
   const [Message, setMessage] = useState("");
 
@@ -41,7 +60,7 @@ function ServiceComponent(props) {
           (data) => {
             setOpenedMessageModal(true);
             setMessage(data.data.message);
-            setvisible(false)
+            setvisible(false);
           },
           (error) => {
             const resMessage =
@@ -51,7 +70,7 @@ function ServiceComponent(props) {
               error.message ||
               error.toString();
 
-            setvisible(false)
+            setvisible(false);
             setOpenedMessageModal(true);
             setMessage(resMessage);
           }
@@ -60,7 +79,7 @@ function ServiceComponent(props) {
   };
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: "relative" }}>
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
       <Container size={"md"}>
@@ -78,8 +97,8 @@ function ServiceComponent(props) {
             </Box>
           </Card.Section>
           <Card.Section>
-            <Container >
-              <Paper my={20} shadow={"lg"}>
+            <Container>
+              <Paper my={20} withBorder>
                 <Group position={"apart"}>
                   <Box sx={{ gap: 3, color: "black", marginLeft: 30 }}>
                     <Text fz={15}>Note globale</Text>
@@ -89,15 +108,74 @@ function ServiceComponent(props) {
                     <Text fz={10}>2 .115 évaluations</Text>
                   </Box>
                   <Box c={"dark"}>
-                    <Group mb={5}>
-                      <Text>Fonctionnalités</Text>
-                      <Progress defaultValue={50} vocab color={"red"} />
+                    <Group mb={5} position={"apart"} style={{paddingRight:20}}>
+                      <Text ml={5}>Fonctionnalités</Text>
+
+                      <Group>
+                        <Progress
+                          value={90}
+                          mt="md"
+                          size="lg"
+                          radius="xl"
+                          color={"#20986E"}
+                          sx={{ width: 250, marginBottom: 15 }}
+                          className={classes.HiddenMobile}
+                        />
+                        <Text fw={500}>
+                          4.5/5{" "}
+                          <IconStar
+                            color="#20986E"
+                            size={20}
+                            sx={{ marginTop: 10 }}
+                          />
+                        </Text>
+                      </Group>
                     </Group>
-                    <Group my={5}>
-                      <Text>Simplicité d'utilisation</Text>
+                    <Group my={5} style={{paddingRight:20}}>
+                      <Text ml={5}>Simplicité d'utilisation</Text>
+
+                      <Group>
+                        <Progress
+                          value={90}
+                          mt="md"
+                          size="lg"
+                          radius="xl"
+                          color={"#20986E"}
+                          sx={{ width: 250, marginBottom: 15 }}
+                          className={classes.HiddenMobile}
+                        />
+
+                        <Text fw={500}>
+                          4.5/5{" "}
+                          <IconStar
+                            color="#20986E"
+                            size={20}
+                            sx={{ marginTop: 10 }}
+                          />{" "}
+                        </Text>
+                      </Group>
                     </Group>
-                    <Group my={5}>
-                      <Text>Support client </Text>
+                    <Group my={5} position={"apart"} style={{paddingRight:20}}>
+                      <Text ml={5}>Support client </Text>
+                      <Group>
+                        <Progress
+                          color={"#20986E"}
+                          value={90}
+                          mt="md"
+                          size="lg"
+                          radius="xl"
+                          sx={{ width: 250, marginBottom: 15 }}
+                          className={classes.HiddenMobile}
+                        />
+                        <Text fw={500}>
+                          4.5/5{" "}
+                          <IconStar
+                            color="#20986E"
+                            size={20}
+                            sx={{ marginTop: 10 }}
+                          />
+                        </Text>
+                      </Group>
                     </Group>
                   </Box>
                 </Group>

@@ -26,6 +26,10 @@ import { Error404 } from "./pages/errors/Error404";
 import { NotificationsPage } from "./pages/NotificationsPage";
 import RegisterAdmin from "./component/Admin/RegisterAdmin";
 import DetailsNotificationClient from "./pages/DetailsNotificationClient";
+// Import Swiper styles
+import 'swiper/css';
+
+
 function App(props) {
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -36,7 +40,7 @@ function App(props) {
       {/* google auth token 164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com */}
       {/* FACEBOOK ID 717531253056662 */}
       <Routes>
-        <Route path="/" element={<FirstPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/admin" element={<AdminDashboard />}>
           <Route index element={<HomeAdmin />} />
           <Route path="historique" element={<Historique />} />

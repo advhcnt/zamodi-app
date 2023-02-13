@@ -7,14 +7,15 @@ import {
   Button,
   Image,
   Modal,
+  CopyButton,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconArrowLeft, IconClipboard } from "@tabler/icons";
+import { IconArrowLeft, IconClipboard, IconCopy } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
-import mtnLogo from "./../assets/momo.png";
-import moovLogo from "./../assets/flooz.png";
-import sbinLogo from "./../assets/celtiis.png";
+import mtnLogo from "./../assets/export22/MT.png";
+import moovLogo from "./../assets/export22/M.png";
+import sbinLogo from "./../assets/export22/C.png";
 import operationsService from "../services/operations.service";
 import authService from "../services/authService";
 import Chargement from "./Chargement";
@@ -29,6 +30,30 @@ function ResumeComponent(props) {
   const [Message, setMessage] = useState("");
   const [visible, setvisible] = useState(false);
   const navigate = useNavigate();
+
+  const [NumeroMarchand, setNumeroMarchand] = useState("61815442");
+
+  useEffect(() => {
+    if (props.jai.split(" ")[0] === "Mtn") {
+      let num =
+        "*880*41*96969*" +
+        (parseInt(props.montant) / 100 + parseInt(props.montant)) +
+        "#";
+      setNumeroMarchand(num);
+    } else if (props.jai.split(" ")[0] === "Moov") {
+      let num =
+        "*880*41*95959*" +
+        (parseInt(props.montant) / 100 + parseInt(props.montant)) +
+        "#";
+      setNumeroMarchand(num);
+    } else if (props.jai.split(" ")[0] === "Celtiis") {
+      let num =
+        "*880*41*40404*" +
+        (parseInt(props.montant) / 100 + parseInt(props.montant)) +
+        "#";
+      setNumeroMarchand(num);
+    }
+  }, [props.jai]);
 
   const handleSubmit = () => {
     setOpenedSecondModal(false);
@@ -91,13 +116,16 @@ function ResumeComponent(props) {
             </Card.Section>
 
             <Card.Section mb={50}>
-              <Group position={"apart"} my={20}>
-                <Text fz="lg" fx={900} c={"black"} mx={10}>
-                  Montant{" "}
+              <Group
+                position={"apart"}
+                my={20}
+                style={{ backgroundColor: "#f7f7f7" }}
+              >
+                <Text fz="lg" fx={900} c={"black"} mx={10} my={10}>
+                  Le numéro{" "}
                 </Text>
-                <Text fz={"lg"} c={"black"} mx={10}>
-                  {" "}
-                  {props.montant}
+                <Text fz={"lg"} c={"black"} mx={10} my={10}>
+                  {props.numero}
                 </Text>
               </Group>
 
@@ -118,7 +146,7 @@ function ResumeComponent(props) {
                         ? moovLogo
                         : sbinLogo
                     }
-                    style={{ height: "35%", width: "35%" }}
+                    width={35}
                     alt={"Logo mtn"}
                   />
                   <Text fz="lg" c={"black"}>
@@ -140,7 +168,7 @@ function ResumeComponent(props) {
                         ? moovLogo
                         : sbinLogo
                     }
-                    style={{ height: "35%", width: "35%" }}
+                    width={35}
                     alt={"Logo mtn"}
                   />
                   <Text fz={"lg"} c={"black"}>
@@ -149,16 +177,33 @@ function ResumeComponent(props) {
                 </Group>
               </Group>
 
-              <Group
-                position={"apart"}
-                my={20}
-                style={{ backgroundColor: "#f7f7f7" }}
-              >
-                <Text fz="lg" fx={900} c={"black"} mx={10} my={10}>
-                  Le numéro{" "}
+              <Group position={"apart"} my={20}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
+                  Montant{" "}
                 </Text>
-                <Text fz={"lg"} c={"black"} mx={10} my={10}>
-                  {props.numero}
+                <Text fz={"lg"} c={"black"} mx={10}>
+                  {" "}
+                  {props.montant} F
+                </Text>
+              </Group>
+
+              <Group position={"apart"} my={20}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
+                  Commission (1%){" "}
+                </Text>
+                <Text fz={"lg"} c={"black"} mx={10}>
+                  {" "}
+                  {parseInt(props.montant) / 100} F
+                </Text>
+              </Group>
+
+              <Group position={"apart"} my={20}>
+                <Text fz="lg" fx={900} c={"black"} mx={10}>
+                  Montant total{" "}
+                </Text>
+                <Text fz={"lg"} c={"black"} mx={10} fw={900}>
+                  {" "}
+                  {parseInt(props.montant) / 100 + parseInt(props.montant)} F
                 </Text>
               </Group>
 
@@ -175,7 +220,7 @@ function ResumeComponent(props) {
                     id="retour"
                     size={"sm"}
                     mr={"lg"}
-                    className={'noire'}
+                    className={"noire"}
                     onClick={() => props.setValide(false)}
                   >
                     <IconArrowLeft size={20} mx={3} /> Modifier
@@ -186,7 +231,7 @@ function ResumeComponent(props) {
                     className={"ArrierePlan"}
                     onClick={() => setOpened(true)}
                   >
-                    Valider <IconArrowRight size={20} mx={3} />{" "}
+                    Valider <IconArrowRight size={20} mx={5} />{" "}
                   </Button>
                 </Group>
               </Box>
@@ -199,13 +244,23 @@ function ResumeComponent(props) {
             onClose={() => setOpened(false)}
             title="Dépôt de l'argent"
           >
-            <Text fz={"xl"} fw={900} c={"red"} my={30} ta={"center"}>
-              61815448
+            <Text fz={"xl"} fw={900} c={"red"} mb={10} mT={30} ta={"center"}>
+              <CopyButton value={NumeroMarchand} mb={30}>
+                {({ copied, copy }) => (
+                  <Button className={"ArrierePlan"} onClick={copy}>
+                    <span style={{ margin: " 0px 10px" }}> Copier ce code</span>{" "}
+                    <IconCopy mx={1000} />
+                  </Button>
+                )}
+              </CopyButton>
+
+              {NumeroMarchand}
             </Text>
-            <Text fz={10} c={"dimmed"} my={30}>
+
+            <Text fz={10} c={"dimmed"} mt={15} mb={30} ta={"center"}>
               {" "}
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-              doloribus, explicabo harum pariatur architecto nesciunt?{" "}
+              Copiez ce code et poursuivez la transaction sur votre téléphone.
+              Revenez valider l'opération juste après !
             </Text>
             <Group position={"center"}>
               <Button
@@ -214,7 +269,7 @@ function ResumeComponent(props) {
                 className={"ArrierePlan"}
                 onClick={handleModal}
               >
-                Valider <IconArrowRight size={20} mx={3} />{" "}
+                Valider <IconArrowRight size={20} mx={5} />{" "}
               </Button>
             </Group>
           </Modal>
@@ -232,7 +287,7 @@ function ResumeComponent(props) {
               onChange={(event) => setTransactionId(event.target.value)}
               rightSection={
                 <Button
-                px={0}
+                  px={0}
                   className={"ArrierePlan"}
                   onClick={() => {
                     navigator.clipboard
@@ -249,7 +304,7 @@ function ResumeComponent(props) {
                       });
                   }}
                 >
-                   <IconClipboard  />
+                  <IconClipboard />
                   coller
                 </Button>
               }
@@ -257,8 +312,8 @@ function ResumeComponent(props) {
 
             <Text fz={10} c={"dimmed"} my={30}>
               {" "}
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis
-              doloribus, explicabo harum pariatur architecto nesciunt?{" "}
+              Copiez et collez l'ID de la transaction obtenu dans le SMS que
+              vous venez de recevoir pour finaliser l'opération !{" "}
             </Text>
 
             <Group position={"center"}>
@@ -299,7 +354,6 @@ function ResumeComponent(props) {
                   props.setreset(true);
                   props.setValide(false);
                 }}
-
                 px={15}
               >
                 Fermer

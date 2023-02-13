@@ -19,6 +19,7 @@ import authService from "../services/authService";
 import { verifyEmail } from "../utils/fonctions";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import Chargement from "./Chargement";
+import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -34,6 +35,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#20986e",
     width: "100%",
     marginTop: "3vh",
+    '&:hover':{
+      backgroundColor: "#20986e",
+    }
   },
   partieChamp: {
     display: "flex",
@@ -64,15 +68,14 @@ const useStyles = createStyles((theme) => ({
     },
   },
   boxStyle: {
-    width: "70%",
+    width: "100%",
     [theme.fn.smallerThan("md")]: {
       width: "80%",
     },
   },
 }));
 
-function EnterCodeComponent({ setpageKing, email,SetCode }) {
-
+function EnterCodeComponent({ setpageKing, email, SetCode }) {
   const [visible, setvisible] = useState(false);
   const [errMsg, setErrMsg] = useState(false);
   const [code, setCode] = useState({ valeur: "", erreur: false });
@@ -83,13 +86,13 @@ function EnterCodeComponent({ setpageKing, email,SetCode }) {
     if (code.valeur) {
       setvisible(true);
       try {
-        authService.reinitialisationCode(email,code.valeur).then(
+        authService.reinitialisationCode(email, code.valeur).then(
           (data) => {
             setvisible(false);
             let response = data.data;
             console.log(response);
             if (response.state === "success") {
-              SetCode(code.valeur)
+              SetCode(code.valeur);
               setpageKing("NewPassword");
             }
           },
@@ -123,21 +126,21 @@ function EnterCodeComponent({ setpageKing, email,SetCode }) {
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
 
-      <Box className={classes.boxStyle}>
-        <Image
-          src={ZamodiLogo}
-          width={"70%"}
-          mb={"8%"}
-          className={classes.hiddenMobile}
-        />
-        <Image src={ZamodiLogo} className={classes.logo} />
+      <Box className={classes.boxStyle} mx={"auto"} pt={10}>
+        <Group position={"center"}>
+          <Image
+            src={ZamodiLogo3}
+            width={200}
+            mb={"8%"}
+            className={classes.hiddenMobile}
+          />
+        </Group>
 
-        <Text size={25} weight={900}>
-          Entrer le code de Réinitialisation
+        <Text size={20} weight={700} ta={"center"} mt={0}>
+          Code de Réinitialisation
         </Text>
-        <Text size={"xs"} mb={"8%"}>
-          Nous venons de vous envoyer un mail contenant votre code
-          rénitialisation à <br />
+        <Text size={"xs"} mb={"8%"} mt={30}>
+          Nous venons d'envoyer un mail contenant votre code de rénitialisation à {" "}
           {email}
         </Text>
         <Text
@@ -180,7 +183,7 @@ function EnterCodeComponent({ setpageKing, email,SetCode }) {
             {upperFirst("Vérifier")}
           </Button>
         </form>
-        <Group position="apart" mt="xl">
+        <Group position="center" mt="xl">
           <Anchor
             component="button"
             type="button"

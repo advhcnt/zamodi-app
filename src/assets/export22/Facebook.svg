@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="41.807" height="40.725" viewBox="0 0 41.807 40.725">
+  <defs>
+    <filter id="Rectangle_18" x="0" y="0" width="41.807" height="40.725" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.051"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Groupe_40863" data-name="Groupe 40863" transform="translate(9 6)">
+    <g transform="matrix(1, 0, 0, 1, -9, -6)" filter="url(#Rectangle_18)">
+      <g id="Rectangle_18-2" data-name="Rectangle 18" transform="translate(9 6)" fill="#fff" stroke="rgba(112,112,112,0.16)" stroke-width="1">
+        <rect width="23.807" height="22.725" rx="11.363" stroke="none"/>
+        <rect x="0.5" y="0.5" width="22.807" height="21.725" rx="10.863" fill="none"/>
+      </g>
+    </g>
+    <g id="facebook" transform="translate(9.566 6.504)">
+      <path id="Tracé_6" data-name="Tracé 6" d="M11.438,13.542H13.5V9.414h1.857l.2-2.051H13.5V6.327a.515.515,0,0,1,.515-.515h1.546V3.75H14.015a2.577,2.577,0,0,0-2.577,2.577V7.363H10.407l-.2,2.051h1.235Z" transform="translate(-10.203 -3.75)" fill="#3c5a9a"/>
+    </g>
+  </g>
+</svg>

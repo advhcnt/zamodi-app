@@ -38,10 +38,12 @@ function PartagerComponent(props) {
       </Text>
 
       <Text fz={"sm"} c={"dimmed"} my={30}>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita kasd gubergren, no sea takimata
+        Partagez l'expérience ZAMODI avec vos proches ! Avec ses fonctionnalités
+        innovantes et faciles à utiliser, ZAMODI est l'application idéale pour
+        améliorer votre quotidien. Invitez vos amis et votre famille à rejoindre
+        le mouvement et découvrez ensemble tout ce que ZAMODI peut offrir.
+        Faites connaître ZAMODI à ceux que vous aimez et profitez ensemble d'une
+        gestion plus aisée de votre Mobile Money !
       </Text>
 
       <Box>
@@ -76,7 +78,7 @@ function PartagerComponent(props) {
         <WhatsappShare />
 
         <TwitterShare />
-       {/* <LinkedinShare /> */}
+        {/* <LinkedinShare /> */}
         {/* toktok */}
         {/* <span>
           <svg

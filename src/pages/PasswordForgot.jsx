@@ -346,7 +346,7 @@ function LoginPage(props) {
             </form>
 
             <Divider
-              label="Or continue with email"
+              label="Ou continuez avec"
               labelPosition="center"
               my="lg"
             />

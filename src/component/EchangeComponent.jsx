@@ -13,84 +13,86 @@ import React, { useEffect, useState } from "react";
 import { IconArrowsLeftRight, IconChevronDown, IconX } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import ResumeComponent from "./ResumeComponent";
-import operation from './../services/operations.service'
+import operation from "./../services/operations.service";
 import authService from "../services/authService";
 import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
 
-
 function EchangeComponent(props) {
   const currentUser = authService.getCurrentUser();
-  const [operations, setOperation] = useState({})
-  const [montant, setMontant] = useState('')
-  const [jai, setjai] = useState('')
-  const [jeveux, setjeveux] = useState('')
-  const [numero, setnumero] = useState('')
-  const [numeroConfirm, setnumeroConfirm] = useState('')
+  const [operations, setOperation] = useState({});
+  const [montant, setMontant] = useState("");
+  const [jai, setjai] = useState("");
+  const [jeveux, setjeveux] = useState("");
+  const [numero, setnumero] = useState("");
+  const [numeroConfirm, setnumeroConfirm] = useState("");
   const [valide, setvalide] = useState(false);
   const [error, seterror] = useState({
     statut: false,
-    message: ''
+    message: "",
   });
   const [Reset, setreset] = useState(false);
 
   useEffect(() => {
-
-    setOperation(operation.getUserOperation(currentUser.message._id))
-    console.log(operations)
-
-  }, [])
+    setOperation(operation.getUserOperation(currentUser.message._id));
+    console.log(operations);
+  }, []);
 
   useEffect(() => {
-    if(Reset){
-      setMontant('');
-      setnumero('')
-      setnumeroConfirm('')
-      setjeveux('')
-      setjai('')
+    if (Reset) {
+      setMontant("");
+      setnumero("");
+      setnumeroConfirm("");
+      setjeveux("");
+      setjai("");
     }
-  },[Reset])
+  }, [Reset]);
 
   const handleEchange = () => {
-   
-
     if (montant && jai && jeveux && numero && numeroConfirm) {
-
       if (numero === numeroConfirm && verifyPhoneNumber(numero)) {
-
         if (jeveux !== jai) {
-
           if (verifyAmount(montant)) {
-            seterror(false,'');
-            setvalide(true)
-
+            seterror(false, "");
+            setvalide(true);
+          } else {
+            seterror({
+              statut: true,
+              message: "Veillez entrer un montant correct",
+            });
           }
-          else {
-            seterror({ statut:true, message:'Veillez entrer un montant correct'})
-          }
+        } else {
+          seterror({
+            statut: true,
+            message: `Vous ne pouvez pas avoir ${jai
+              .split(" ")[0]
+              .toUpperCase()} et recevoir ${jeveux
+              .split(" ")[0]
+              .toUpperCase()}`,
+          });
         }
-        else{
-          seterror({ statut:true, message:`Tu ne peux pas avoir ${jai.split(' ')[0].toUpperCase() } et recevoir ${jeveux.split(' ')[0].toUpperCase() }`})
-        }
+      } else {
+        seterror({ statut: true, message: "Veillez entrer un numéro correct" });
       }
-      else{
-        seterror({ statut:true, message:'Veillez entrer un numéro correct'})
-      }
+    } else {
+      seterror({ statut: true, message: "Veillez remplir les champs" });
     }
-    else{
-      seterror({ statut:true, message:'Veillez remplir les champs'})
-    }
-  }
+  };
 
   return (
-    <Container size={'sm'}>
+    <Container size={"sm"}>
       {!valide && (
         <Grid style={{ justifyContent: "space-around" }}>
           <Grid.Col md={10}>
-            {error.statut &&
-              (<Notification my={30} icon={<IconX size={18} />} color="red" onClick={()=>seterror(false,'')}>
+            {error.statut && (
+              <Notification
+                my={30}
+                icon={<IconX size={18} />}
+                color="red"
+                onClick={() => seterror(false, "")}
+              >
                 {error.message}
               </Notification>
-              )}
+            )}
             <Card shadow="lg" p="lg" radius="md" withBorder>
               <Card.Section
                 withBorder
@@ -109,17 +111,16 @@ function EchangeComponent(props) {
                 <Grid>
                   <Grid.Col md={4} mt={30}>
                     <Text fz={"md"} weight={500} my={10} className={"dh"}>
-                      Montant de recharge
+                      Montant à recharger
                     </Text>
                     <TextInput
-
                       placeholder="Montant"
                       withAsterisk
                       className={"ombre"}
                       width={"100%"}
                       value={montant}
                       onChange={(event) => setMontant(event.target.value)}
-                      type={'number'}
+                      type={"number"}
                     />
                   </Grid.Col>
                 </Grid>
@@ -139,8 +140,7 @@ function EchangeComponent(props) {
                     </Text>
                     <Select
                       fullWidth
-
-                      placeholder="Pick one"
+                      placeholder="J'ai"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
                       styles={{ rightSection: { pointerEvents: "none" } }}
@@ -157,8 +157,7 @@ function EchangeComponent(props) {
                       Je veux
                     </Text>
                     <Select
-
-                      placeholder="Pick one"
+                      placeholder="Je veux"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}
                       styles={{ rightSection: { pointerEvents: "none" } }}
@@ -181,31 +180,29 @@ function EchangeComponent(props) {
                 >
                   <Box>
                     <Text fz={"md"} weight={500} my={10} className={"dh"}>
-                      Le numéro :
+                      Numéro de réception :
                     </Text>
                     <TextInput
-
-                      placeholder="Votre numéro"
+                      placeholder="Numéro de réception"
                       withAsterisk
                       className={"ombre"}
                       onChange={(event) => setnumero(event.target.value)}
                       value={numero}
-                      type={'tel'}
+                      type={"tel"}
                     />
                   </Box>
                   <Box></Box>
                   <Box>
                     <Text fz={"md"} weight={500} my={10} className={"dh"}>
-                      Confirmé le numéro :
+                      Confirmer le numéro de réception :
                     </Text>
                     <TextInput
-
-                      placeholder="Confirmer numéro"
+                      placeholder=" Confirmer le numéro de réception"
                       withAsterisk
                       className={"ombre"}
                       onChange={(event) => setnumeroConfirm(event.target.value)}
                       value={numeroConfirm}
-                      type={'tel'}
+                      type={"tel"}
                     />
                   </Box>
                 </Box>
@@ -218,12 +215,10 @@ function EchangeComponent(props) {
                   }}
                 >
                   <Button
-
                     mr={"lg"}
                     className={"ArrierePlan"}
                     onClick={handleEchange}
                   >
-
                     Valider <IconArrowRight size={20} mx={3} />{" "}
                   </Button>
                 </Box>
@@ -233,7 +228,16 @@ function EchangeComponent(props) {
         </Grid>
       )}
 
-      {valide && <ResumeComponent setreset={setreset} setValide={setvalide} numero={numero} jai={jai} jeveux={jeveux} montant={montant} />}
+      {valide && (
+        <ResumeComponent
+          setreset={setreset}
+          setValide={setvalide}
+          numero={numero}
+          jai={jai}
+          jeveux={jeveux}
+          montant={montant}
+        />
+      )}
     </Container>
   );
 }

@@ -11,7 +11,7 @@ import {
   IconFileText,
   IconHome,
 } from "@tabler/icons";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
+import ZamodiLogo from "./../assets/Zamodi-Logo3.png";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 
@@ -114,7 +114,7 @@ const data = [
   { link: "recharge", label: "Recharge", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
   { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "partager", label: "Partager l'application", icon: IconShare },
+  { link: "partager", label: "Partager l'App", icon: IconShare },
   { link: "service", label: "Noter le service", icon: IconStar },
 ];
 
@@ -165,17 +165,17 @@ function SidebarLayout() {
     <Navbar height={"100%"} width={"auto"} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          <Image src={ZamodiLogo} width={200} />
+          <Image src={ZamodiLogo} width={150} mt={10} />
         </Group>
         {links}
       </Navbar.Section>
 
       <Navbar.Section >
         <Paper style={{ border: '2px solid #f7f7f7',padding:'15px' }}>
-          <Text ta="center" fw={'bold'}>À Propos</Text>
-          <Text fz={'xs'} >
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-            diam nonumy eirmod tempor
+          <Text  fw={'bold'} mb={10}>À Propos</Text>
+          <Text fz={'xs'}  >
+          Avec ZAMODI, vous pouvez transférer facilement et rapidement des soldes entre MTN Money, Moov Money et Celtiis Cash ou acheter facilement du crédit d'appel ou des données internet.
+
           </Text>
         </Paper>
       </Navbar.Section>

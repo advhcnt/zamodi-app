@@ -7,6 +7,7 @@ import { createStyles } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import operationsService from "../services/operations.service";
 import blankTable from "./../assets/canvas-pana.png";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   secondCard: {
@@ -35,6 +36,8 @@ function HistoriqueComponent(props) {
   const [achatTable, setachatTable] = useState([]);
   const [historiqueType, toggle] = useToggle(["echanges", "recharges"]);
 
+  
+
   useEffect(() => {
     operationsService.getUserOperation().then(
       (data) => {
@@ -55,11 +58,14 @@ function HistoriqueComponent(props) {
     );
   }, []);
 
+
+  const navigate = useNavigate();
+
   return (
     <Box className={classes.paddingBox}>
       <Group position={"apart"}>
         <Text size={"xl"} fw={400} c={"black"}>
-          Historique des {historiqueType}
+          Historique des {historiqueType==='echanges'?'échanges':historiqueType}
         </Text>
         <Paper withBorder sx={{ dsplay: "flex" }}>
           <Box sx={{ display: "flex" }}>
@@ -229,6 +235,8 @@ function HistoriqueComponent(props) {
               <Text ta={"center"} c="green">
                 Vous n'avez encore fait aucun échange.{" "}
               </Text>
+
+              <Button className={"ArrierePlan"} onClick={()=>navigate('/echange')}>Faire un échange </Button>
             </>
           )}
         </>
@@ -357,6 +365,9 @@ function HistoriqueComponent(props) {
               <Text ta={"center"} c="green">
                 Vous n'avez encore fait aucun achat.{" "}
               </Text>
+
+              <Button className={"ArrierePlan"} onClick={()=>navigate('/recharge')}>Faire un recharge </Button>
+
             </>
           )}
         </>

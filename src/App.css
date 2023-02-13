@@ -8,13 +8,22 @@
   padding-top: 10px;
 }
 
+
+.FirstPathAuthMobile{
+  background-image: url('./assets/backround1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(92, 28, 28);
+}
+
 .SecondPathAuth
 {
   background-image: url('./assets/backround1.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: left;
-  background-color: rgb(92, 28, 28);
+  
 }
 
 
@@ -61,6 +70,15 @@
   background-size: 500px;
   background-blend-mode: hard-light;
   background-position-x: right;
+}
+
+.bgBottom{
+  background-image: url('./assets/AuthBottomBackground.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+  background-position-x: right;
+
 }
 
 .secondplaceBottom{
@@ -143,6 +161,7 @@ body{
   right: 0;
   bottom: 0;
   overflow: hidden;
+  padding-bottom: 5vh;
 }
 
 
@@ -197,4 +216,14 @@ background-color: #fab005;
     width: 40px !important;
     height: 40px !important;
     
+}
+
+
+.mantine-w29q45{
+  display: none;
+}
+
+
+.mantine-1lrofwx{
+  background: #20986e !important;
 }

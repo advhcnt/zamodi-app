@@ -17,6 +17,8 @@ import authService from "../services/authService";
 import { verifyEmail } from "../utils/fonctions";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import Chargement from "./Chargement";
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
+import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -32,6 +34,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#20986e",
     width: "100%",
     marginTop: "3vh",
+    '&:hover':{
+      backgroundColor: "#20986e",
+    }
   },
   partieChamp: {
     display: "flex",
@@ -115,20 +120,21 @@ function PasswordForgotComponent({ setpageKing, setclient }) {
       {/* LAZY LOAD */}
       <Chargement visible={visible} />
 
-      <Box className={classes.boxStyle}>
-        <Image
-          src={ZamodiLogo}
-          width={"70%"}
-          mb={"8%"}
-          className={classes.hiddenMobile}
-        />
-        <Image src={ZamodiLogo} className={classes.logo} />
+      <Box className={classes.boxStyle} mx={"auto"} pt={10}>
+        <Group position={"center"}>
+          <Image
+            src={ZamodiLogo3}
+            width={200}
+            mb={"8%"}
+            className={classes.hiddenMobile}
+          />
+        </Group>
 
-        <Text size={25} weight={900}>
+        <Text size={20} weight={700} ta={"center"}>
           Mot depasse oublié
         </Text>
-        <Text size={"xs"} mb={"8%"}>
-          Inséré votre mail pour recevoir le code de confirmation
+        <Text size={"xs"} mb={"8%"} ta={"center"} c={"dimmed"} mt={30}>
+          Insérez votre mail pour recevoir le code de confirmation !
         </Text>
         <Text
           ta={"center"}
@@ -141,7 +147,7 @@ function PasswordForgotComponent({ setpageKing, setclient }) {
         <form>
           <Stack>
             <TextInput
-              radius="32px"
+              radius={12}
               icon={
                 <IconMail
                   size={20}
@@ -162,7 +168,7 @@ function PasswordForgotComponent({ setpageKing, setclient }) {
           <Button
             size="xs"
             fw={"xs"}
-            radius={"lg"}
+            radius={12}
             className={classes.loginButton}
             onClick={handlePassword}
           >

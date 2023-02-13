@@ -33,7 +33,7 @@ function DashboardPage(props) {
           <Box>
             <HearderLayout />
           </Box>
-          <Box style={{ paddingInline: "20px" }}>
+          <Box style={{ paddingInline: "5px" }}>
             <Outlet />
           </Box>
         </Grid.Col>

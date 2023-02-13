@@ -13,8 +13,11 @@ import {
   Box,
   createStyles,
   Image,
+  Card,
 } from "@mantine/core";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
+import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
@@ -28,6 +31,8 @@ import { LoginSocialFacebook } from "reactjs-social-login";
 import jwt_decode from "jwt-decode";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import facebook from "./../assets/export22/Facebook.svg";
+import google from "./../assets/export22/google.svg";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -43,6 +48,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: "#20986e",
     width: "100%",
     marginTop: "3vh",
+    "&:hover": {
+      backgroundColor: "#20986e",
+    },
   },
   partieChamp: {
     display: "flex",
@@ -93,16 +101,13 @@ function RegisterPage(props) {
   const navigate = useNavigate();
   const [visible, setvisible] = useState(false);
   const [condition, setcondition] = useState({ valeur: false, erreur: false });
- 
+
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
 
   useEffect(() => {
     setErrMsg("");
   }, [user, pwd]);
-
- 
-
 
   // Fonction pour l'inscription
   const handleSubmit = async (e) => {
@@ -117,38 +122,36 @@ function RegisterPage(props) {
                 if (data.status === 200 || data.state === "success") {
                   // setvisible(false);
                   // console.log(data);
-                //  Login
+                  //  Login
 
-                authService.login(user.valeur,  pwd.valeur).then(
-                  (data) => {
-                    if (data.status === 200 || data.state === "success") {
-                      authHeader(data.accessToken);
-                      if(data.isAdmin)
-                      {
-                        navigate("/admin");
-                      }else{
-                        navigate("/dashboard");
+                  authService.login(user.valeur, pwd.valeur).then(
+                    (data) => {
+                      if (data.status === 200 || data.state === "success") {
+                        authHeader(data.accessToken);
+                        if (data.isAdmin) {
+                          navigate("/admin");
+                        } else {
+                          navigate("/dashboard");
+                        }
+                      } else {
+                        setvisible(false);
+                        setErrMsg(data.message);
                       }
-                    } else {
-                      setvisible(false);
-                      setErrMsg(data.message);
-                    }
-                  },
-                  (error) => {
-                    const resMessage =
-                      (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                      error.message ||
-                      error.toString();
-          
-                    setvisible(false);
-                    setErrMsg(resMessage);
-                  }
-                );
-                // login
+                    },
+                    (error) => {
+                      const resMessage =
+                        (error.response &&
+                          error.response.data &&
+                          error.response.data.message) ||
+                        error.message ||
+                        error.toString();
 
-              } else {
+                      setvisible(false);
+                      setErrMsg(resMessage);
+                    }
+                  );
+                  // login
+                } else {
                   setvisible(false);
                   setErrMsg(data.message);
                 }
@@ -213,323 +216,443 @@ function RegisterPage(props) {
   });
 
   return (
-    <div
-      style={{
-        maxWidth: "100vw",
-        overflow: "hidden",
-        maxHeight: "100vh",
-        position: "relative",
-      }}
-    >
-      {/* LAZY LOAD */}
-      <Chargement visible={visible} />
-      <Grid
-        className={"secondplaceLogin"}
-        style={{ maxHeight: "102vh", overflow: "hidden" }}
+    <>
+      <Box
+        className={classes.hiddenMobile}
+        style={{
+          maxWidth: "100vw",
+          overflow: "hidden",
+          maxHeight: "100vh",
+          position: "relative",
+        }}
       >
-        {/* Partie une */}
-        <Grid.Col
-          md={6}
-          order={2}
-          orderMd={1}
-          className={` ${classes.partieChamp}`}
+        {/* LAZY LOAD */}
+        <Chargement visible={visible} />
+        <Grid
+          className={"secondplaceLogin"}
+          style={{ maxHeight: "102vh", overflow: "hidden" }}
         >
-          <Box style={{ width: "70%" }}>
-            <Image
-              src={ZamodiLogo}
-              width={"70%"}
-              mb={"8%"}
-              className={classes.hiddenMobile}
-            />
-            <Image src={ZamodiLogo} className={classes.logo} />
-
-            <Text size={28} weight={900}>
-              Créer un compte
-            </Text>
-            <Text size={"xs"} mb={"8%"}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi,
-            </Text>
-            <Text
-              ta={"center"}
-              c={"red"}
-              ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </Text>
-            <form>
-              <Stack>
-                <TextInput
-                  icon={
-                    <IconUser
-                      size={20}
-                      color={"#20986e"}
-                      className={classes.lesIcones}
-                    />
-                  }
-                  radius="32px"
-                  variant={"filled"}
-                  placeholder="Your name"
-                  value={user.valeur}
-                  onChange={(event) =>
-                    setUser({
-                      valeur: event.currentTarget.value,
-                      erreur: false,
-                    })
-                  }
-                  error={user.erreur && <>{user.erreur}</>}
+          {/* Partie une */}
+          <Grid.Col
+            md={6}
+            order={2}
+            orderMd={1}
+            className={` ${classes.partieChamp}`}
+          >
+            <Box style={{ width: "70%" }}>
+              <Group>
+                <Image
+                  src={ZamodiLogo3}
+                  width={"70%"}
+                  mb={"4%"}
+                  className={classes.hiddenMobile}
                 />
+              </Group>
 
-                <TextInput
-                  radius="32px"
-                  icon={
-                    <IconMail
-                      size={20}
-                      color={"#20986e"}
-                      className={classes.lesIcones}
-                    />
-                  }
-                  required
-                  size={"sm"}
-                  placeholder="exemple@zamodi.com"
-                  variant={"filled"}
-                  value={mail.valeur}
-                  onChange={(event) =>
-                    setMail({
-                      valeur: event.currentTarget.value,
-                      erreur: false,
-                    })
-                  }
-                  error={mail.erreur && <>{mail.erreur}</>}
-                />
+              <Text size={28} weight={900}>
+                Créer un compte
+              </Text>
+              <Text size={"xs"} mb={"8%"}>
+                Inscrivez-vous gratuitement !{" "}
+              </Text>
+              <Text
+                ta={"center"}
+                c={"red"}
+                ref={errRef}
+                className={errMsg ? "errmsg" : "offscreen"}
+                aria-live="assertive"
+              >
+                {errMsg}
+              </Text>
+              <form>
+                <Stack>
+                  <TextInput
+                    icon={
+                      <IconUser
+                        size={20}
+                        color={"#20986e"}
+                        className={classes.lesIcones}
+                      />
+                    }
+                    radius={12}
+                    variant={"filled"}
+                    placeholder="Your name"
+                    value={user.valeur}
+                    onChange={(event) =>
+                      setUser({
+                        valeur: event.currentTarget.value,
+                        erreur: false,
+                      })
+                    }
+                    error={user.erreur && <>{user.erreur}</>}
+                  />
 
-                <PasswordInput
-                  radius="32px"
-                  size={"sm"}
-                  icon={
-                    <IconLock
-                      size={20}
-                      color={"#20986e"}
-                      className={classes.lesIcones}
-                    />
-                  }
-                  required
-                  placeholder="Your password"
-                  variant={"filled"}
-                  value={pwd.valeur}
-                  onChange={(event) =>
-                    setPwd({ valeur: event.currentTarget.value, erreur: false })
-                  }
-                  error={pwd.erreur && <>{pwd.erreur}</>}
-                />
+                  <TextInput
+                    radius={12}
+                    icon={
+                      <IconMail
+                        size={20}
+                        color={"#20986e"}
+                        className={classes.lesIcones}
+                      />
+                    }
+                    required
+                    size={"sm"}
+                    placeholder="exemple@zamodi.com"
+                    variant={"filled"}
+                    value={mail.valeur}
+                    onChange={(event) =>
+                      setMail({
+                        valeur: event.currentTarget.value,
+                        erreur: false,
+                      })
+                    }
+                    error={mail.erreur && <>{mail.erreur}</>}
+                  />
 
-                {type === "register" && (
-                  <div
-                    style={{ display: "flex", alignItems: "center", gap: 5 }}
-                  >
-                    <Checkbox
-                      checked={condition.valeur}
-                      size={15}
-                      className={"lesCheckbox"}
-                      onChange={(event) =>
-                        setcondition({
-                          valeur: event.currentTarget.checked,
-                          erreur: false,
-                        })
-                      }
-                      error={condition.erreur && <>{condition.erreur}</>}
-                    />
-                    <Text size={10}>
-                      J'accepte les{" "}
-                      <Link
-                        to={"#"}
-                        style={{ textDecoration: "none", color: "red" }}
-                      >
-                        conditions d'utilisation
-                      </Link>{" "}
-                      et{" "}
-                      <Link
-                        to={"#"}
-                        style={{ textDecoration: "none", color: "red" }}
-                      >
-                        politique de confidentialité
-                      </Link>
-                    </Text>
-                  </div>
-                )}
-              </Stack>
+                  <PasswordInput
+                    radius={12}
+                    size={"sm"}
+                    icon={
+                      <IconLock
+                        size={20}
+                        color={"#20986e"}
+                        className={classes.lesIcones}
+                      />
+                    }
+                    required
+                    placeholder="Your password"
+                    variant={"filled"}
+                    value={pwd.valeur}
+                    onChange={(event) =>
+                      setPwd({
+                        valeur: event.currentTarget.value,
+                        erreur: false,
+                      })
+                    }
+                    error={pwd.erreur && <>{pwd.erreur}</>}
+                  />
 
-              <Group position="apart" mt="md">
+                  {type === "register" && (
+                    <div
+                      style={{ display: "flex", alignItems: "center", gap: 5 }}
+                    >
+                      <Checkbox
+                        checked={condition.valeur}
+                        size={15}
+                        className={"lesCheckbox"}
+                        onChange={(event) =>
+                          setcondition({
+                            valeur: event.currentTarget.checked,
+                            erreur: false,
+                          })
+                        }
+                        error={condition.erreur && <>{condition.erreur}</>}
+                      />
+                      <Text size={10}>
+                        J'accepte les{" "}
+                        <Link
+                          to={"#"}
+                          style={{ textDecoration: "none", color: "red" }}
+                        >
+                          conditions d'utilisation
+                        </Link>{" "}
+                        et{" "}
+                        <Link
+                          to={"#"}
+                          style={{ textDecoration: "none", color: "red" }}
+                        >
+                          les politiques de confidentialité
+                        </Link>
+                      </Text>
+                    </div>
+                  )}
+                </Stack>
+
+                <Button
+                  size="xs"
+                  fw={"xs"}
+                  // type="submit"
+                  radius={12}
+                  className={classes.loginButton}
+                  onClick={handleSubmit}
+                >
+                  {upperFirst("Se connecter")}
+                </Button>
+              </form>
+
+              <Divider
+                label="Ou continuez avec"
+                labelPosition="center"
+                my="lg"
+              />
+              <Group position="center">
+                <Image src={facebook} width={60} />
+                <Image src={google} width={60} />
+              </Group>
+              <Group position="center" mt="xl">
                 <Anchor
                   component="button"
                   type="button"
                   color="dimmed"
-                  onClick={() => toggle()}
+                  style={{
+                    color: "black",
+                    justifyContent: "space-around",
+                    textAlign: "center",
+                    alignContent: "center",
+                  }}
                   size="xs"
                 >
-                  <Link to={"/register"} style={{ color: "#20986e" }}>
-                    Mot de passe oublier
-                  </Link>
+                  <Text ta={"center"} display={"inline-block"}>
+                    Vous avez un compte?
+                    <Link to={"/login"}>
+                      <span style={{ color: "#20986e" }}> Se connecter</span>
+                    </Link>
+                  </Text>
                 </Anchor>
               </Group>
-              <Button
-                size="xs"
-                fw={"xs"}
-                // type="submit"
-                radius={"lg"}
-                className={classes.loginButton}
-                onClick={handleSubmit}
-              >
-                {upperFirst("Se connecter")}
-              </Button>
-            </form>
+            </Box>
+          </Grid.Col>
 
-            <Divider
-              label="Or continue with email"
-              labelPosition="center"
-              my="lg"
-            />
-            <Group position="center" mt="xl">
-              {/* Connexion via google */}
-              <span className={"spanButton"} onClick={loginGoogle}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                >
-                  <path
-                    fill="#FFC107"
-                    d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
-                  ></path>
-                  <path
-                    fill="#FF3D00"
-                    d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
-                  ></path>
-                  <path
-                    fill="#4CAF50"
-                    d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
-                  ></path>
-                  <path
-                    fill="#1976D2"
-                    d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
-                  ></path>
-                </svg>
-              </span>
-
-              {/* Connexion via facebook */}
-              <LoginSocialFacebook
-                appId={717531253056662}
-                onResolve={(response) => {
-                  console.log(response);
-                }}
-                onReject={(error) => {
-                  console.log(error);
-                }}
-              >
-                {/* <FacebookLoginButton /> */}
-
-                <span className={"spanButton"}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    x="0px"
-                    y="0px"
-                    width="48"
-                    height="48"
-                    viewBox="0 0 48 48"
-                  >
-                    <linearGradient
-                      id="Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1"
-                      x1="9.993"
-                      x2="40.615"
-                      y1="9.993"
-                      y2="40.615"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop offset="0" stop-color="#2aa4f4"></stop>
-                      <stop offset="1" stop-color="#007ad9"></stop>
-                    </linearGradient>
-                    <path
-                      fill="url(#Ld6sqrtcxMyckEl6xeDdMa_uLWV5A9vXIPu_gr1)"
-                      d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z"
-                    ></path>
-                    <path
-                      fill="#fff"
-                      d="M26.707,29.301h5.176l0.813-5.258h-5.989v-2.874c0-2.184,0.714-4.121,2.757-4.121h3.283V12.46 c-0.577-0.078-1.797-0.248-4.102-0.248c-4.814,0-7.636,2.542-7.636,8.334v3.498H16.06v5.258h4.948v14.452 C21.988,43.9,22.981,44,24,44c0.921,0,1.82-0.084,2.707-0.204V29.301z"
-                    ></path>
-                  </svg>
-                </span>
-              </LoginSocialFacebook>
-            </Group>
-            <Group position="apart" mt="xl">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
+          {/* Partie second */}
+          <Grid.Col
+            md={6}
+            order={1}
+            orderMd={2}
+            className={classes.partieNeutre}
+          >
+            <Box style={{ width: "58%" }}>
+              {" "}
+              <Box
                 style={{
-                  color: "black",
+                  display: "flex",
+                  alignItems: "center",
                   justifyContent: "space-around",
-                  textAlign: "center",
-                  alignContent: "center",
                 }}
-                size="xs"
               >
-                <Text ta={"center"} display={"inline-block"}>
-                  Vous avez un compte?
-                  <Link to={"/login"}>
-                    <span style={{ color: "#20986e" }}>Se connecter</span>
-                  </Link>
+                <Image
+                  src={authLogo}
+                  alt="auth logo"
+                  width={"100%"}
+                  marginX={"auto"}
+                />
+              </Box>
+              <Box
+                style={{
+                  marginInline: "auto",
+                  width: "80%",
+                  textAlign: "center",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  display: "flex",
+                }}
+              >
+                <Text
+                  size={10}
+                  ta="center"
+                  style={{ color: "whitesmoke", marginTop: "30px" }}
+                >
+                  Avec ZAMODI, vous pouvez transférer facilement et rapidement
+                  des soldes entre MTN Money, Moov Money et Celtiis Cash ou
+                  acheter facilement du crédit d'appel ou des données internet.<br />
+                  Inscrivez-vous gratuitement !{" "}
                 </Text>
-              </Anchor>
-            </Group>
-          </Box>
-        </Grid.Col>
+              </Box>
+            </Box>
+          </Grid.Col>
+        </Grid>
+      </Box>
 
-        {/* Partie second */}
-        <Grid.Col md={6} order={1} orderMd={2} className={classes.partieNeutre}>
-          <Box style={{ width: "58%" }}>
-            {" "}
-            <Box
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
-              }}
-            >
-              <Image
-                src={authLogo}
-                alt="auth logo"
-                width={"100%"}
-                marginX={"auto"}
+      <Box className={`${classes.hiddenDesktop} `}>
+        <Box
+          sx={{
+            height: "30vh",
+            paddingTop: 40,
+            paddingBottom: 20,
+            background: "#20986E",
+            borderRadius: "0 0 0 32px",
+          }}
+        >
+          <Group position={"center"}>
+            <Image src={ZamodiLogo2} width={200} />
+          </Group>
+        </Box>
+
+        <Card
+          shadow={"xs"}
+          sx={{
+            width: "90vw",
+            marginInline: "5vw",
+            marginTop: "-12vh",
+            borderRadius: 22,
+          }}
+        >
+          <Text size={20} weight={700} ta={"center"} mt={0}>
+            Créer un compte
+          </Text>
+          <Text size={"xs"} ta={"center"} c={"dimmed"} my={15}>
+            Inscrivez-vous gratuitement !{" "}
+          </Text>
+          <Text
+            ta={"center"}
+            c={"red"}
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </Text>
+          <form>
+            <Stack>
+              <TextInput
+                icon={
+                  <IconUser
+                    size={20}
+                    color={"#20986e"}
+                    className={classes.lesIcones}
+                  />
+                }
+                radius={12}
+                variant={"filled"}
+                placeholder="Your name"
+                value={user.valeur}
+                onChange={(event) =>
+                  setUser({
+                    valeur: event.currentTarget.value,
+                    erreur: false,
+                  })
+                }
+                error={user.erreur && <>{user.erreur}</>}
               />
-            </Box>
-            <Box
-              style={{
-                marginInline: "auto",
-                width: "80%",
-                textAlign: "center",
-                justifyContent: "center",
-                alignContent: "center",
-                display: "flex",
-              }}
+
+              <PasswordInput
+                radius={12}
+                icon={
+                  <IconMail
+                    size={20}
+                    color={"#20986e"}
+                    className={classes.lesIcones}
+                  />
+                }
+                required
+                size={"sm"}
+                placeholder="exemple@zamodi.com"
+                variant={"filled"}
+                value={mail.valeur}
+                onChange={(event) =>
+                  setMail({
+                    valeur: event.currentTarget.value,
+                    erreur: false,
+                  })
+                }
+                error={mail.erreur && <>{mail.erreur}</>}
+              />
+
+              <PasswordInput
+                radius={12}
+                size={"sm"}
+                icon={
+                  <IconLock
+                    size={20}
+                    color={"#20986e"}
+                    className={classes.lesIcones}
+                  />
+                }
+                required
+                placeholder="Your password"
+                variant={"filled"}
+                value={pwd.valeur}
+                onChange={(event) =>
+                  setPwd({
+                    valeur: event.currentTarget.value,
+                    erreur: false,
+                  })
+                }
+                error={pwd.erreur && <>{pwd.erreur}</>}
+              />
+
+              {type === "register" && (
+                <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                  <Checkbox
+                    checked={condition.valeur}
+                    size={15}
+                    className={"lesCheckbox"}
+                    onChange={(event) =>
+                      setcondition({
+                        valeur: event.currentTarget.checked,
+                        erreur: false,
+                      })
+                    }
+                    error={condition.erreur && <>{condition.erreur}</>}
+                  />
+                  <Text size={10}>
+                    J'accepte les{" "}
+                    <Link
+                      to={"#"}
+                      style={{ textDecoration: "none", color: "red" }}
+                    >
+                      conditions d'utilisation
+                    </Link>{" "}
+                    et{" "}
+                    <Link
+                      to={"#"}
+                      style={{ textDecoration: "none", color: "red" }}
+                    >
+                      les politiques de confidentialité
+                    </Link>
+                  </Text>
+                </div>
+              )}
+            </Stack>
+
+            <Button
+              size="xs"
+              fw={"xs"}
+              // type="submit"
+              radius={12}
+              className={classes.loginButton}
+              onClick={handleSubmit}
             >
-              <Text
-                size={10}
-                ta="center"
-                style={{ color: "whitesmoke", marginTop: "30px" }}
-              >
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos
-                sed blanditiis sint. Odio, magni vero minus blanditiis
-                cupiditate nisi
+              {upperFirst("S'inscrire")}
+            </Button>
+          </form>
+        </Card>
+        <Box
+          sx={{
+            width: "90vw",
+            marginInline: "5vw",
+            paddingInline: 30,
+          }}
+        >
+          <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
+          <Group position="center">
+            <Image src={facebook} width={60} />
+            <Image src={google} width={60} />
+          </Group>
+          <Group position="center">
+            <Anchor
+              component="button"
+              type="button"
+              color="dimmed"
+              style={{
+                color: "black",
+                justifyContent: "space-around",
+                textAlign: "center",
+                alignContent: "center",
+              }}
+              size="xs"
+            >
+              <Text ta={"center"} display={"inline-block"}>
+                Vous avez déjà un compte ?{" "}
+                <Link to={"/login"}>
+                  <span style={{ color: "#20986e" }}>Se connecter</span>
+                </Link>
               </Text>
-            </Box>
-          </Box>
-        </Grid.Col>
-      </Grid>
-    </div>
+            </Anchor>
+          </Group>
+        </Box>
+      </Box>
+    </>
   );
 }
 

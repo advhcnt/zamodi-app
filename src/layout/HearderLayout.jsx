@@ -14,6 +14,8 @@ import {
   UnstyledButton,
   Paper,
   Indicator,
+  Container,
+  ScrollArea,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -26,8 +28,10 @@ import {
   IconCheck,
   IconX,
   IconInfoCircle,
+  IconLetterX,
 } from "@tabler/icons";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
+import ZamodiLogo from "./../assets/Zamodi-Logo3.png";
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import {
   IconStar,
   IconLogout,
@@ -35,7 +39,7 @@ import {
   IconShare,
   IconAlertOctagon,
   IconFileText,
-  IconHome,
+  IconLayoutDashboard,
 } from "@tabler/icons";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
@@ -51,14 +55,13 @@ const user = {
   // "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80",
 };
 
-
 const DrawerData = [
-  { link: "/dashboard", label: "Dashboard", icon: IconHome },
+  { link: "/dashboard", label: "Dashboard", icon: IconLayoutDashboard },
   { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
   { link: "recharge", label: "Recharge", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
   { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
-  { link: "partager", label: "Partager l'application", icon: IconShare },
+  { link: "partager", label: "Partager l'App", icon: IconShare },
   { link: "service", label: "Noter le service", icon: IconStar },
 ];
 
@@ -72,14 +75,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
       alignItems: "center",
       textDecoration: "none",
       fontSize: theme.fontSizes.sm,
-      color:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[1]
-          : theme.colors.gray[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      color: "#fff",
+      padding: `10px  30px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
-      marginTop: "80px",
     },
 
     user: {
@@ -107,23 +106,17 @@ const useStyles = createStyles((theme, _params, getRef) => {
       alignItems: "center",
       textDecoration: "none",
       fontSize: theme.fontSizes.sm,
-      color:
-        theme.colorScheme === "dark"
-          ? theme.colors.dark[1]
-          : theme.colors.gray[7],
+      color: "#fff",
       padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 
       "&:hover": {
-        backgroundColor:
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[6]
-            : theme.colors.gray[0],
-        color: theme.colorScheme === "dark" ? theme.white : theme.black,
+        backgroundColor: "#fff",
+        color: "#20986e",
 
         [`& .${icon}`]: {
-          color: theme.colorScheme === "dark" ? theme.white : theme.black,
+          color: "#20986e",
         },
       },
     },
@@ -138,17 +131,20 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     linkDrawerIcon: {
       ref: icon,
-      color: "black",
-      marginRight: theme.spacing.sm,
+      color: "#fff",
+      marginRight: theme.spacing.xl,
+      marginLeft: theme.spacing.xl
     },
+
+
 
     linkDrawerActive: {
       "&, &:hover": {
-        backgroundColor: "#20986e",
-        color: "white",
+        backgroundColor: "#fff",
+        color: "#20986e",
         borderRadius: "0px 12px 12px 0px",
         [`& .${icon}`]: {
-          color: "white",
+          color: "#20986e",
         },
       },
     },
@@ -174,6 +170,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     burger: {
       marginRight: theme.spacing.md,
+      marginLeft:theme.spacing.md,
 
       [theme.fn.largerThan("sm")]: {
         display: "none",
@@ -266,7 +263,7 @@ function HearderLayout(props) {
       >
         ..
       </span>
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "80%" }}>
         {" "}
         <Link
           className={cx(classes.linkDrawer, {
@@ -286,56 +283,61 @@ function HearderLayout(props) {
 
   const navigation = useNavigate();
 
-  const [countNotifications, setcountNotifications] = useState(0)
+  const [countNotifications, setcountNotifications] = useState(0);
 
   useEffect(() => {
     notificationsService.listeNotification().then(
       (data) => {
-
         const retour = data.data;
-        const compteurTable = retour.filter((item) => !item.readNotification && item.statut !== 'En attente')
-        console.log('taille', compteurTable.length)
+        const compteurTable = retour.filter(
+          (item) => !item.readNotification && item.statut !== "En attente"
+        );
+        console.log("taille", compteurTable.length);
         setcountNotifications(parseInt(compteurTable.length));
       },
       (error) => {
-        console.log(error)
+        console.log(error);
       }
-    )
+    );
   }, []);
-
-
 
   const openDeleteModal = () =>
     openConfirmModal({
-      title: 'Supprimer votre profil',
+      title: "Supprimer votre profil",
       centered: true,
       children: (
         <Text size="sm">
-          Voulez-vous vraiment supprimer votre profil ? Cette action est destructrice et vous aurez
-          pour contacter le support technique afin de restaurer vos données.
+          Voulez-vous vraiment supprimer votre profil ? Cette action est
+          destructrice et vous aurez pour contacter le support technique afin de
+          restaurer vos données.
         </Text>
       ),
-      labels: { confirm: 'Delete account', cancel: "No don't delete it" },
-      confirmProps: { color: 'red' },
+      labels: { confirm: "Delete account", cancel: "No don't delete it" },
+      confirmProps: { color: "red" },
       onCancel: () => {
-        SuccessNotification('Suppression de compte', 'Suppression de compte annulée avec succès', 1);
+        SuccessNotification(
+          "Suppression de compte",
+          "Suppression de compte annulée avec succès",
+          1
+        );
       },
       onConfirm: () => {
         authService.deleteAccount().then(
           (data) => {
-
-            SuccessNotification('Suppression de compte', 'Votre compte a été supprimé avec succès')
+            SuccessNotification(
+              "Suppression de compte",
+              "Votre compte a été supprimé avec succès"
+            );
             setTimeout(() => {
-              logOut()
+              logOut();
             }, 2000);
           },
           (error) => {
-            ErrorNotification('Suppression de compte', error);
+            ErrorNotification("Suppression de compte", error);
           }
-        )
+        );
       },
     });
-
 
   const SuccessNotification = (titre, texte, kind = false) => {
     showNotification({
@@ -343,19 +345,18 @@ function HearderLayout(props) {
       message: texte,
       icon: kind ? <IconInfoCircle size={16} /> : <IconCheck size={16} />,
       autoClose: 2000,
-    })
+    });
   };
 
   const ErrorNotification = (titre, texte) => {
     showNotification({
-      color: 'red',
+      color: "red",
       title: titre,
       message: texte,
       icon: <IconX size={16} />,
       autoClose: 2000,
-    })
+    });
   };
-
 
   return (
     <>
@@ -380,8 +381,9 @@ function HearderLayout(props) {
               {" "}
               <Image
                 src={ZamodiLogo}
-                size={30}
+                width={130}
                 className={classes.hiddenDesktop}
+                style={{ marginLeft: "-20px" }}
               />
               <Text
                 fz="xl"
@@ -396,7 +398,7 @@ function HearderLayout(props) {
 
             <Box
               className={classes.NavhiddenMobile}
-            // style={{ display: "flex", gap: 20, alignItems: "center" }}
+              // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
                 icon={<IconSearch size={14} />}
@@ -409,38 +411,53 @@ function HearderLayout(props) {
                 size={"sm"}
                 style={{ width: "40vw" }}
               />
-
-
               {/* Menu pour le choix de la langue */}
-
               <LanguagePicker />
-
-
               {/* cloche de notification */}{" "}
-
               {countNotifications > 0 ? (
-                <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
-                  <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
-
+                <Indicator
+                  color="red"
+                  label={countNotifications}
+                  overflowCount={10}
+                  inline
+                  size={22}
+                >
+                  <IconBell
+                    className={"EcritVert spanButton"}
+                    onClick={() => navigate("notifications")}
+                  />{" "}
                 </Indicator>
               ) : (
-                <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
+                <IconBell
+                  className={"EcritVert spanButton"}
+                  onClick={() => navigate("notifications")}
+                />
               )}
             </Box>
 
             {/* Client info */}
-            <Box display={'flex'} sx={{ alignItems: 'center' }}>
-              <Box className={classes.hiddenDesktop} >
+            <Box display={"flex"} sx={{ alignItems: "center" }}>
+              <Box className={classes.hiddenDesktop}>
                 {countNotifications > 0 ? (
-                  <Indicator color="red" label={countNotifications} overflowCount={10} inline size={22}>
-                    <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />{" "}
-
+                  <Indicator
+                    color="red"
+                    label={countNotifications}
+                    overflowCount={10}
+                    inline
+                    size={22}
+                  >
+                    <IconBell
+                      className={"EcritVert spanButton"}
+                      onClick={() => navigate("notifications")}
+                    />{" "}
                   </Indicator>
                 ) : (
-                  <IconBell className={"EcritVert spanButton"} onClick={() => navigate('notifications')} />
-                )}</Box>
-
-              {" "}
+                  <IconBell
+                    className={"EcritVert spanButton"}
+                    onClick={() => navigate("notifications")}
+                  />
+                )}
+              </Box>{" "}
               <Menu
                 width={"300px"}
                 position="bottom-end"
@@ -477,7 +494,7 @@ function HearderLayout(props) {
                       </div>
 
                       <Avatar
-                       className={classes.NavhiddenMobile}
+                        className={classes.NavhiddenMobile}
                         src={
                           currentUser.message.photo
                             ? currentUser.message.photo
@@ -523,51 +540,70 @@ function HearderLayout(props) {
       </Header>
 
       <Drawer
-        // transition="rotate-left"
-        // transitionDuration={2500}
-        // transitionTimingFunction="ease"
         opened={drawerOpened}
         onClose={closeDrawer}
-        size="100%"
-        padding="md"
+        size="75%"
         // title="ZAMODI"
         className={classes.hiddenDesktop}
         zIndex={1000000}
-        lockScroll={true}
-      // closeOnEscape
+        
       >
-        <Box>
-          <Image src={ZamodiLogo} width={200} />
+        <Box
+          py={10}
+          sx={{
+            background: "#fff",
+            borderRadius: "0 0 0 32px",
+            marginTop: "-100",
+          }}
+        >
+          <Group position={"right"}>
+            <span onClick={closeDrawer} style={{ border: "1px solid #fff", borderRadius: "360px",padding:'5px 10px',marginRight:10,background:'#f3f3f3' }}>
+              {/*  */}
+              <IconLetterX size={14} color={'#20986E'} />
+            </span>
+          </Group>
+          <Group pl={35}>
+            <Image src={ZamodiLogo} width={130} />
+            {/* <IconLetterX mt={-100} /> */}
+          </Group>
         </Box>
-        <Box>{linksDrawer}</Box>
+        <Box mt={30}>
+          <ScrollArea type ={'scroll'} sx={{paddingBottom:30}}>
+             <Box>{linksDrawer}</Box>
 
-        <Box my={"100px"}>
-          <Paper style={{ border: "2px solid #f7f7f7", padding: "15px" }}>
-            <Text ta="center" fw={"bold"}>
-              À Propos
-            </Text>
-            <Text fz={"xs"}>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor
-            </Text>
-          </Paper>
-        </Box>
-        <Box className={classes.footer}>
-          <Link
-            to="/login"
-            className={classes.link2}
-            // onClick={(event) => event.preventDefault()}
+          <Box  style={{bottom:0,position:'fixed',paddingBottom:20}} >
+            {/* <Group position={"center"} my={"5px"} >
+              <Paper style={{marginLeft:30, border: "1px solid #f7f7f7", padding: "20px",background:"#62C3A1",marginRight:20 }}>
+                <Text ta="center" fw={"bold"} c={'#fff'}>
+                  À Propos
+                </Text>
+                <Text fz={"xs"} c={'#fff'} ta={'center'}>
+                  Lorem ipsum dolor sit amet, consetetur sadipscing
+                  diam nonumy eirmod tempor
+                </Text>
+              </Paper>
+            </Group> */}
 
-            style={{
-              backgroundColor: "#20986e",
-              borderRadius: "12px",
-              paddingLeft: "10px",
-              color: "white",
-            }}
-          >
-            <IconLogout className={classes.linkIcon} stroke={1.5} />
-            <span>Deconnexion</span>
-          </Link>
+            <Group position={"center"} ml={30} >
+              <Link
+                to="/login"
+                className={classes.link2}
+                // onClick={(event) => event.preventDefault()}
+
+                style={{
+                  borderRadius: "12px",
+                  paddingLeft: "15px",
+                  color: "#20986e",
+                  background: "#fff",
+                }}
+              >
+                <IconLogout className={classes.linkIcon} stroke={1.5} />
+                <span>Deconnexion</span>
+              </Link>
+            </Group>
+          </Box>
+          </ScrollArea>
+         
         </Box>
       </Drawer>
     </>
