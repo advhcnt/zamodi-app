@@ -1,5 +1,4 @@
 import { useToggle, upperFirst } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
 import {
   TextInput,
   PasswordInput,
@@ -13,9 +12,6 @@ import {
   Box,
   createStyles,
   Image,
-  BackgroundImage,
-  Container,
-  Paper,
   Card,
 } from "@mantine/core";
 import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
@@ -36,6 +32,7 @@ import EnterCodeComponent from "../component/EnterCodeComponent";
 import NewPasswordComponent from "../component/NewPasswordComponent";
 import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
+import { verifyEmail } from "../utils/fonctions";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -113,7 +110,7 @@ function LoginPage(props) {
     setvisible(true);
     e.preventDefault();
     // setvisible(true);
-    if (user.valeur) {
+    if (user.valeur && verifyEmail(user.valeur) ) {
       if (pwd.valeur && pwd.valeur.length >= 8) {
         authService.login(user.valeur, pwd.valeur).then(
           (data) => {
@@ -205,14 +202,14 @@ function LoginPage(props) {
                       <TextInput
                         radius={12}
                         icon={
-                          <IconUser
+                          <IconMail
                             size={20}
                             color={"#20986e"}
                             className={classes.lesIcones}
                           />
                         }
                         size={"sm"}
-                        placeholder="username"
+                        placeholder="votre email"
                         variant={"filled"}
                         value={user.valeur}
                         onChange={(event) =>

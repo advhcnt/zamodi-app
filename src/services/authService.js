@@ -25,9 +25,9 @@ deleteAccount(){
 
 
 
-  login(username, password) {
+  login(email, password) {
     return axios
-      .post(API_URL + "/auth/login", { username, password })
+      .post(API_URL + "/auth/login", { email, password })
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
