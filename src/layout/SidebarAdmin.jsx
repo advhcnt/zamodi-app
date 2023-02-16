@@ -12,7 +12,7 @@ import {
   IconHome,
   IconUserPlus,
 } from "@tabler/icons";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
+import ZamodiLogo from "./../assets/Zamodi-Logo3.png";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 
