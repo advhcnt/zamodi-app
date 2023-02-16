@@ -8,6 +8,8 @@ import {
   Select,
   Button,
   Notification,
+  Group,
+  createStyles,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { IconArrowsLeftRight, IconChevronDown, IconX } from "@tabler/icons";
@@ -17,7 +19,26 @@ import operation from "./../services/operations.service";
 import authService from "../services/authService";
 import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
 
+
+const useStyles = createStyles((theme) => ({
+  hiddenMobile: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+  hiddenDesktop: {
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+}));
+
+
+
+
+
 function EchangeComponent(props) {
+  const { classes, cx } = useStyles();
   const currentUser = authService.getCurrentUser();
   const [operations, setOperation] = useState({});
   const [montant, setMontant] = useState("");
@@ -110,11 +131,11 @@ function EchangeComponent(props) {
               <Box mb={50}>
                 <Grid>
                   <Grid.Col md={4} mt={30}>
-                    <Text fz={"md"} weight={500} my={10} className={"dh"}>
+                    <Text fz={"md"} weight={500} my={10}  className={`dh ${classes.hiddenMobile}`}>
                       Montant à recharger
                     </Text>
                     <TextInput
-                      placeholder="Montant"
+                      placeholder="Montant à recharger"
                       withAsterisk
                       className={"ombre"}
                       width={"100%"}
@@ -125,17 +146,12 @@ function EchangeComponent(props) {
                   </Grid.Col>
                 </Grid>
 
-                <Box
+                <Grid
                   mt={15}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: 30,
-                    alignItems: "center",
-                  }}
+                 
                 >
-                  <Box>
-                    <Text fz={"md"} weight={500} my={10} className={"dh"}>
+                  <Grid.Col md={5}>
+                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
                       J'ai
                     </Text>
                     <Select
@@ -148,12 +164,14 @@ function EchangeComponent(props) {
                       onChange={setjai}
                       defaultValue={jai}
                     />
-                  </Box>
-                  <Box>
-                    <IconArrowsLeftRight size={20} color="green" />
-                  </Box>
-                  <Box>
-                    <Text fz={"md"} weight={500} my={10} className={"dh"}>
+                  </Grid.Col>
+                  <Grid.Col md={2} className={`${classes.hiddenMobile}`}>
+                    <Group position="center" align={'center'} sx={{marginBlock:20}}>
+                      <IconArrowsLeftRight size={20} color="green" />
+                    </Group>
+                  </Grid.Col>
+                  <Grid.Col md={5}>
+                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
                       Je veux
                     </Text>
                     <Select
@@ -165,21 +183,15 @@ function EchangeComponent(props) {
                       onChange={setjeveux}
                       defaultValue={jeveux}
                     />
-                  </Box>
-                </Box>
+                  </Grid.Col>
+                </Grid>
 
-                <Box
+                <Grid
                   mt={15}
                   mb={30}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: 30,
-                    alignItems: "center",
-                  }}
                 >
-                  <Box>
-                    <Text fz={"md"} weight={500} my={10} className={"dh"}>
+                  <Grid.Col md={5}>
+                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
                       Numéro de réception :
                     </Text>
                     <TextInput
@@ -190,11 +202,12 @@ function EchangeComponent(props) {
                       value={numero}
                       type={"tel"}
                     />
-                  </Box>
-                  <Box></Box>
-                  <Box>
-                    <Text fz={"md"} weight={500} my={10} className={"dh"}>
-                      Confirmer le numéro de réception :
+                  </Grid.Col>
+                  <Grid.Col md={2} className={`${classes.hiddenMobile}`}></Grid.Col>
+                  <Grid.Col md={5} >
+                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
+                      Confirmer le numéro :
+                      {/* de réception : */}
                     </Text>
                     <TextInput
                       placeholder=" Confirmer le numéro de réception"
@@ -204,24 +217,20 @@ function EchangeComponent(props) {
                       value={numeroConfirm}
                       type={"tel"}
                     />
-                  </Box>
-                </Box>
+                  </Grid.Col>
+                </Grid>
 
-                <Box
-                  style={{
-                    justifyContent: "center",
-                    alignContent: "center",
-                    textAlign: "center",
-                  }}
+                <Group
+                 position="center"
                 >
                   <Button
                     mr={"lg"}
                     className={"ArrierePlan"}
                     onClick={handleEchange}
                   >
-                    Valider <IconArrowRight size={20} mx={3} />{" "}
+                     <span style={{ marginInline: 5 }}>Valider</span>{" "} <IconArrowRight size={20} mx={3} />{" "}
                   </Button>
-                </Box>
+                </Group>
               </Box>
             </Card>
           </Grid.Col>

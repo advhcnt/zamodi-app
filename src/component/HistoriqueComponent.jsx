@@ -36,8 +36,6 @@ function HistoriqueComponent(props) {
   const [achatTable, setachatTable] = useState([]);
   const [historiqueType, toggle] = useToggle(["echanges", "recharges"]);
 
-  
-
   useEffect(() => {
     operationsService.getUserOperation().then(
       (data) => {
@@ -58,14 +56,14 @@ function HistoriqueComponent(props) {
     );
   }, []);
 
-
   const navigate = useNavigate();
 
   return (
     <Box className={classes.paddingBox}>
       <Group position={"apart"}>
         <Text size={"xl"} fw={400} c={"black"}>
-          Historique des {historiqueType==='echanges'?'échanges':historiqueType}
+          Historique des{" "}
+          {historiqueType === "echanges" ? "échanges" : historiqueType}
         </Text>
         <Paper withBorder sx={{ dsplay: "flex" }}>
           <Box sx={{ display: "flex" }}>
@@ -219,6 +217,7 @@ function HistoriqueComponent(props) {
           ) : (
             <>
               <Box
+               mt={80}
                 sx={{
                   display: "flex",
                   justifyContent: "space-around",
@@ -227,16 +226,24 @@ function HistoriqueComponent(props) {
               >
                 <Image
                   src={blankTable}
-                  width={200}
+                  width={150}
                   alt="table vide"
                   sx={{ alignItems: "center", justifyContent: "center" }}
                 />
               </Box>
-              <Text ta={"center"} c="green">
+              <Text ta={"center"} c="#000"  mt={20}>
                 Vous n'avez encore fait aucun échange.{" "}
               </Text>
 
-              <Button className={"ArrierePlan"} onClick={()=>navigate('/echange')}>Faire un échange </Button>
+              
+              <Group position="center" mt={40}>
+                <Button
+                  className={"ArrierePlan"}
+                  onClick={() => navigate("/echange")}
+                >
+                  Faire un recharge{" "}
+                </Button>
+              </Group>
             </>
           )}
         </>
@@ -349,6 +356,7 @@ function HistoriqueComponent(props) {
           ) : (
             <>
               <Box
+              mt={80}
                 sx={{
                   display: "flex",
                   justifyContent: "space-around",
@@ -357,17 +365,23 @@ function HistoriqueComponent(props) {
               >
                 <Image
                   src={blankTable}
-                  width={200}
+                  width={150}
                   alt="table vide"
                   sx={{ alignItems: "center", justifyContent: "center" }}
                 />
               </Box>
-              <Text ta={"center"} c="green">
+              <Text ta={"center"} c="#000"  mt={20}>
                 Vous n'avez encore fait aucun achat.{" "}
               </Text>
 
-              <Button className={"ArrierePlan"} onClick={()=>navigate('/recharge')}>Faire un recharge </Button>
-
+              <Group position="center"   mt={40}>
+                <Button
+                  className={"ArrierePlan"}
+                  onClick={() => navigate("/recharge")}
+                >
+                  Faire un recharge{" "}
+                </Button>
+              </Group>
             </>
           )}
         </>

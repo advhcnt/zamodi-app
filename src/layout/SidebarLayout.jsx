@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { createStyles, Navbar, Group, Image, Text, Paper, Button } from "@mantine/core";
 import {
-
+  createStyles,
+  Navbar,
+  Group,
+  Image,
+  Text,
+  Paper,
+  Button,
+} from "@mantine/core";
+import {
   IconStar,
   IconLogout,
   IconArrowsLeftRight,
@@ -21,19 +28,21 @@ const useStyles = createStyles((theme, _params, getRef) => {
     header: {
       paddingBottom: theme.spacing.md,
       marginBottom: theme.spacing.md * 1.5,
-      borderBottom: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
-        }`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[2]
+      }`,
     },
 
     footer: {
       paddingTop: theme.spacing.md,
       marginTop: theme.spacing.md,
-      borderTop: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
-        }`,
+      borderTop: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[2]
+      }`,
     },
     link2: {
       ...theme.fn.focusStyles(),
@@ -48,7 +57,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
       padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
-
     },
 
     link: {
@@ -80,7 +88,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     firstPartActive: {
       backgroundColor: "black",
-      display: 'block',
+      display: "block",
     },
     firstPart: {
       display: "none",
@@ -92,7 +100,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       marginRight: theme.spacing.sm,
       "&:hover": {
         color: "white",
-      }
+      },
     },
 
     linkActive: {
@@ -126,7 +134,7 @@ function SidebarLayout() {
 
   const links = data.map((item) => (
     <div
-    key={item.icon}
+      key={item.icon}
       style={{ display: "flex", width: "100%" }}
       onClick={(event) => {
         event.preventDefault();
@@ -170,25 +178,30 @@ function SidebarLayout() {
         {links}
       </Navbar.Section>
 
-      <Navbar.Section >
-        <Paper style={{ border: '2px solid #f7f7f7',padding:'15px' }}>
-          <Text  fw={'bold'} mb={10}>À Propos</Text>
-          <Text fz={'xs'}  >
-          Avec ZAMODI, vous pouvez transférer facilement et rapidement des soldes entre MTN Money, Moov Money et Celtiis Cash ou acheter facilement du crédit d'appel ou des données internet.
-
+      <Navbar.Section>
+        <Paper style={{ border: "2px solid #f7f7f7", padding: "15px" }}>
+          <Text fw={"bold"} mb={10}>
+            À Propos
+          </Text>
+          <Text fz={"xs"}>
+            Avec ZAMODI, vous pouvez transférer facilement et rapidement des
+            soldes entre MTN Money, Moov Money et Celtiis Cash ou acheter
+            facilement du crédit d'appel ou des données internet.
           </Text>
         </Paper>
       </Navbar.Section>
       <Navbar.Section className={classes.footer}>
-
-
         <Button
-        
           className={classes.link2}
           // onClick={(event) => event.preventDefault()}
 
-          style={{ backgroundColor: '#20986e', borderRadius: '12px', paddingLeft: '10px', color: "white" }}
-        onClick={logOut}
+          style={{
+            backgroundColor: "#20986e",
+            borderRadius: "12px",
+            paddingLeft: "10px",
+            color: "white",
+          }}
+          onClick={logOut}
         >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Deconnexion</span>

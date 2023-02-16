@@ -153,6 +153,7 @@ export function NotificationsPage(props) {
           ) : (
             <>
               <Box
+              mt={100}
                 sx={{
                   display: "flex",
                   justifyContent: "space-around",
@@ -166,7 +167,7 @@ export function NotificationsPage(props) {
                   sx={{ alignItems: "center", justifyContent: "center" }}
                 />
               </Box>
-              <Text ta={"center"} c="green">
+              <Text ta={"center"} c="#000" mt={20}>
                 Vous n'avez pas de notifications actuellement
               </Text>
             </>

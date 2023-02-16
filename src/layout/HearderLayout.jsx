@@ -133,10 +133,8 @@ const useStyles = createStyles((theme, _params, getRef) => {
       ref: icon,
       color: "#fff",
       marginRight: theme.spacing.xl,
-      marginLeft: theme.spacing.xl
+      marginLeft: theme.spacing.xl,
     },
-
-
 
     linkDrawerActive: {
       "&, &:hover": {
@@ -155,8 +153,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
       alignItems: "center",
       height: 86,
 
-      [theme.fn.smallerThan("sm")]: {
-        justifyContent: "flex-start",
+      [theme.fn.smallerThan("md")]: {
+        // justifyContent: "flex-start",
+        display: "block",
+        paddingBlock:20
       },
     },
 
@@ -170,9 +170,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     burger: {
       marginRight: theme.spacing.md,
-      marginLeft:theme.spacing.md,
+      marginLeft: theme.spacing.md,
 
-      [theme.fn.largerThan("sm")]: {
+      [theme.fn.largerThan("md")]: {
         display: "none",
       },
     },
@@ -213,8 +213,18 @@ const useStyles = createStyles((theme, _params, getRef) => {
         display: "none",
       },
     },
+    hiddenDesktop2: {
+      [theme.fn.largerThan("md")]: {
+        display: "none",
+      },
+    },
     hiddenMobile: {
       [theme.fn.smallerThan("sm")]: {
+        display: "none",
+      },
+    },
+    hiddenMobile2: {
+      [theme.fn.smallerThan("md")]: {
         display: "none",
       },
     },
@@ -223,6 +233,16 @@ const useStyles = createStyles((theme, _params, getRef) => {
       gap: 20,
       alignItems: "center",
       [theme.fn.smallerThan("sm")]: {
+        display: "none",
+      },
+    },
+    divHidden: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      justifyItems: "center",
+      width: "100%",
+      [theme.fn.smallerThan("md")]: {
         display: "none",
       },
     },
@@ -362,29 +382,46 @@ function HearderLayout(props) {
     <>
       <Header height={70} mb={30}>
         <Box className={classes.inner}>
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            size="sm"
-            className={classes.burger}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              alignItems: "center",
-              justifyItems: "center",
-              width: "100%",
-            }}
-          >
+
+          <Group position="apart" className={classes.hiddenDesktop2} width={'100vw'}>
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              size="sm"
+              className={classes.burger}
+            />
+            <Image src={ZamodiLogo} width={130} />
+            {/* cloche de notification */}{" "}
+            {countNotifications > 0 ? (
+              <Indicator
+                color="red"
+                label={countNotifications}
+                overflowCount={10}
+                inline
+                size={22}
+              >
+                <IconBell
+                  className={"EcritVert spanButton"}
+                  onClick={() => navigate("notifications")}
+                />{" "}
+              </Indicator>
+            ) : (
+              <IconBell
+                className={"EcritVert spanButton"}
+                onClick={() => navigate("notifications")}
+              />
+            )}
+          </Group>
+          <div className={classes.divHidden}>
             <Box ta={"center"}>
               {" "}
-              <Image
-                src={ZamodiLogo}
-                width={130}
-                className={classes.hiddenDesktop}
-                style={{ marginLeft: "-20px" }}
-              />
+              <Group position="center" className={classes.hiddenDesktop}>
+                <Image
+                  src={ZamodiLogo}
+                  width={130}
+                  style={{ marginLeft: 50 }}
+                />
+              </Group>
               <Text
                 fz="xl"
                 fw={900}
@@ -459,6 +496,7 @@ function HearderLayout(props) {
                 )}
               </Box>{" "}
               <Menu
+                className={classes.NavhiddenMobile}
                 width={"300px"}
                 position="bottom-end"
                 transition="pop-top-right"
@@ -494,7 +532,6 @@ function HearderLayout(props) {
                       </div>
 
                       <Avatar
-                        className={classes.NavhiddenMobile}
                         src={
                           currentUser.message.photo
                             ? currentUser.message.photo
@@ -544,9 +581,9 @@ function HearderLayout(props) {
         onClose={closeDrawer}
         size="75%"
         // title="ZAMODI"
-        className={classes.hiddenDesktop}
+        className={classes.hiddenDesktop2}
         zIndex={1000000}
-        
+        style={{ background: "#20986e !important" }}
       >
         <Box
           py={10}
@@ -557,22 +594,58 @@ function HearderLayout(props) {
           }}
         >
           <Group position={"right"}>
-            <span onClick={closeDrawer} style={{ border: "1px solid #fff", borderRadius: "360px",padding:'5px 10px',marginRight:10,background:'#f3f3f3' }}>
+            <span
+              onClick={closeDrawer}
+              style={{
+                border: "1px solid #fff",
+                borderRadius: "360px",
+                padding: "5px 10px",
+                marginRight: 10,
+                background: "#f3f3f3",
+              }}
+            >
               {/*  */}
-              <IconLetterX size={14} color={'#20986E'} />
+              <IconLetterX size={14} color={"#20986E"} />
             </span>
           </Group>
           <Group pl={35}>
-            <Image src={ZamodiLogo} width={130} />
+            {/* <Image src={ZamodiLogo} width={130} /> */}
             {/* <IconLetterX mt={-100} /> */}
+            <Group>
+              <Avatar
+                src={
+                  currentUser.message.photo
+                    ? currentUser.message.photo
+                    : user.image
+                }
+                alt={user.name}
+                radius="xl"
+                size={50}
+              />
+              <Box>
+                <Text fw={500} fz={"md"}>
+                  {currentUser.message.username}
+                </Text>
+                <Text
+                  fz={"xs"}
+                  className="dh"
+                  onClick={() => {
+                    closeDrawer();
+                    navigate("profile");
+                  }}
+                >
+                  Edit Profile
+                </Text>
+              </Box>
+            </Group>
           </Group>
         </Box>
         <Box mt={30}>
-          <ScrollArea type ={'scroll'} sx={{paddingBottom:30}}>
-             <Box>{linksDrawer}</Box>
+          <ScrollArea type={"scroll"} sx={{ paddingBottom: 30 }}>
+            <Box>{linksDrawer}</Box>
 
-          <Box  style={{bottom:0,position:'fixed',paddingBottom:20}} >
-            {/* <Group position={"center"} my={"5px"} >
+            <Box style={{ bottom: 0, position: "fixed", paddingBottom: 20 }}>
+              {/* <Group position={"center"} my={"5px"} >
               <Paper style={{marginLeft:30, border: "1px solid #f7f7f7", padding: "20px",background:"#62C3A1",marginRight:20 }}>
                 <Text ta="center" fw={"bold"} c={'#fff'}>
                   À Propos
@@ -584,26 +657,25 @@ function HearderLayout(props) {
               </Paper>
             </Group> */}
 
-            <Group position={"center"} ml={30} >
-              <Link
-                to="/login"
-                className={classes.link2}
-                // onClick={(event) => event.preventDefault()}
+              <Group position={"center"} ml={30}>
+                <Link
+                  to="/login"
+                  className={classes.link2}
+                  // onClick={(event) => event.preventDefault()}
 
-                style={{
-                  borderRadius: "12px",
-                  paddingLeft: "15px",
-                  color: "#20986e",
-                  background: "#fff",
-                }}
-              >
-                <IconLogout className={classes.linkIcon} stroke={1.5} />
-                <span>Deconnexion</span>
-              </Link>
-            </Group>
-          </Box>
+                  style={{
+                    borderRadius: "12px",
+                    paddingLeft: "15px",
+                    color: "#20986e",
+                    background: "#fff",
+                  }}
+                >
+                  <IconLogout className={classes.linkIcon} stroke={1.5} />
+                  <span>Deconnexion</span>
+                </Link>
+              </Group>
+            </Box>
           </ScrollArea>
-         
         </Box>
       </Drawer>
     </>
