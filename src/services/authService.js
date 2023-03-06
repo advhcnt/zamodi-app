@@ -87,6 +87,13 @@ deleteAccount(){
     return axios.post(API_URL + "/auth/loginbysociallink", data);
 
   }
+
+
+  registerWithGoogle() {
+
+    return axios.get(API_URL + "/auth/google");
+
+  }
 }
 
 export default new AuthService();

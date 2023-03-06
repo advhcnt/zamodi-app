@@ -148,10 +148,24 @@ function LoginPage(props) {
 
   const googleAuth = () => {
     window.open(
-      `http://localhost:8000/zamodi-api/auth/loginbysociallink/google`,
+      `http://localhost:8000/zamodi-api/auth/google`,
       "_self"
     );
   };
+
+  const HandleGoogle = ()=>{
+    authService.registerWithGoogle().then(
+      (data)=>{
+        console.log(data)
+        let reponse = data
+        // showError
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+
+  }
 
   return (
     <>
@@ -268,13 +282,13 @@ function LoginPage(props) {
                   </form>
 
                   <Divider
-                    label="Ou continuez avec"
+                    label="Ou continuez avec ggooo"
                     labelPosition="center"
                     my="lg"
                   />
                   <Group position="center">
-                    <Image src={facebook} width={60} />
-                    <Image src={google} width={60} />
+                    <Image src={facebook} width={60}  />
+                    <Image src={google} width={60} onClick={HandleGoogle} className="spanButton" />
                   </Group>
                   <Group position="apart" mt="xl">
                     <Anchor
@@ -558,7 +572,7 @@ function LoginPage(props) {
             <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
             <Group position="center">
               <Image src={facebook} width={60} />
-              <Image src={google} width={60} />
+              <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
             </Group>
             <Group position="center" mt={5}>
               <Anchor
