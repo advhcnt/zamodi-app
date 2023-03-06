@@ -28,6 +28,7 @@ import RegisterAdmin from "./component/Admin/RegisterAdmin";
 import DetailsNotificationClient from "./pages/DetailsNotificationClient";
 // Import Swiper styles
 import 'swiper/css';
+import AuthBySocial from "./pages/AuthBySocial";
 
 
 function App(props) {
@@ -66,6 +67,8 @@ function App(props) {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/login-social/:email/:name" element={<AuthBySocial />} />
+        
         <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
