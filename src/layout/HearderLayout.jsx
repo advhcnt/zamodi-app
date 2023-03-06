@@ -658,10 +658,13 @@ function HearderLayout(props) {
             </Group> */}
 
               <Group position={"center"} ml={30}>
-                <Link
-                  to="/login"
+                <span
+                  
                   className={classes.link2}
-                  // onClick={(event) => event.preventDefault()}
+                  onClick={(event) =>{
+                    event.preventDefault();
+                    logOut();
+                  } }
 
                   style={{
                     borderRadius: "12px",
@@ -672,7 +675,7 @@ function HearderLayout(props) {
                 >
                   <IconLogout className={classes.linkIcon} stroke={1.5} />
                   <span>Deconnexion</span>
-                </Link>
+                </span>
               </Group>
             </Box>
           </ScrollArea>

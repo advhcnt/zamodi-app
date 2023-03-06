@@ -185,35 +185,15 @@ function RegisterPage(props) {
     }
   };
 
-  const loginGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      try {
-        const res = await axios.get(
-          "https://www.googleapis.com/oauth2/v3/userinfo",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResponse.access_token}`,
-            },
-          }
-        );
 
-        console.log("info user ", res.data);
-      } catch (error) {
-        console.log(error);
-      }
 
-      var decoded = jwt_decode(tokenResponse.credential);
-      console.log("decodage du token", decoded);
-      // email = decoded.email
-      // email verify = decoded.verify_email
-      // familiname = decoded.family_name
-      // given_name = decoded.given_name
-      // piture = decoded.picture
-    },
-    onError: (error) => {
-      console.log("Login Failed");
-    },
-  });
+
+  const googleAuth = () => {
+    window.open(
+      `http://localhost:8000/zamodi-api/auth/google`,
+      "_self"
+    );
+  };
 
   return (
     <>
@@ -388,7 +368,7 @@ function RegisterPage(props) {
               />
               <Group position="center">
                 <Image src={facebook} width={60} />
-                <Image src={google} width={60} />
+                <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
               </Group>
               <Group position="center" mt="xl">
                 <Anchor
@@ -627,7 +607,7 @@ function RegisterPage(props) {
           <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
           <Group position="center">
             <Image src={facebook} width={60} />
-            <Image src={google} width={60} />
+            <Image src={google} width={60} onClick={googleAuth} className="spanButton"/>
           </Group>
           <Group position="center">
             <Anchor

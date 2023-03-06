@@ -5,25 +5,28 @@ import { API_URL } from "./http-common";
 // const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {
-deleteAccount(){
-  return axios.get(API_URL + "/auth/delete-account");
-}
-  forgetPassword(email)
-  {
-    return axios.post(API_URL + "/auth/forgot-pass",{email:email});
+  deleteAccount() {
+    return axios.get(API_URL + "/auth/delete-account");
+  }
+  forgetPassword(email) {
+    return axios.post(API_URL + "/auth/forgot-pass", { email: email });
   }
 
-  reinitialisationCode(email,code)
-  {
-    return axios.post(API_URL + "/auth/check-code",{email:email,code:code});
+  reinitialisationCode(email, code) {
+    return axios.post(API_URL + "/auth/check-code", {
+      email: email,
+      code: code,
+    });
   }
 
-  NewPassword(code, email, newPassword, confirmPassword)
-  {
-    return axios.post(API_URL + "/auth/new-password",{code:code, email:email, newPassword:newPassword, confirmPassword:confirmPassword});
+  NewPassword(code, email, newPassword, confirmPassword) {
+    return axios.post(API_URL + "/auth/new-password", {
+      code: code,
+      email: email,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    });
   }
-
-
 
   login(email, password) {
     return axios
@@ -38,7 +41,7 @@ deleteAccount(){
   }
 
   isAdmin() {
-    return axios.get(API_URL + "/auth/userrole/")
+    return axios.get(API_URL + "/auth/userrole/");
   }
 
   RefreshToken(identifiant) {
@@ -53,7 +56,8 @@ deleteAccount(){
   }
 
   logout() {
-    localStorage.removeItem("user");
+    localStorage.clear();
+    return axios.get(API_URL + "/logout");
   }
 
   register(username, email, password) {
@@ -64,12 +68,12 @@ deleteAccount(){
     });
   }
 
-  registerAdmin(username, email, password,isAdmin=true) {
+  registerAdmin(username, email, password, isAdmin = true) {
     return axios.post(API_URL + "/auth/admin/register", {
       username,
       email,
       password,
-      isAdmin
+      isAdmin,
     });
   }
 
@@ -81,18 +85,12 @@ deleteAccount(){
     return JSON.parse(localStorage.getItem("user"));
   }
 
-
   loginWithSocial(data) {
-
     return axios.post(API_URL + "/auth/loginbysociallink", data);
-
   }
 
-
   registerWithGoogle() {
-
     return axios.get(API_URL + "/auth/google");
-
   }
 }
 
