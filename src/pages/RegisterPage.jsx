@@ -33,6 +33,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
+import { API_URL } from "../services/http-common";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -190,7 +191,7 @@ function RegisterPage(props) {
 
   const googleAuth = () => {
     window.open(
-      `http://localhost:8000/zamodi-api/auth/google`,
+      `${API_URL}/auth/google/auth/google`,
       "_self"
     );
   };

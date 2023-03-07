@@ -33,6 +33,7 @@ import NewPasswordComponent from "../component/NewPasswordComponent";
 import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
 import { verifyEmail } from "../utils/fonctions";
+import { API_URL } from "../services/http-common";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -148,7 +149,7 @@ function LoginPage(props) {
 
   const googleAuth = () => {
     window.open(
-      `http://localhost:8000/zamodi-api/auth/google`,
+      `${API_URL}/auth/google`,
       "_self"
     );
   };
