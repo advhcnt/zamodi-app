@@ -154,6 +154,13 @@ function LoginPage(props) {
     );
   };
 
+  const facebookAuth = () => {
+    window.open(
+      `${API_URL}/auth/facebook`,
+      "_self"
+    );
+  };
+
 
   return (
     <>
@@ -275,7 +282,7 @@ function LoginPage(props) {
                     my="lg"
                   />
                   <Group position="center">
-                    <Image src={facebook} width={60}  />
+                    <Image src={facebook} width={60}  onClick={facebookAuth} className="spanButton"   />
                     <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
                   </Group>
                   <Group position="apart" mt="xl">
@@ -533,7 +540,7 @@ function LoginPage(props) {
           >
             <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
             <Group position="center">
-              <Image src={facebook} width={60} />
+              <Image src={facebook} width={60} onClick={facebookAuth} className="spanButton" />
               <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
             </Group>
             <Group position="center" mt={5}>
