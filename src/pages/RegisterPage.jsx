@@ -125,7 +125,7 @@ function RegisterPage(props) {
                   // console.log(data);
                   //  Login
 
-                  authService.login(user.valeur, pwd.valeur).then(
+                  authService.login(mail.valeur, pwd.valeur).then(
                     (data) => {
                       if (data.status === 200 || data.state === "success") {
                         authHeader(data.accessToken);
