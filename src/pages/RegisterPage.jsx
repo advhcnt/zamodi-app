@@ -506,7 +506,7 @@ function RegisterPage(props) {
                 error={user.erreur && <>{user.erreur}</>}
               />
 
-              <PasswordInput
+              <TextInput
                 radius={12}
                 icon={
                   <IconMail

@@ -432,14 +432,14 @@ function LoginPage(props) {
                   <TextInput
                     radius="12px"
                     icon={
-                      <IconUser
+                      <IconMail
                         size={20}
                         color={"#20986e"}
                         className={classes.lesIcones}
                       />
                     }
                     size={"md"}
-                    placeholder="username"
+                    placeholder="votre email"
                     variant={"filled"}
                     value={user.valeur}
                     onChange={(event) =>
