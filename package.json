@@ -1,5 +1,6 @@
 {
   "name": "zamodi-app",
+  "homepage": "https://zamodi.netlify.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
