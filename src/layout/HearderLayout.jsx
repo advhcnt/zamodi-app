@@ -383,7 +383,7 @@ function HearderLayout(props) {
       <Header height={70} mb={30}>
         <Box className={classes.inner}>
 
-          <Group position="apart" className={classes.hiddenDesktop2} width={'100vw'}>
+          <Group position="apart" className={classes.hiddenDesktop2} width={'100vw'} pr={20}>
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}
@@ -435,6 +435,7 @@ function HearderLayout(props) {
 
             <Box
               className={classes.NavhiddenMobile}
+              pr={20}
               // style={{ display: "flex", gap: 20, alignItems: "center" }}
             >
               <TextInput
@@ -473,7 +474,7 @@ function HearderLayout(props) {
             </Box>
 
             {/* Client info */}
-            <Box display={"flex"} sx={{ alignItems: "center" }}>
+            <Box display={"flex"} sx={{ alignItems: "center",paddingRight:10 }}>
               <Box className={classes.hiddenDesktop}>
                 {countNotifications > 0 ? (
                   <Indicator
