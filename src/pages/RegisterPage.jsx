@@ -186,14 +186,8 @@ function RegisterPage(props) {
     }
   };
 
-
-
-
   const googleAuth = () => {
-    window.open(
-      `${API_URL}/auth/google/auth/google`,
-      "_self"
-    );
+    window.open(`${API_URL}/auth/google/auth/google`, "_self");
   };
 
   return (
@@ -233,10 +227,14 @@ function RegisterPage(props) {
               <Text size={28} weight={900}>
                 Créer un compte
               </Text>
-              <Text size={"xs"} mb={"8%"}>
+              <Text size={"xs"} mb={"8%"} className={classes.hiddenMobile}>
+                Inscrivez-vous gratuitement sur Zamodi et effectuez vos
+                opérations en toute simplicité !
+              </Text>
+              <Text size={"xs"} mb={"8%"} className={classes.hiddenDesktop}>
                 Inscrivez-vous gratuitement !{" "}
               </Text>
-              <Text
+              <div
                 ta={"center"}
                 c={"red"}
                 ref={errRef}
@@ -244,7 +242,7 @@ function RegisterPage(props) {
                 aria-live="assertive"
               >
                 {errMsg}
-              </Text>
+              </div>
               <form>
                 <Stack>
                   <TextInput
@@ -365,13 +363,18 @@ function RegisterPage(props) {
               <Divider
                 label="Ou continuez avec"
                 labelPosition="center"
-                my="lg"
+                my="sm"
               />
               <Group position="center">
                 <Image src={facebook} width={60} />
-                <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
+                <Image
+                  src={google}
+                  width={60}
+                  onClick={googleAuth}
+                  className="spanButton"
+                />
               </Group>
-              <Group position="center" mt="xl">
+              <Group position="center" mt="md">
                 <Anchor
                   component="button"
                   type="button"
@@ -435,7 +438,8 @@ function RegisterPage(props) {
                 >
                   Avec ZAMODI, vous pouvez transférer facilement et rapidement
                   des soldes entre MTN Money, Moov Money et Celtiis Cash ou
-                  acheter facilement du crédit d'appel ou des données internet.<br />
+                  acheter facilement du crédit d'appel ou des données internet.
+                  <br />
                   Inscrivez-vous gratuitement !{" "}
                 </Text>
               </Box>
@@ -608,7 +612,12 @@ function RegisterPage(props) {
           <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
           <Group position="center">
             <Image src={facebook} width={60} />
-            <Image src={google} width={60} onClick={googleAuth} className="spanButton"/>
+            <Image
+              src={google}
+              width={60}
+              onClick={googleAuth}
+              className="spanButton"
+            />
           </Group>
           <Group position="center">
             <Anchor

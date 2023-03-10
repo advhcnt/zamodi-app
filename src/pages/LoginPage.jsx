@@ -111,7 +111,7 @@ function LoginPage(props) {
     setvisible(true);
     e.preventDefault();
     // setvisible(true);
-    if (user.valeur && verifyEmail(user.valeur) ) {
+    if (user.valeur && verifyEmail(user.valeur)) {
       if (pwd.valeur && pwd.valeur.length >= 8) {
         authService.login(user.valeur, pwd.valeur).then(
           (data) => {
@@ -148,19 +148,12 @@ function LoginPage(props) {
   };
 
   const googleAuth = () => {
-    window.open(
-      `${API_URL}/auth/google`,
-      "_self"
-    );
+    window.open(`${API_URL}/auth/google`, "_self");
   };
 
   const facebookAuth = () => {
-    window.open(
-      `${API_URL}/auth/facebook`,
-      "_self"
-    );
+    window.open(`${API_URL}/auth/facebook`, "_self");
   };
-
 
   return (
     <>
@@ -194,7 +187,11 @@ function LoginPage(props) {
                   <Text size={25} weight={900}>
                     Connexion
                   </Text>
-                  <Text size={"xs"} mb={"8%"}>
+                  <Text size={"xs"} mb={"8%"} className={classes.hiddenMobile}>
+                    Nous sommes heureux de vous revoir !
+                    Connectez-vous sur Zamodi.
+                  </Text>
+                  <Text size={"xs"} mb={"8%"} className={classes.hiddenDesktop}>
                     Content de vous revoir !
                   </Text>
                   <Text
@@ -282,8 +279,18 @@ function LoginPage(props) {
                     my="lg"
                   />
                   <Group position="center">
-                    <Image src={facebook} width={60}  onClick={facebookAuth} className="spanButton"   />
-                    <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
+                    <Image
+                      src={facebook}
+                      width={60}
+                      onClick={facebookAuth}
+                      className="spanButton"
+                    />
+                    <Image
+                      src={google}
+                      width={60}
+                      onClick={googleAuth}
+                      className="spanButton"
+                    />
                   </Group>
                   <Group position="apart" mt="xl">
                     <Anchor
@@ -370,7 +377,7 @@ function LoginPage(props) {
                     Avec ZAMODI, vous pouvez transférer facilement et rapidement
                     des soldes entre MTN Money, Moov Money et Celtiis Cash ou
                     acheter facilement du crédit d'appel ou des données
-                    internet. <br/>
+                    internet. <br />
                     Connectez-vous !
                   </Text>
                 </Box>
@@ -497,8 +504,6 @@ function LoginPage(props) {
                   {upperFirst("Se connecter")}
                 </Button>
               </form>
-
-              
             </Box>
           )}
 
@@ -540,23 +545,40 @@ function LoginPage(props) {
           >
             <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
             <Group position="center">
-              <Image src={facebook} width={60} onClick={facebookAuth} className="spanButton" />
-              <Image src={google} width={60} onClick={googleAuth} className="spanButton" />
+              <Image
+                src={facebook}
+                width={60}
+                onClick={facebookAuth}
+                className="spanButton"
+              />
+              <Image
+                src={google}
+                width={60}
+                onClick={googleAuth}
+                className="spanButton"
+              />
             </Group>
-            <Group position="center" mt={5}>
+            <Group position="center">
               <Anchor
                 component="button"
                 type="button"
                 color="dimmed"
-                style={{ color: "black" }}
+                style={{
+                  color: "black",
+                  justifyContent: "space-around",
+                  textAlign: "center",
+                  alignContent: "center",
+                }}
                 size="xs"
               >
-                Nouveau sur Zamodi ?
-                <Link to={"/register"}>
-                  <span style={{ color: "#20986e", marginLeft: 5 }}>
-                    S'inscrire
-                  </span>
-                </Link>
+                <Text ta={"center"} >
+                  Nouveau sur Zamodi ?
+                  <Link to={"/register"}>
+                    <span style={{ color: "#20986e", marginLeft: 5 }}>
+                      S'inscrire
+                    </span>
+                  </Link>
+                </Text>
               </Anchor>
             </Group>
           </Box>

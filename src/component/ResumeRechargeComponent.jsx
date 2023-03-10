@@ -8,10 +8,11 @@ import {
   Image,
   Modal,
   CopyButton,
+  createStyles,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconArrowLeft, IconClipboard, IconCopy } from "@tabler/icons";
+import { IconArrowLeft, IconClipboard, IconCopy, IconPhoneCall } from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/export22/MT.png";
 import moovLogo from "./../assets/export22/M.png";
@@ -20,7 +21,21 @@ import operationsService from "../services/operations.service";
 import authService from "../services/authService";
 import Chargement from "./Chargement";
 
+const useStyles = createStyles((theme) => ({
+  hiddenDesktop: {
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+  hiddenMobile: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+}));
+
 function ResumeRechargeComponent(props) {
+  const { classes } = useStyles();
   const currentUser = authService.getCurrentUser();
   const [opened, setOpened] = useState(false);
   const [openedSecondModal, setOpenedSecondModal] = useState(false);
@@ -266,7 +281,14 @@ function ResumeRechargeComponent(props) {
             onClose={() => setOpened(false)}
             title="Dépôt de l'argent"
           >
-            <Text fz={"xl"} fw={900} c={"red"} my={30} ta={"center"}>
+            <Text
+              fz={"xl"}
+              fw={900}
+              c={"red"}
+              my={30}
+              ta={"center"}
+              className={classes.hiddenMobile}
+            >
               <CopyButton value={NumeroMarchand} mb={30}>
                 {({ copied, copy }) => (
                   <Button className={"ArrierePlan"} onClick={copy}>
@@ -278,9 +300,16 @@ function ResumeRechargeComponent(props) {
 
               {NumeroMarchand}
             </Text>
+            <Group position={"center"} className={classes.hiddenDesktop} >
+              <a href={`tel:${NumeroMarchand}`}>
+                <Button>Composer <IconPhoneCall /> </Button>
+              </a>
+              
+              <Text> {NumeroMarchand}</Text>
+            </Group>
             <Text fz={10} c={"dimmed"} mt={15} mb={30} ta={"center"}>
               {" "}
-              Copiez ce code et poursuivez la transaction sur votre téléphone.
+              Copiez ce  code et poursuivez la transaction sur votre téléphone.
               Revenez valider l'opération juste après !
             </Text>
             <Group position={"center"}>

@@ -22,7 +22,7 @@ import { useDisclosure } from "@mantine/hooks";
 import authService from "../services/authService";
 import { Navigate, useNavigate } from "react-router-dom";
 import notificationAdminService from "./../services/admin/notificationsService.js";
-import blankTable from "./../assets/canvas-pana.png";
+import blankTable from "./../assets/blankTable.png";
 const useStyles = createStyles((theme) => ({
   comment: {
     padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
@@ -52,6 +52,16 @@ export function NotificationsPage(props) {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   const [who, setwho] = useState("CLIENT");
+  const path = window.location.pathname;
+  
+  useEffect(() => {
+    // "document.documentElement.scrollTo" is the magic for React Router Dom v6
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // Optional if you want to skip the scrolling animation
+    });
+  }, path);
 
   // Pour ouvrir le modal permettant d'afficher les details
   const afficheOperation = (identifiant) => {

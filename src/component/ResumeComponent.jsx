@@ -8,10 +8,16 @@ import {
   Image,
   Modal,
   CopyButton,
+  createStyles,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Group } from "@mantine/core";
-import { IconArrowLeft, IconClipboard, IconCopy } from "@tabler/icons";
+import {
+  IconArrowLeft,
+  IconClipboard,
+  IconCopy,
+  IconPhoneCall,
+} from "@tabler/icons";
 import { IconArrowRight } from "@tabler/icons";
 import mtnLogo from "./../assets/export22/MT.png";
 import moovLogo from "./../assets/export22/M.png";
@@ -21,7 +27,21 @@ import authService from "../services/authService";
 import Chargement from "./Chargement";
 import { useNavigate } from "react-router-dom";
 
+const useStyles = createStyles((theme) => ({
+  hiddenDesktop: {
+    [theme.fn.largerThan("md")]: {
+      display: "none",
+    },
+  },
+  hiddenMobile: {
+    [theme.fn.smallerThan("md")]: {
+      display: "none",
+    },
+  },
+}));
+
 function ResumeComponent(props) {
+  const { classes } = useStyles();
   const currentUser = authService.getCurrentUser();
   const [opened, setOpened] = useState(false);
   const [openedSecondModal, setOpenedSecondModal] = useState(false);
@@ -244,7 +264,7 @@ function ResumeComponent(props) {
             onClose={() => setOpened(false)}
             title="Dépôt de l'argent"
           >
-            <Text fz={"xl"} fw={900} c={"red"} mb={10} mT={30} ta={"center"}>
+            <Text fz={"xl"} fw={900} c={"red"} mb={10} mT={30} ta={"center"} className={classes.hiddenMobile}>
               <CopyButton value={NumeroMarchand} mb={30}>
                 {({ copied, copy }) => (
                   <Button className={"ArrierePlan"} onClick={copy}>
@@ -256,6 +276,15 @@ function ResumeComponent(props) {
 
               {NumeroMarchand}
             </Text>
+            <Group position={"center"} className={classes.hiddenDesktop}>
+              <a href={`tel:${NumeroMarchand}`}>
+                <Button className={"ArrierePlan"}>
+                  Composer <IconPhoneCall />{" "}
+                </Button>
+              </a>
+
+              <Text> {NumeroMarchand}</Text>
+            </Group>
 
             <Text fz={10} c={"dimmed"} mt={15} mb={30} ta={"center"}>
               {" "}
@@ -312,11 +341,11 @@ function ResumeComponent(props) {
 
             <Text fz={10} c={"dimmed"} my={30}>
               {" "}
-              Copiez et collez l'ID de la transaction obtenu dans le SMS que
+              Copiez et collez l'ID  de la transaction obtenu dans le SMS que
               vous venez de recevoir pour finaliser l'opération !{" "}
             </Text>
 
-            <Group position={"center"}>
+            <Group position={"center"} >
               <Button
                 size={"sm"}
                 mr={"lg"}
@@ -326,6 +355,7 @@ function ResumeComponent(props) {
                 Faire une nouvelle opération <IconArrowRight size={20} mx={3} />{" "}
               </Button>
             </Group>
+            
           </Modal>
 
           {/* Modal pour afficher la réponse du serveur */}

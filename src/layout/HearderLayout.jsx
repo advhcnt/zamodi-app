@@ -390,7 +390,7 @@ function HearderLayout(props) {
               size="sm"
               className={classes.burger}
             />
-            <Image src={ZamodiLogo} width={130} />
+            <Image src={ZamodiLogo} width={130} onClick={()=>navigate('/dashboard')} />
             {/* cloche de notification */}{" "}
             {countNotifications > 0 ? (
               <Indicator
@@ -420,6 +420,7 @@ function HearderLayout(props) {
                   src={ZamodiLogo}
                   width={130}
                   style={{ marginLeft: 50 }}
+                  onClick={()=>navigate('/dashboard')}
                 />
               </Group>
               <Text

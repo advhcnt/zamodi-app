@@ -6,7 +6,7 @@ import sbinLogo from "./../assets/celtiis.png";
 import { createStyles } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import operationsService from "../services/operations.service";
-import blankTable from "./../assets/canvas-pana.png";
+import blankTable from "./../assets/blankTable.png";
 import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({

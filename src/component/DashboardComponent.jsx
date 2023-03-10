@@ -22,7 +22,6 @@ import HistoriqueDashboard from "./HistoriqueDashboard";
 import operationsService from "../services/operations.service";
 import Slider from "react-slick";
 
-
 const useStyles = createStyles((theme) => ({
   hiddenMobile: {
     [theme.fn.smallerThan("md")]: {
@@ -236,7 +235,6 @@ function DashboardComponent(props) {
   }, [chartSemaineData]);
 
   const settings = {
-    dots: true,
     infinite: true,
     autoplay: true,
     speed: 5000,
@@ -246,7 +244,7 @@ function DashboardComponent(props) {
     slidesToScroll: 1,
     centerMode: true,
     // variableWidth: true,
-    centerPadding: '10px',
+    centerPadding: "10px",
     // autoplay: true,
     // autoplaySpeed: 2000,
     responsive: [
@@ -336,11 +334,10 @@ function DashboardComponent(props) {
             </Grid>
           </Box>
 
-          <Box className={classes.hiddenDesktop}>
-          <Slider {...settings}>
-
+          <Box className={classes.hiddenDesktop} mb={15}>
+            <Slider {...settings}>
               <Box px={10}>
-                <div className={classes.item} >
+                <div className={classes.item}>
                   <div>
                     <Image src={mtnLogo} width={50} alt={"Logo mtn"} />
                   </div>
@@ -354,8 +351,8 @@ function DashboardComponent(props) {
                   </div>
                 </div>
               </Box>
-             
-              <Box  px={10}>
+
+              <Box px={10}>
                 <div className={classes.item}>
                   <div>
                     <Image src={moovLogo} width={100} alt={"Logo mtn"} />
@@ -370,9 +367,9 @@ function DashboardComponent(props) {
                   </div>
                 </div>
               </Box>
-              
-              <Box  px={10}>
-                <div className={classes.item}  >
+
+              <Box px={10}>
+                <div className={classes.item}>
                   <div>
                     <Image src={sbinLogo} width={50} alt={"Logo mtn"} />
                   </div>
@@ -386,7 +383,6 @@ function DashboardComponent(props) {
                   </div>
                 </div>
               </Box>
-             
             </Slider>
           </Box>
 
@@ -455,28 +451,6 @@ function DashboardComponent(props) {
                       )}
                     </Tabs.Panel>
                   </Tabs>
-
-                  {/* <Tabs defaultValue="semaine" color="#20986e" center>
-                    <Tabs.List position={"center"} >
-                      <Tabs.Tab value="semaine">Semaines</Tabs.Tab>
-                      <Tabs.Tab value="mois">Mois</Tabs.Tab>
-                      <Tabs.Tab value="annees">Années</Tabs.Tab>
-                    </Tabs.List>
-
-                    <Tabs.Panel value="semaine" pt="xs">
-                      <Graphe chartData={chartSemaineData} titre={'Dépense de la semaine'} text={'Dépense sur la semaine N°'} />
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="mois" pt="xs">
-                      <Graphe chartData={chartMoisData} titre={'Dépense du mois'} text={'Dépense dans le mois N°'} />
-
-                    </Tabs.Panel>
-
-                    <Tabs.Panel value="annees" pt="xs">
-                      <Graphe chartData={chartAnneeData} titre={"Dépense de l'année"} text={'Dépense sur l\'année'} />
-
-                    </Tabs.Panel>
-                  </Tabs> */}
                 </Card>
               </Grid.Col>
               <Grid.Col md={6}>

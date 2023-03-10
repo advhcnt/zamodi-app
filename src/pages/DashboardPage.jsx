@@ -1,5 +1,6 @@
 import { Box, Container, createStyles, Grid } from "@mantine/core";
 import React from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import DashboardComponent from "../component/DashboardComponent";
@@ -20,6 +21,16 @@ function DashboardPage(props) {
   const currentUser = authService.getCurrentUser();
   const { classes, cx } = useStyles();
   const location = useLocation()
+  const path = window.location.pathname;
+  
+  useEffect(() => {
+    // "document.documentElement.scrollTo" is the magic for React Router Dom v6
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", // Optional if you want to skip the scrolling animation
+    });
+  }, path);
 
   return currentUser ? (
     <Box style={{ overflowX: "hidden" }}>
