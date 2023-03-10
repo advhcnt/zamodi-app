@@ -39,6 +39,7 @@
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
+    "react-social-login-buttons": "^3.6.1",
     "reactjs-social-login": "^2.6.1",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.6.1",

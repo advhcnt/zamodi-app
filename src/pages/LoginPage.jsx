@@ -13,6 +13,7 @@ import {
   createStyles,
   Image,
   Card,
+  UnstyledButton,
 } from "@mantine/core";
 import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
@@ -34,6 +35,10 @@ import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
 import { verifyEmail } from "../utils/fonctions";
 import { API_URL } from "../services/http-common";
+import {
+  FacebookLoginButton,
+  GoogleLoginButton,
+} from "react-social-login-buttons";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -279,7 +284,7 @@ function LoginPage(props) {
                     my="lg"
                   />
                   <Group position="center">
-                    <Image
+                    {/* <Image
                       src={facebook}
                       width={60}
                       onClick={facebookAuth}
@@ -290,7 +295,48 @@ function LoginPage(props) {
                       width={60}
                       onClick={googleAuth}
                       className="spanButton"
-                    />
+                    /> */}
+                    <LoginSocialGoogle
+                      client_id={
+                        "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
+                      }
+                      // onLoginStart={onLoginStart}
+                      redirect_uri={"http://localhost:3000"}
+                      scope="openid profile email"
+                      discoveryDocs="claims_supported"
+                      access_type="offline"
+                      onResolve={({ provider, data }) => {
+                        // setProvider(provider);
+                        // setProfile(data);
+                        console.log(data);
+                        console.log(provider);
+                      }}
+                      onReject={(err) => {
+                        console.log(err);
+                      }}
+                    >
+                      <GoogleLoginButton />
+                    </LoginSocialGoogle>
+                    {/* <LoginSocialFacebook
+                      appId={"717531253056662"}
+                      fieldsProfile={
+                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                      }
+                      onLoginStart={onLoginStart}
+                      onLogoutSuccess={onLogoutSuccess}
+                      redirect_uri={"http://localhost:3000"}
+                      onResolve={({ provider, data }) => {
+                        setProvider(provider);
+                        setProfile(data);
+                        console.log(data);
+                        console.log(provider);
+                      }}
+                      onReject={(err) => {
+                        console.log(err);
+                      }}
+                    >
+                      <FacebookLoginButton />
+                    </LoginSocialFacebook> */}
                   </Group>
                   <Group position="apart" mt="xl">
                     <Anchor
@@ -545,7 +591,7 @@ function LoginPage(props) {
           >
             <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
             <Group position="center">
-              <Image
+              {/* <Image
                 src={facebook}
                 width={60}
                 onClick={facebookAuth}
@@ -556,7 +602,57 @@ function LoginPage(props) {
                 width={60}
                 onClick={googleAuth}
                 className="spanButton"
-              />
+              /> */}
+              <LoginSocialGoogle
+                client_id={
+                  "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
+                }
+                // onLoginStart={onLoginStart}
+                redirect_uri={"http://localhost:3000"}
+                scope="openid profile email"
+                discoveryDocs="claims_supported"
+                access_type="offline"
+                onResolve={({ provider, data }) => {
+                  // setProvider(provider);
+                  // setProfile(data);
+                  console.log(data);
+                  console.log(provider);
+                }}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+              >
+                {/* <GoogleLoginButton /> */}
+                <UnstyledButton style={{border:'1px solid black'}} >
+                  <Group position="center">
+                    <Image src={google} width={60} className="spanButton" />
+                    <div>
+                      <Text>Connexion avec google</Text>
+                      
+                    </div>
+                  </Group>
+                </UnstyledButton>
+              </LoginSocialGoogle>
+              {/* <LoginSocialFacebook
+                      appId={"717531253056662"}
+                      fieldsProfile={
+                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
+                      }
+                      onLoginStart={onLoginStart}
+                      onLogoutSuccess={onLogoutSuccess}
+                      redirect_uri={"http://localhost:3000"}
+                      onResolve={({ provider, data }) => {
+                        setProvider(provider);
+                        setProfile(data);
+                        console.log(data);
+                        console.log(provider);
+                      }}
+                      onReject={(err) => {
+                        console.log(err);
+                      }}
+                    >
+                      <FacebookLoginButton />
+                    </LoginSocialFacebook> */}
             </Group>
             <Group position="center">
               <Anchor
@@ -571,7 +667,7 @@ function LoginPage(props) {
                 }}
                 size="xs"
               >
-                <Text ta={"center"} >
+                <Text ta={"center"}>
                   Nouveau sur Zamodi ?
                   <Link to={"/register"}>
                     <span style={{ color: "#20986e", marginLeft: 5 }}>
