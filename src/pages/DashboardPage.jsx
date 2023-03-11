@@ -28,7 +28,7 @@ function DashboardPage(props) {
       left: 0,
       behavior: "instant", // Optional if you want to skip the scrolling animation
     });
-  }, path);
+  }, [path]);
 
   return currentUser ? (
     <Box style={{ overflowX: "hidden" }}>

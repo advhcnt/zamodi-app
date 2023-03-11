@@ -12,9 +12,7 @@ import {
   Menu,
   Avatar,
   UnstyledButton,
-  Paper,
   Indicator,
-  Container,
   ScrollArea,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -47,6 +45,8 @@ import { LanguagePicker } from "../component/langue";
 import notificationsService from "../services/notifications.service";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
+
+
 
 const user = {
   name: "J. Spoonfgf",
@@ -156,7 +156,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       [theme.fn.smallerThan("md")]: {
         // justifyContent: "flex-start",
         display: "block",
-        paddingBlock:20
+        paddingBlock: 20,
       },
     },
 
@@ -332,7 +332,7 @@ function HearderLayout(props) {
           restaurer vos données.
         </Text>
       ),
-      labels: { confirm: "Delete account", cancel: "No don't delete it" },
+      labels: { confirm: "Oui", cancel: "Non" },
       confirmProps: { color: "red" },
       onCancel: () => {
         SuccessNotification(
@@ -382,15 +382,23 @@ function HearderLayout(props) {
     <>
       <Header height={70} mb={30}>
         <Box className={classes.inner}>
-
-          <Group position="apart" className={classes.hiddenDesktop2} width={'100vw'} pr={20}>
+          <Group
+            position="apart"
+            className={classes.hiddenDesktop2}
+            width={"100vw"}
+            pr={20}
+          >
             <Burger
               opened={drawerOpened}
               onClick={toggleDrawer}
               size="sm"
               className={classes.burger}
             />
-            <Image src={ZamodiLogo} width={130} onClick={()=>navigate('/dashboard')} />
+            <Image
+              src={ZamodiLogo}
+              width={130}
+              onClick={() => navigate("/dashboard")}
+            />
             {/* cloche de notification */}{" "}
             {countNotifications > 0 ? (
               <Indicator
@@ -420,7 +428,7 @@ function HearderLayout(props) {
                   src={ZamodiLogo}
                   width={130}
                   style={{ marginLeft: 50 }}
-                  onClick={()=>navigate('/dashboard')}
+                  onClick={() => navigate("/dashboard")}
                 />
               </Group>
               <Text
@@ -475,7 +483,10 @@ function HearderLayout(props) {
             </Box>
 
             {/* Client info */}
-            <Box display={"flex"} sx={{ alignItems: "center",paddingRight:10 }}>
+            <Box
+              display={"flex"}
+              sx={{ alignItems: "center", paddingRight: 10 }}
+            >
               <Box className={classes.hiddenDesktop}>
                 {countNotifications > 0 ? (
                   <Indicator
@@ -661,13 +672,11 @@ function HearderLayout(props) {
 
               <Group position={"center"} ml={30}>
                 <span
-                  
                   className={classes.link2}
-                  onClick={(event) =>{
+                  onClick={(event) => {
                     event.preventDefault();
                     logOut();
-                  } }
-
+                  }}
                   style={{
                     borderRadius: "12px",
                     paddingLeft: "15px",

@@ -1,11 +1,11 @@
 import React from "react";
 
-function TwitterShare(props) {
+function TwitterShare() {
   return (
     <a
       rel="noreferrer"
       target="_blank"
-      class="twitter-share-button"
+      className="twitter-share-button"
       href="https://twitter.com/intent/tweet?text=https://app.zamodi.com/register"
       data-size="large"
     >

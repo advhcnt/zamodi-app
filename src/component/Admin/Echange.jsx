@@ -28,6 +28,7 @@ import operationsService from "../../services/operations.service";
 import Chargement from "../Chargement";
 import { UpdatedModal } from "./UpdateModale";
 
+
 const useStyles = createStyles((theme) => ({
   header: {
     position: "sticky",
@@ -42,10 +43,11 @@ const useStyles = createStyles((theme) => ({
       left: 0,
       right: 0,
       bottom: 0,
-      borderBottom: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[2]
-        }`,
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[3]
+          : theme.colors.gray[2]
+      }`,
     },
   },
 
@@ -107,7 +109,7 @@ function Echange(props) {
   };
 
   // Pour la mise à jour d'une demande(creation de notification)
-  const handleNotification = () => { };
+  const handleNotification = () => {};
 
   useEffect(() => {
     if (operation && operation) setoperation({ ...operation, statut: statut });
@@ -117,8 +119,6 @@ function Echange(props) {
     if (message && message !== "") {
       setoperation({ ...operation, notification: message });
     }
-
-
   };
 
   // Soumission de la notification
@@ -135,6 +135,7 @@ function Echange(props) {
               const liste = data.data.data;
 
               setoperations([...liste]);
+             
             },
             (error) => {
               console.log(error);
@@ -204,7 +205,9 @@ function Echange(props) {
                     <td>{item.transactionId}</td>
                     <td>
                       <span className={checkState(item.statut)}>
-                        {item.statut.toUpperCase() === 'EN ATTENTE' ? 'ATTENTE' : item.statut.toUpperCase()}
+                        {item.statut.toUpperCase() === "EN ATTENTE"
+                          ? "ATTENTE"
+                          : item.statut.toUpperCase()}
                       </span>
                     </td>
                     <td>
@@ -243,7 +246,10 @@ function Echange(props) {
               </>
             ) : (
               <tr>
-                <td colSpan={7} > <Text ta={'center'}> Pas d'opérations</Text> </td>
+                <td colSpan={7}>
+                  {" "}
+                  <Text ta={"center"}> Pas d'opérations</Text>{" "}
+                </td>
               </tr>
             )}
           </tbody>
@@ -294,7 +300,9 @@ function Echange(props) {
             />
 
             <Group position={"center"} my={20} onClick={handleSubmit}>
-              <Button className={'ArrierePlan'} sx={{ color: "white" }}>Valider</Button>
+              <Button className={"ArrierePlan"} sx={{ color: "white" }}>
+                Valider
+              </Button>
             </Group>
           </Box>
         </div>
@@ -418,7 +426,7 @@ function Echange(props) {
                 >
                   Lecture:{" "}
                 </strong>
-                {!operation.readNotification ? "Non" : 'Oui'}
+                {!operation.readNotification ? "Non" : "Oui"}
               </Text>
 
               <Text>

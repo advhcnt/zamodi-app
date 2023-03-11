@@ -517,7 +517,7 @@ function Login2Page(props) {
                         console.log(err);
                       }}
                     >
-                      <GoogleLoginButton text={"connexion avec google"} />
+                      <GoogleLoginButton text={"Connexion avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
                     </LoginSocialGoogle>
                   </Group>
 

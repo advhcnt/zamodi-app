@@ -592,7 +592,7 @@ function RegisterPage(props) {
                     console.log(err);
                   }}
                 >
-                  <GoogleLoginButton text={"inscription avec google"} />
+                  <GoogleLoginButton text={"Inscription avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
                 </LoginSocialGoogle>
               </Group>
 
