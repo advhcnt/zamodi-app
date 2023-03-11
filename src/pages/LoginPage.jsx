@@ -13,32 +13,25 @@ import {
   createStyles,
   Image,
   Card,
-  UnstyledButton,
 } from "@mantine/core";
 import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import { IconLock, IconMail, IconUser } from "@tabler/icons";
+import { IconLock, IconMail } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
 import { useEffect, useState, useRef } from "react";
 import authService from "../services/authService";
 import authHeader from "./../services/auth-header";
 import Chargement from "../component/Chargement";
-import authLogoMobile from "./../assets/Auth-Logo.svg";
 
-import { LoginSocialFacebook, LoginSocialGoogle } from "reactjs-social-login";
+import { LoginSocialGoogle } from "reactjs-social-login";
 import PasswordForgotComponent from "../component/PasswordForgotComponent";
 import EnterCodeComponent from "../component/EnterCodeComponent";
 import NewPasswordComponent from "../component/NewPasswordComponent";
-import facebook from "./../assets/export22/Facebook.svg";
-import google from "./../assets/export22/google.svg";
+
 import { verifyEmail } from "../utils/fonctions";
-import { API_URL } from "../services/http-common";
-import {
-  FacebookLoginButton,
-  GoogleLoginButton,
-} from "react-social-login-buttons";
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { showError } from "../utils/NotificationPopUp";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -122,6 +115,7 @@ function LoginPage(props) {
           (data) => {
             if (data.status === 200 || data.state === "success") {
               authHeader(data.accessToken);
+              
               if (data.isAdmin) {
                 navigate("/admin");
               } else {
@@ -129,7 +123,7 @@ function LoginPage(props) {
               }
             } else {
               setvisible(false);
-              setErrMsg(data.message);
+              showError("Connexion", data.message);
             }
           },
           (error) => {
@@ -141,7 +135,7 @@ function LoginPage(props) {
               error.toString();
 
             setvisible(false);
-            setErrMsg(resMessage);
+            showError("Connexion", resMessage);
           }
         );
       } else {
@@ -152,12 +146,34 @@ function LoginPage(props) {
     }
   };
 
-  const googleAuth = () => {
-    window.open(`${API_URL}/auth/google`, "_self");
-  };
+  const googleAuth = (data, provider) => {
+    authService.authWithGoogle(data, provider).then(
+      (data) => {
+        if (data.status === 200 || data.state === "success") {
+          
+          authHeader(data.accessToken);
+          if (data.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
+        } else {
+          setvisible(false);
+          showError("Connexion", data.message);
+        }
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-  const facebookAuth = () => {
-    window.open(`${API_URL}/auth/facebook`, "_self");
+        setvisible(false);
+        showError("Connexion", resMessage);
+      }
+    );
   };
 
   return (
@@ -283,19 +299,7 @@ function LoginPage(props) {
                     labelPosition="center"
                     my="lg"
                   />
-                  <Group position="center">
-                    {/* <Image
-                      src={facebook}
-                      width={60}
-                      onClick={facebookAuth}
-                      className="spanButton"
-                    />
-                    <Image
-                      src={google}
-                      width={60}
-                      onClick={googleAuth}
-                      className="spanButton"
-                    /> */}
+                  <Group position="center" px={0}>
                     <LoginSocialGoogle
                       client_id={
                         "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
@@ -306,37 +310,16 @@ function LoginPage(props) {
                       discoveryDocs="claims_supported"
                       access_type="offline"
                       onResolve={({ provider, data }) => {
+                        googleAuth(data, provider);
                         // setProvider(provider);
                         // setProfile(data);
-                        console.log(data);
-                        console.log(provider);
                       }}
                       onReject={(err) => {
                         console.log(err);
                       }}
                     >
-                      <GoogleLoginButton />
+                      <GoogleLoginButton text={"connexion avec google"} />
                     </LoginSocialGoogle>
-                    {/* <LoginSocialFacebook
-                      appId={"717531253056662"}
-                      fieldsProfile={
-                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                      }
-                      onLoginStart={onLoginStart}
-                      onLogoutSuccess={onLogoutSuccess}
-                      redirect_uri={"http://localhost:3000"}
-                      onResolve={({ provider, data }) => {
-                        setProvider(provider);
-                        setProfile(data);
-                        console.log(data);
-                        console.log(provider);
-                      }}
-                      onReject={(err) => {
-                        console.log(err);
-                      }}
-                    >
-                      <FacebookLoginButton />
-                    </LoginSocialFacebook> */}
                   </Group>
                   <Group position="apart" mt="xl">
                     <Anchor
@@ -590,19 +573,8 @@ function LoginPage(props) {
             }}
           >
             <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
-            <Group position="center">
-              {/* <Image
-                src={facebook}
-                width={60}
-                onClick={facebookAuth}
-                className="spanButton"
-              />
-              <Image
-                src={google}
-                width={60}
-                onClick={googleAuth}
-                className="spanButton"
-              /> */}
+
+            <Group position="center" pw={0}>
               <LoginSocialGoogle
                 client_id={
                   "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
@@ -615,45 +587,16 @@ function LoginPage(props) {
                 onResolve={({ provider, data }) => {
                   // setProvider(provider);
                   // setProfile(data);
-                  console.log(data);
-                  console.log(provider);
+                  googleAuth(data, provider);
                 }}
                 onReject={(err) => {
                   console.log(err);
                 }}
               >
-                {/* <GoogleLoginButton /> */}
-                <UnstyledButton style={{border:'1px solid black'}} >
-                  <Group position="center">
-                    <Image src={google} width={60} className="spanButton" />
-                    <div>
-                      <Text>Connexion avec google</Text>
-                      
-                    </div>
-                  </Group>
-                </UnstyledButton>
+                <GoogleLoginButton text={"connexion avec google"} />
               </LoginSocialGoogle>
-              {/* <LoginSocialFacebook
-                      appId={"717531253056662"}
-                      fieldsProfile={
-                        "id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender"
-                      }
-                      onLoginStart={onLoginStart}
-                      onLogoutSuccess={onLogoutSuccess}
-                      redirect_uri={"http://localhost:3000"}
-                      onResolve={({ provider, data }) => {
-                        setProvider(provider);
-                        setProfile(data);
-                        console.log(data);
-                        console.log(provider);
-                      }}
-                      onReject={(err) => {
-                        console.log(err);
-                      }}
-                    >
-                      <FacebookLoginButton />
-                    </LoginSocialFacebook> */}
             </Group>
+
             <Group position="center">
               <Anchor
                 component="button"

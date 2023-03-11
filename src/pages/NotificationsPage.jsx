@@ -1,5 +1,4 @@
 import React from "react";
-import { Notifications } from "../component/NotificationsComponent";
 import notificationsService from "../services/notifications.service";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -61,7 +60,7 @@ export function NotificationsPage(props) {
       left: 0,
       behavior: "instant", // Optional if you want to skip the scrolling animation
     });
-  }, path);
+  }, [path]);
 
   // Pour ouvrir le modal permettant d'afficher les details
   const afficheOperation = (identifiant) => {

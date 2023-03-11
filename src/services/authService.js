@@ -89,8 +89,16 @@ class AuthService {
     return axios.post(API_URL + "/auth/loginbysociallink", data);
   }
 
-  registerWithGoogle() {
-    return axios.get(API_URL + "/auth/google");
+  authWithGoogle(data, provider) {
+    return axios
+      .post(API_URL + "/auth/google", { data, provider })
+      .then((response) => {
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+        console.log(response.data);
+        return response.data;
+      });
   }
 }
 

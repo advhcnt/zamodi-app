@@ -1,9 +1,7 @@
-import { Box, Container, createStyles, Grid } from "@mantine/core";
+import { Box,  createStyles, Grid } from "@mantine/core";
 import React from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import DashboardComponent from "../component/DashboardComponent";
 import HearderLayout from "../layout/HearderLayout";
 import SidebarLayout from "../layout/SidebarLayout";
 import authService from "../services/authService";

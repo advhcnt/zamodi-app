@@ -15,25 +15,23 @@ import {
   Image,
   Card,
 } from "@mantine/core";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 import { Link, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import authService from "../services/authService";
 import Chargement from "../component/Chargement";
 import { verifyEmail } from "../utils/fonctions";
 import authHeader from "./../services/auth-header";
-import { LoginSocialFacebook } from "reactjs-social-login";
-import jwt_decode from "jwt-decode";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
+
 import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
 import { API_URL } from "../services/http-common";
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
+import { showError, showSuccess } from "../utils/NotificationPopUp";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -128,6 +126,10 @@ function RegisterPage(props) {
                   authService.login(mail.valeur, pwd.valeur).then(
                     (data) => {
                       if (data.status === 200 || data.state === "success") {
+                        showSuccess(
+                          "Inscription",
+                          "Inscription éffectuée avec succès"
+                        );
                         authHeader(data.accessToken);
                         if (data.isAdmin) {
                           navigate("/admin");
@@ -136,7 +138,7 @@ function RegisterPage(props) {
                         }
                       } else {
                         setvisible(false);
-                        setErrMsg(data.message);
+                        showError("inscription", data.message);
                       }
                     },
                     (error) => {
@@ -148,13 +150,13 @@ function RegisterPage(props) {
                         error.toString();
 
                       setvisible(false);
-                      setErrMsg(resMessage);
+                      showError("inscription", resMessage);
                     }
                   );
                   // login
                 } else {
                   setvisible(false);
-                  setErrMsg(data.message);
+                  showError("inscription", data.message);
                 }
               },
               (error) => {
@@ -166,7 +168,7 @@ function RegisterPage(props) {
                   error.toString();
 
                 setvisible(false);
-                setErrMsg(resMessage);
+                showError("inscription", resMessage);
               }
             );
           } else {
@@ -186,8 +188,36 @@ function RegisterPage(props) {
     }
   };
 
-  const googleAuth = () => {
-    window.open(`${API_URL}/auth/google/auth/google`, "_self");
+  const googleAuth = (data, provider) => {
+    console.log("Hyacinthe");
+    authService.authWithGoogle(data, provider).then(
+      (data) => {
+        console.log(data)
+        if (data.status === 200 || data.state === "success") {
+          showSuccess("Inscription", "Inscription éffectuée avec succès");
+          authHeader(data.accessToken);
+          if (data.isAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
+        } else {
+          setvisible(false);
+          showError("inscription", data.message);
+        }
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setvisible(false);
+        showError("inscription", resMessage);
+      }
+    );
   };
 
   return (
@@ -365,15 +395,29 @@ function RegisterPage(props) {
                 labelPosition="center"
                 my="sm"
               />
-              <Group position="center">
-                <Image src={facebook} width={60} />
-                <Image
-                  src={google}
-                  width={60}
-                  onClick={googleAuth}
-                  className="spanButton"
-                />
+              <Group position="center" pw={0}>
+                <LoginSocialGoogle
+                  client_id={
+                    "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
+                  }
+                  // onLoginStart={onLoginStart}
+                  redirect_uri={"http://localhost:3000"}
+                  scope="openid profile email"
+                  discoveryDocs="claims_supported"
+                  access_type="offline"
+                  onResolve={({ provider, data }) => {
+                    // setProvider(provider);
+                    // setProfile(data);
+                    googleAuth(data, provider);
+                  }}
+                  onReject={(err) => {
+                    console.log(err);
+                  }}
+                >
+                  <GoogleLoginButton text={"inscription avec google"} />
+                </LoginSocialGoogle>
               </Group>
+
               <Group position="center" mt="md">
                 <Anchor
                   component="button"
@@ -610,15 +654,29 @@ function RegisterPage(props) {
           }}
         >
           <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
-          <Group position="center">
-            <Image src={facebook} width={60} />
-            <Image
-              src={google}
-              width={60}
-              onClick={googleAuth}
-              className="spanButton"
-            />
+          <Group position="center" pw={0}>
+            <LoginSocialGoogle
+              client_id={
+                "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
+              }
+              // onLoginStart={onLoginStart}
+              redirect_uri={"http://localhost:3000"}
+              scope="openid profile email"
+              discoveryDocs="claims_supported"
+              access_type="offline"
+              onResolve={({ provider, data }) => {
+                // setProvider(provider);
+                // setProfile(data);
+                googleAuth(data, provider);
+              }}
+              onReject={(err) => {
+                console.log(err);
+              }}
+            >
+              <GoogleLoginButton text={"connexion avec google"} />
+            </LoginSocialGoogle>
           </Group>
+
           <Group position="center">
             <Anchor
               component="button"
