@@ -21,7 +21,7 @@ import { IconLock, IconMail } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
 import { useEffect, useState, useRef } from "react";
 import authService from "../services/authService";
-import authHeader from "./../services/auth-header";
+import authHeader from "../services/auth-header";
 import Chargement from "../component/Chargement";
 
 import { LoginSocialGoogle } from "reactjs-social-login";
@@ -56,7 +56,8 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     justifyItems: "center",
-    height: "100vh",
+    paddingTop:70
+   
   },
   partieNeutre: {
     backgroundColor: "#20986e",
@@ -65,6 +66,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-around",
     borderRadius: " 110px 0px 0px 0px ",
     border: "1px solid white",
+    height: "100vh",
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
@@ -87,7 +89,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function LoginPage(props) {
+function Login2Page(props) {
   const errRef = useRef();
   const [user, setUser] = useState({ valeur: "", erreur: false });
   const [pwd, setPwd] = useState({ valeur: "", erreur: false });
@@ -115,7 +117,7 @@ function LoginPage(props) {
           (data) => {
             if (data.status === 200 || data.state === "success") {
               authHeader(data.accessToken);
-              
+
               if (data.isAdmin) {
                 navigate("/admin");
               } else {
@@ -149,8 +151,8 @@ function LoginPage(props) {
   const googleAuth = (data, provider) => {
     authService.authWithGoogle(data, provider).then(
       (data) => {
+        setvisible(true);
         if (data.status === 200 || data.state === "success") {
-          
           authHeader(data.accessToken);
           if (data.isAdmin) {
             navigate("/admin");
@@ -179,127 +181,324 @@ function LoginPage(props) {
   return (
     <>
       <Chargement visible={visible} />
-      <Box className={classes.hiddenMobile}>
+      <Box>
         <Box style={{ maxWidth: "100vw", position: "relative" }}>
-          {/* LAZY LOAD */}
-          {/* <Chargement visible={visible} /> */}
-
-          <Grid className={"secondplaceLogin"}>
+          <Grid style={{margin:0}}>
             {/* Première partie */}
-            <Grid.Col
-              md={6}
-              order={2}
-              orderMd={1}
-              className={` ${classes.partieChamp}`}
-            >
-              {pageKing === "login" && (
-                <Box className={classes.boxStyle}>
-                  <Group>
-                    <Image
-                      src={ZamodiLogo3}
-                      width={"70%"}
-                      mb={"4%"}
-                      className={classes.hiddenMobile}
-                    />
-                  </Group>
+            <Grid.Col md={6} order={2} orderMd={1} className={``} style={{padding:0}}>
+              <Box
+                className={`${classes.hiddenMobile}  ${classes.partieChamp} secondplaceLogin `}
 
-                  <Image src={ZamodiLogo3} className={classes.logo} />
-
-                  <Text size={25} weight={900}>
-                    Connexion
-                  </Text>
-                  <Text size={"xs"} mb={"8%"} className={classes.hiddenMobile}>
-                    Nous sommes heureux de vous revoir !
-                    Connectez-vous sur Zamodi.
-                  </Text>
-                  <Text size={"xs"} mb={"8%"} className={classes.hiddenDesktop}>
-                    Content de vous revoir !
-                  </Text>
-                  <Text
-                    ta={"center"}
-                    c={"red"}
-                    ref={errRef}
-                    className={errMsg ? "errmsg" : "offscreen"}
-                    aria-live="assertive"
-                  >
-                    {errMsg}
-                  </Text>
-                  <form onSubmit={handleSubmit}>
-                    <Stack>
-                      <TextInput
-                        radius={12}
-                        icon={
-                          <IconMail
-                            size={20}
-                            color={"#20986e"}
-                            className={classes.lesIcones}
-                          />
-                        }
-                        size={"sm"}
-                        placeholder="votre email"
-                        variant={"filled"}
-                        value={user.valeur}
-                        onChange={(event) =>
-                          setUser({ valeur: event.target.value, erreur: false })
-                        }
-                        error={user.erreur && <>{user.erreur}</>}
+              >
+                {pageKing === "login" && (
+                  <Box className={classes.boxStyle}>
+                    <Group>
+                      <Image
+                        src={ZamodiLogo3}
+                        width={"70%"}
+                        mb={"4%"}
+                        className={classes.hiddenMobile}
                       />
-
-                      <PasswordInput
-                        radius={12}
-                        size={"sm"}
-                        icon={
-                          <IconLock
-                            size={20}
-                            color={"#20986e"}
-                            className={classes.lesIcones}
-                          />
-                        }
-                        placeholder="Your password"
-                        variant={"filled"}
-                        value={pwd.valeur}
-                        onChange={(event) =>
-                          setPwd({ valeur: event.target.value, erreur: false })
-                        }
-                        error={pwd.erreur && <>{pwd.erreur}</>}
-                      />
-                    </Stack>
-
-                    <Group position="apart" mt="xl">
-                      <Anchor
-                        component="button"
-                        type="button"
-                        color="dimmed"
-                        onClick={() => toggle()}
-                        size="xs"
-                      >
-                        <span
-                          style={{ color: "#20986e" }}
-                          onClick={() => setpageKing("forgotpassword")}
-                        >
-                          Mot de passe oublié ?
-                        </span>
-                      </Anchor>
                     </Group>
-                    <Button
-                      size="xs"
-                      fw={"xs"}
-                      type="submit"
-                      radius={12}
-                      className={classes.loginButton}
-                      // onClick={() =>navigation('/dashboard')}
-                      // type={"submit"}
-                    >
-                      {upperFirst("Se connecter")}
-                    </Button>
-                  </form>
 
-                  <Divider
-                    label="Ou continuez avec "
-                    labelPosition="center"
-                    my="lg"
+                    <Image src={ZamodiLogo3} className={classes.logo} />
+
+                    <Text size={25} weight={900}>
+                      Connexion
+                    </Text>
+                    <Text
+                      size={"xs"}
+                      mb={"8%"}
+                      className={classes.hiddenMobile}
+                    >
+                      Nous sommes heureux de vous revoir !
+                      Connectez-vous sur Zamodi.
+                    </Text>
+                    <Text
+                      size={"xs"}
+                      mb={"8%"}
+                      className={classes.hiddenDesktop}
+                    >
+                      Content de vous revoir !
+                    </Text>
+                    <Text
+                      ta={"center"}
+                      c={"red"}
+                      ref={errRef}
+                      className={errMsg ? "errmsg" : "offscreen"}
+                      aria-live="assertive"
+                    >
+                      {errMsg}
+                    </Text>
+                    <form onSubmit={handleSubmit}>
+                      <Stack>
+                        <TextInput
+                          radius={12}
+                          icon={
+                            <IconMail
+                              size={20}
+                              color={"#20986e"}
+                              className={classes.lesIcones}
+                            />
+                          }
+                          size={"sm"}
+                          placeholder="votre email"
+                          variant={"filled"}
+                          value={user.valeur}
+                          onChange={(event) =>
+                            setUser({
+                              valeur: event.target.value,
+                              erreur: false,
+                            })
+                          }
+                          error={user.erreur && <>{user.erreur}</>}
+                        />
+
+                        <PasswordInput
+                          radius={12}
+                          size={"sm"}
+                          icon={
+                            <IconLock
+                              size={20}
+                              color={"#20986e"}
+                              className={classes.lesIcones}
+                            />
+                          }
+                          placeholder="Your password"
+                          variant={"filled"}
+                          value={pwd.valeur}
+                          onChange={(event) =>
+                            setPwd({
+                              valeur: event.target.value,
+                              erreur: false,
+                            })
+                          }
+                          error={pwd.erreur && <>{pwd.erreur}</>}
+                        />
+                      </Stack>
+
+                      <Group position="apart" mt="xl">
+                        <Anchor
+                          component="button"
+                          type="button"
+                          color="dimmed"
+                          onClick={() => toggle()}
+                          size="xs"
+                        >
+                          <span
+                            style={{ color: "#20986e" }}
+                            onClick={() => setpageKing("forgotpassword")}
+                          >
+                            Mot de passe oublié ?
+                          </span>
+                        </Anchor>
+                      </Group>
+                      <Button
+                        size="xs"
+                        fw={"xs"}
+                        type="submit"
+                        radius={12}
+                        className={classes.loginButton}
+                        // onClick={() =>navigation('/dashboard')}
+                        // type={"submit"}
+                      >
+                        {upperFirst("Se connecter")}
+                      </Button>
+                    </form>
+
+                    <Divider
+                      label="Ou continuez avec "
+                      labelPosition="center"
+                      my="sm"
+                    />
+                  </Box>
+                )}
+
+                {pageKing === "forgotpassword" && (
+                  <PasswordForgotComponent
+                    setpageKing={setpageKing}
+                    setclient={setclient}
                   />
-                  <Group position="center" px={0}>
+                )}
+
+                {pageKing === "EnterCode" && (
+                  <EnterCodeComponent
+                    email={client}
+                    setpageKing={setpageKing}
+                    SetCode={SetCode}
+                  />
+                )}
+
+                {pageKing === "NewPassword" && (
+                  <NewPasswordComponent
+                    email={client}
+                    setpageKing={setpageKing}
+                    code={Code}
+                  />
+                )}
+              </Box>
+
+              <Box className={classes.hiddenDesktop}>
+                <Box
+                  sx={{
+                    height: "30vh",
+                    paddingTop: 40,
+                    paddingBottom: 20,
+                    background: "#20986E",
+                    borderRadius: "0 0 0 32px",
+                  }}
+                >
+                  <Group position={"center"}>
+                    <Image src={ZamodiLogo2} width={200} />
+                  </Group>
+                </Box>
+
+                <Card
+                  shadow={"xs"}
+                  sx={{
+                    width: "90vw",
+                    marginInline: "5vw",
+                    marginTop: "-12vh",
+                    borderRadius: 22,
+                  }}
+                >
+                  {pageKing === "login" && (
+                    <Box pt={10}>
+                      <Text size={20} weight={700} ta={"center"} mt={0}>
+                        Connexion
+                      </Text>
+                      <Text size={"xs"} ta={"center"} c={"dimmed"} mt={15}>
+                        Content de vous revoir !
+                      </Text>
+                      <Text
+                        ta={"center"}
+                        c={"red"}
+                        ref={errRef}
+                        className={errMsg ? "errmsg" : "offscreen"}
+                        aria-live="assertive"
+                      >
+                        {errMsg}
+                      </Text>
+
+                      <form
+                        onSubmit={handleSubmit}
+                        style={{ paddingInline: 10, marginTop: 20 }}
+                      >
+                        <Stack>
+                          <TextInput
+                            radius="12px"
+                            icon={
+                              <IconMail
+                                size={20}
+                                color={"#20986e"}
+                                className={classes.lesIcones}
+                              />
+                            }
+                            size={"md"}
+                            placeholder="votre email"
+                            variant={"filled"}
+                            value={user.valeur}
+                            onChange={(event) =>
+                              setUser({
+                                valeur: event.target.value,
+                                erreur: false,
+                              })
+                            }
+                            error={user.erreur && <>{user.erreur}</>}
+                          />
+
+                          <PasswordInput
+                            radius="12px"
+                            size={"md"}
+                            icon={
+                              <IconLock
+                                size={20}
+                                color={"#20986e"}
+                                className={classes.lesIcones}
+                              />
+                            }
+                            placeholder="Your password"
+                            variant={"filled"}
+                            value={pwd.valeur}
+                            onChange={(event) =>
+                              setPwd({
+                                valeur: event.target.value,
+                                erreur: false,
+                              })
+                            }
+                            error={pwd.erreur && <>{pwd.erreur}</>}
+                          />
+                        </Stack>
+
+                        <Group position="right" mt="xs">
+                          <Anchor
+                            component="button"
+                            type="button"
+                            color="dimmed"
+                            onClick={() => toggle()}
+                            size="xs"
+                          >
+                            <span
+                              style={{ color: "#20986e" }}
+                              onClick={() => setpageKing("forgotpassword")}
+                            >
+                              Mot de passe oublié ?
+                            </span>
+                          </Anchor>
+                        </Group>
+                        <Button
+                          my={20}
+                          size="xs"
+                          fw={"xs"}
+                          type="submit"
+                          radius={12}
+                          className={classes.loginButton}
+                          // onClick={() =>navigation('/dashboard')}
+                          // type={"submit"}
+                        >
+                          {upperFirst("Se connecter")}
+                        </Button>
+                      </form>
+                    </Box>
+                  )}
+
+                  {pageKing === "forgotpassword" && (
+                    <PasswordForgotComponent
+                      setpageKing={setpageKing}
+                      setclient={setclient}
+                    />
+                  )}
+
+                  {pageKing === "EnterCode" && (
+                    <EnterCodeComponent
+                      email={client}
+                      setpageKing={setpageKing}
+                      SetCode={SetCode}
+                    />
+                  )}
+
+                  {pageKing === "NewPassword" && (
+                    <NewPasswordComponent
+                      email={client}
+                      setpageKing={setpageKing}
+                      code={Code}
+                    />
+                  )}
+                </Card>
+               
+              </Box>
+
+              {pageKing === "login" && (
+                <Box>
+                   <Divider
+                  label="Ou continuez avec "
+                  labelPosition="center"
+                  my="sm"
+                  mx={"lg"}
+                  className={classes.hiddenDesktop}
+                 
+                />
+                  <Group position="center" pw={0} my={"sm"}>
                     <LoginSocialGoogle
                       client_id={
                         "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
@@ -310,9 +509,9 @@ function LoginPage(props) {
                       discoveryDocs="claims_supported"
                       access_type="offline"
                       onResolve={({ provider, data }) => {
-                        googleAuth(data, provider);
                         // setProvider(provider);
                         // setProfile(data);
+                        googleAuth(data, provider);
                       }}
                       onReject={(err) => {
                         console.log(err);
@@ -321,50 +520,31 @@ function LoginPage(props) {
                       <GoogleLoginButton text={"connexion avec google"} />
                     </LoginSocialGoogle>
                   </Group>
-                  <Group position="apart" mt="xl">
+
+                  <Group position="center">
                     <Anchor
                       component="button"
                       type="button"
                       color="dimmed"
-                      style={{ color: "black" }}
+                      style={{
+                        color: "black",
+                        justifyContent: "space-around",
+                        textAlign: "center",
+                        alignContent: "center",
+                      }}
                       size="xs"
                     >
-                      Nouveau sur Zamodi ?
-                      <Link to={"/register"}>
-                        <span style={{ color: "#20986e", marginInline: 10 }}>
-                          S'inscrire
-                        </span>
-                      </Link>
+                      <Text ta={"center"}>
+                        Nouveau sur Zamodi ?
+                        <Link to={"/register"}>
+                          <span style={{ color: "#20986e", marginLeft: 5 }}>
+                            S'inscrire
+                          </span>
+                        </Link>
+                      </Text>
                     </Anchor>
                   </Group>
                 </Box>
-              )}
-
-              {pageKing === "forgotpassword" && (
-                <PasswordForgotComponent
-                  setpageKing={setpageKing}
-                  setclient={setclient}
-                />
-              )}
-
-              {pageKing === "EnterCode" && (
-                <EnterCodeComponent
-                  email={client}
-                  setpageKing={setpageKing}
-                  SetCode={SetCode}
-                />
-              )}
-
-              {/* {pageKing === "AddNewPass" && (
-            <EnterCodeComponent email={client} setpageKing={setpageKing} SetCode={SetCode}/>
-          )} */}
-
-              {pageKing === "NewPassword" && (
-                <NewPasswordComponent
-                  email={client}
-                  setpageKing={setpageKing}
-                  code={Code}
-                />
               )}
             </Grid.Col>
 
@@ -415,216 +595,8 @@ function LoginPage(props) {
           </Grid>
         </Box>
       </Box>
-
-      {/* Afichage version mobile */}
-
-      <Box className={`${classes.hiddenDesktop} `}>
-        <Box
-          sx={{
-            height: "30vh",
-            paddingTop: 40,
-            paddingBottom: 20,
-            background: "#20986E",
-            borderRadius: "0 0 0 32px",
-          }}
-        >
-          <Group position={"center"}>
-            <Image src={ZamodiLogo2} width={200} />
-          </Group>
-        </Box>
-
-        <Card
-          shadow={"xs"}
-          sx={{
-            width: "90vw",
-            marginInline: "5vw",
-            marginTop: "-12vh",
-            borderRadius: 22,
-          }}
-        >
-          {pageKing === "login" && (
-            <Box pt={10}>
-              <Text size={20} weight={700} ta={"center"} mt={0}>
-                Connexion
-              </Text>
-              <Text size={"xs"} ta={"center"} c={"dimmed"} mt={30}>
-                Content de vous revoir !
-              </Text>
-              <Text
-                ta={"center"}
-                c={"red"}
-                ref={errRef}
-                className={errMsg ? "errmsg" : "offscreen"}
-                aria-live="assertive"
-              >
-                {errMsg}
-              </Text>
-
-              <form
-                onSubmit={handleSubmit}
-                style={{ paddingInline: 20, marginTop: 40 }}
-              >
-                <Stack>
-                  <TextInput
-                    radius="12px"
-                    icon={
-                      <IconMail
-                        size={20}
-                        color={"#20986e"}
-                        className={classes.lesIcones}
-                      />
-                    }
-                    size={"md"}
-                    placeholder="votre email"
-                    variant={"filled"}
-                    value={user.valeur}
-                    onChange={(event) =>
-                      setUser({ valeur: event.target.value, erreur: false })
-                    }
-                    error={user.erreur && <>{user.erreur}</>}
-                  />
-
-                  <PasswordInput
-                    radius="12px"
-                    size={"md"}
-                    icon={
-                      <IconLock
-                        size={20}
-                        color={"#20986e"}
-                        className={classes.lesIcones}
-                      />
-                    }
-                    placeholder="Your password"
-                    variant={"filled"}
-                    value={pwd.valeur}
-                    onChange={(event) =>
-                      setPwd({ valeur: event.target.value, erreur: false })
-                    }
-                    error={pwd.erreur && <>{pwd.erreur}</>}
-                  />
-                </Stack>
-
-                <Group position="right" mt="xs">
-                  <Anchor
-                    component="button"
-                    type="button"
-                    color="dimmed"
-                    onClick={() => toggle()}
-                    size="xs"
-                  >
-                    <span
-                      style={{ color: "#20986e" }}
-                      onClick={() => setpageKing("forgotpassword")}
-                    >
-                      Mot de passe oublié ?
-                    </span>
-                  </Anchor>
-                </Group>
-                <Button
-                  my={20}
-                  size="xs"
-                  fw={"xs"}
-                  type="submit"
-                  radius={12}
-                  className={classes.loginButton}
-                  // onClick={() =>navigation('/dashboard')}
-                  // type={"submit"}
-                >
-                  {upperFirst("Se connecter")}
-                </Button>
-              </form>
-            </Box>
-          )}
-
-          {pageKing === "forgotpassword" && (
-            <PasswordForgotComponent
-              setpageKing={setpageKing}
-              setclient={setclient}
-            />
-          )}
-
-          {pageKing === "EnterCode" && (
-            <EnterCodeComponent
-              email={client}
-              setpageKing={setpageKing}
-              SetCode={SetCode}
-            />
-          )}
-
-          {/* {pageKing === "AddNewPass" && (
-            <EnterCodeComponent email={client} setpageKing={setpageKing} SetCode={SetCode}/>
-          )} */}
-
-          {pageKing === "NewPassword" && (
-            <NewPasswordComponent
-              email={client}
-              setpageKing={setpageKing}
-              code={Code}
-            />
-          )}
-        </Card>
-
-        {pageKing === "login" && (
-          <Box
-            sx={{
-              width: "90vw",
-              marginInline: "5vw",
-              paddingInline: 30,
-            }}
-          >
-            <Divider label="Ou continuez avec" labelPosition="center" my="xs" />
-
-            <Group position="center" pw={0}>
-              <LoginSocialGoogle
-                client_id={
-                  "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
-                }
-                // onLoginStart={onLoginStart}
-                redirect_uri={"http://localhost:3000"}
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
-                onResolve={({ provider, data }) => {
-                  // setProvider(provider);
-                  // setProfile(data);
-                  googleAuth(data, provider);
-                }}
-                onReject={(err) => {
-                  console.log(err);
-                }}
-              >
-                <GoogleLoginButton text={"connexion avec google"} />
-              </LoginSocialGoogle>
-            </Group>
-
-            <Group position="center">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
-                style={{
-                  color: "black",
-                  justifyContent: "space-around",
-                  textAlign: "center",
-                  alignContent: "center",
-                }}
-                size="xs"
-              >
-                <Text ta={"center"}>
-                  Nouveau sur Zamodi ?
-                  <Link to={"/register"}>
-                    <span style={{ color: "#20986e", marginLeft: 5 }}>
-                      S'inscrire
-                    </span>
-                  </Link>
-                </Text>
-              </Anchor>
-            </Group>
-          </Box>
-        )}
-      </Box>
     </>
   );
 }
 
-export default LoginPage;
+export default Login2Page;

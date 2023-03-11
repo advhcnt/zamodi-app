@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
-import FirstPage from "./pages/FirstPage";
 import LoginPage from "./pages/LoginPage";
+import Login2Page from "./pages/Login2Page";
 import RegisterPage from "./pages/RegisterPage";
 import "./App.css";
 import EchangeComponent from "./component/EchangeComponent";
@@ -67,6 +67,7 @@ function App(props) {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/login2" element={<Login2Page />} />
         <Route path="/login-social/:email/:name" element={<AuthBySocial />} />
         
         <Route path="/register" element={<RegisterPage />} />
