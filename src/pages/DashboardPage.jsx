@@ -1,7 +1,7 @@
-import { Box,  createStyles, Grid } from "@mantine/core";
-import React from "react";
+import { Box, createStyles, Grid } from "@mantine/core";
+import React, { useLayoutEffect } from "react";
 import { useEffect } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import HearderLayout from "../layout/HearderLayout";
 import SidebarLayout from "../layout/SidebarLayout";
 import authService from "../services/authService";
@@ -15,12 +15,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function DashboardPage(props) {
-
   const currentUser = authService.getCurrentUser();
   const { classes, cx } = useStyles();
-  const location = useLocation()
+  const location = useLocation();
   const path = window.location.pathname;
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     // "document.documentElement.scrollTo" is the magic for React Router Dom v6
     document.documentElement.scrollTo({
@@ -29,6 +29,12 @@ function DashboardPage(props) {
       behavior: "instant", // Optional if you want to skip the scrolling animation
     });
   }, [path]);
+
+  useEffect(() => {
+    console.log(location.pathname.split("/"));
+    let path = location.pathname;
+    navigate(path);
+  }, []);
 
   return currentUser ? (
     <Box style={{ overflowX: "hidden" }}>

@@ -19,9 +19,10 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import authService from "../services/authService";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import notificationAdminService from "./../services/admin/notificationsService.js";
 import blankTable from "./../assets/blankTable.png";
+import { useLayoutEffect } from "react";
 const useStyles = createStyles((theme) => ({
   comment: {
     padding: `${theme.spacing.lg}px ${theme.spacing.xl}px`,
@@ -52,7 +53,14 @@ export function NotificationsPage(props) {
   const { classes } = useStyles();
   const [who, setwho] = useState("CLIENT");
   const path = window.location.pathname;
-  
+  const location = useLocation();
+
+  const navigate = useNavigate();
+  useLayoutEffect(() => {
+    console.log(location.pathname.split("/"));
+    let path = location.pathname;
+    navigate(path);
+  }, []);
   useEffect(() => {
     // "document.documentElement.scrollTo" is the magic for React Router Dom v6
     document.documentElement.scrollTo({
@@ -82,7 +90,6 @@ export function NotificationsPage(props) {
 
     ouvrir.open();
   };
-  const navigate = useNavigate();
 
   useEffect(() => {
     authService.isAdmin().then(
@@ -162,7 +169,7 @@ export function NotificationsPage(props) {
           ) : (
             <>
               <Box
-              mt={100}
+                mt={100}
                 sx={{
                   display: "flex",
                   justifyContent: "space-around",

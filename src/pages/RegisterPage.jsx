@@ -17,10 +17,10 @@ import {
 } from "@mantine/core";
 import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IconLock, IconMail, IconUser } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import authService from "../services/authService";
 import Chargement from "../component/Chargement";
 import { verifyEmail } from "../utils/fonctions";
@@ -65,7 +65,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-around",
     borderRadius: " 110px 0px 0px 0px ",
     border: "1px solid white",
-    bottom:0,
+    bottom: 0,
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
@@ -101,6 +101,12 @@ function RegisterPage(props) {
   const navigate = useNavigate();
   const [visible, setvisible] = useState(false);
   const [condition, setcondition] = useState({ valeur: false, erreur: false });
+  const location = useLocation();
+  useLayoutEffect(() => {
+    console.log(location.pathname.split("/"));
+    let path = location.pathname;
+    navigate(path);
+  }, []);
 
   const { classes, cx } = useStyles();
   const [type, toggle] = useToggle(["register", "login"]);
@@ -225,21 +231,21 @@ function RegisterPage(props) {
     <>
       <Box
         style={{
-          padding:0 ,
+          padding: 0,
           overflow: "hidden",
           maxHeight: "100vh",
           position: "relative",
-          bottom:0
+          bottom: 0,
         }}
       >
         {/* LAZY LOAD */}
         <Chargement visible={visible} />
-        <Grid style={{ maxHeight: "100vh", overflow: "hidden",margin:0 }}>
+        <Grid style={{ maxHeight: "100vh", overflow: "hidden", margin: 0 }}>
           {/* Partie une */}
-          <Grid.Col md={6} order={2} orderMd={1} style={{padding:0 ,}}>
+          <Grid.Col md={6} order={2} orderMd={1} style={{ padding: 0 }}>
             <Box
               className={`${classes.hiddenMobile}  ${classes.partieChamp} secondplaceLogin`}
-              style={{paddingTop:30 }}
+              style={{ paddingTop: 30 }}
             >
               <Box style={{ width: "70%" }}>
                 <Group>
@@ -579,7 +585,7 @@ function RegisterPage(props) {
                     "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
                   }
                   // onLoginStart={onLoginStart}
-                  redirect_uri={"http://localhost:3000"}
+                  redirect_uri={"https://app.zamodi.com"}
                   scope="openid profile email"
                   discoveryDocs="claims_supported"
                   access_type="offline"
@@ -592,7 +598,10 @@ function RegisterPage(props) {
                     console.log(err);
                   }}
                 >
-                  <GoogleLoginButton text={"Inscription avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
+                  <GoogleLoginButton
+                    text={"Inscription avec Google"}
+                    style={{ borderRadius: 32, fontSize: 15, fontWeight: 500 }}
+                  />
                 </LoginSocialGoogle>
               </Group>
 

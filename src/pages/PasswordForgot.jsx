@@ -16,7 +16,7 @@ import {
   Image,
 } from "@mantine/core";
 import ZamodiLogo from "./../assets/Zamodi-Logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IconLock, IconMail } from "@tabler/icons";
 import authLogo from "./../assets/Auth.svg";
 import { useEffect, useState, useRef } from "react";
@@ -30,6 +30,7 @@ import {
   LoginSocialGoogle,
 
 } from "reactjs-social-login";
+import { useLayoutEffect } from "react";
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -88,6 +89,13 @@ function LoginPage(props) {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    console.log(location.pathname.split("/"));
+    let path = location.pathname;
+    navigate(path);
+  }, []);
 
   useEffect(() => {
     setErrMsg("");

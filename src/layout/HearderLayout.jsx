@@ -301,8 +301,6 @@ function HearderLayout(props) {
 
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const navigation = useNavigate();
-
   const [countNotifications, setcountNotifications] = useState(0);
 
   useEffect(() => {
@@ -312,7 +310,6 @@ function HearderLayout(props) {
         const compteurTable = retour.filter(
           (item) => !item.readNotification && item.statut !== "En attente"
         );
-        console.log("taille", compteurTable.length);
         setcountNotifications(parseInt(compteurTable.length));
       },
       (error) => {
@@ -561,7 +558,7 @@ function HearderLayout(props) {
                   <Menu.Label>Settings</Menu.Label>
                   <Menu.Item
                     icon={<IconSettings size={14} stroke={1.5} />}
-                    onClick={() => navigation("profile")}
+                    onClick={() => navigate("profile")}
                   >
                     Account settings
                   </Menu.Item>

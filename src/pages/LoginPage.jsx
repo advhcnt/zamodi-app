@@ -504,7 +504,7 @@ function Login2Page(props) {
                         "164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com"
                       }
                       // onLoginStart={onLoginStart}
-                      redirect_uri={"http://localhost:3000"}
+                      redirect_uri={"https://app.zamodi.com"}
                       scope="openid profile email"
                       discoveryDocs="claims_supported"
                       access_type="offline"

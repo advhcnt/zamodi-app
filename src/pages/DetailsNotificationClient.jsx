@@ -1,10 +1,12 @@
 import { Box, Button, Group, Text } from '@mantine/core';
 import React from 'react';
+import { useLayoutEffect } from 'react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 function DetailsNotificationClient({ operation }) {
 const location = useLocation();
+const navigate = useNavigate();
 const path = window.location.pathname;
   
   useEffect(() => {
@@ -15,9 +17,12 @@ const path = window.location.pathname;
       behavior: "instant", // Optional if you want to skip the scrolling animation
     });
   }, path);
-    useEffect(() => {
-        console.log(location)
-    }, [])
+ 
+  useLayoutEffect(() => {
+    console.log(location.pathname.split("/"));
+    let path = location.pathname;
+    navigate(path);
+  }, []);
 
 
     return (

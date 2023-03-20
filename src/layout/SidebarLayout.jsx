@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import {
   createStyles,
   Navbar,
@@ -19,8 +19,9 @@ import {
   IconHome,
 } from "@tabler/icons";
 import ZamodiLogo from "./../assets/Zamodi-Logo3.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
+import { useEffect } from "react";
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef("icon");
@@ -131,6 +132,15 @@ function SidebarLayout() {
   const { classes, cx } = useStyles();
   const [active, setActive] = useState("Dashboard");
   const [DivActive, setDivActive] = useState("Dashboard");
+  const location = useLocation();
+
+  useLayoutEffect(() => {
+    let tablePath = location.pathname.split("/");
+    let path = ((tablePath.length>2 &&tablePath[2]!=="profile") ?tablePath[2]:'/'+tablePath[1] );
+    let lien = data.filter((item) => item.link === path);
+    console.log(path)
+    setActive(lien[0].label);
+  });
 
   const links = data.map((item) => (
     <div
