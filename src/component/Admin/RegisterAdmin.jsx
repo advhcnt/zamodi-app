@@ -139,15 +139,15 @@ function RegisterAdmin(props) {
               );
         } else {
           setvisible(false);
-          setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" });
+          setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
         }
       } else {
         setvisible(false);
-        setMail({ ...mail, erreur: "Veillez entrer un mail valide" });
+        setMail({ ...mail, erreur: "Veuillez entrer un mail valide" });
       }
     } else {
       setvisible(false);
-      setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
     }
   };
 

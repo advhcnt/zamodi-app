@@ -59,7 +59,7 @@ function RechargeComponent(props) {
           } else {
             seterror({
               statut: true,
-              message: "Veillez entrer un montant correct",
+              message: "Veuillez entrer un montant correct",
             });
           }
         } else {
@@ -73,10 +73,10 @@ function RechargeComponent(props) {
           });
         }
       } else {
-        seterror({ statut: true, message: "Veillez entrer un numéro correct" });
+        seterror({ statut: true, message: "Veuillez entrer un numéro correct" });
       }
     } else {
-      seterror({ statut: true, message: "Veillez remplir les champs" });
+      seterror({ statut: true, message: "Veuillez remplir les champs" });
     }
   };
 

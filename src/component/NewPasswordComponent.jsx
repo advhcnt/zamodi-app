@@ -120,7 +120,7 @@ function NewPasswordComponent({ setpageKing, email, code }) {
         setErrMsg(resMessage);
       }
     } else {
-      setPwd({ ...pwd, erreur: "Veillez entrer un mail valide" });
+      setPwd({ ...pwd, erreur: "Veuillez entrer un mail valide" });
     }
   };
 

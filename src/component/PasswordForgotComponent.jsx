@@ -111,7 +111,7 @@ function PasswordForgotComponent({ setpageKing, setclient }) {
         setErrMsg(resMessage);
       }
     } else {
-      setUser({ ...user, erreur: "Veillez entrer un mail valide" });
+      setUser({ ...user, erreur: "Veuillez entrer un mail valide" });
     }
   };
 

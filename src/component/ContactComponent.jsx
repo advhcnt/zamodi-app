@@ -58,7 +58,7 @@ function ContactComponent(props) {
     } else {
       seterror({
         statut: true,
-        message: "Veillez remplir les champs",
+        message: "Veuillez remplir les champs",
       });
     }
   };

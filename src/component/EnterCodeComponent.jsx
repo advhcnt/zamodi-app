@@ -113,7 +113,7 @@ function EnterCodeComponent({ setpageKing, email, SetCode }) {
         setErrMsg(resMessage);
       }
     } else {
-      setCode({ ...code, erreur: "Veillez entrer un mail valide" });
+      setCode({ ...code, erreur: "Veuillez entrer un mail valide" });
     }
   };
 

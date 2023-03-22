@@ -141,10 +141,10 @@ function Login2Page(props) {
           }
         );
       } else {
-        setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" });
+        setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
       }
     } else {
-      setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
     }
   };
 
@@ -264,7 +264,7 @@ function Login2Page(props) {
                               className={classes.lesIcones}
                             />
                           }
-                          placeholder="Your password"
+                          placeholder="Votre mot de passe"
                           variant={"filled"}
                           value={pwd.valeur}
                           onChange={(event) =>
@@ -283,7 +283,7 @@ function Login2Page(props) {
                           type="button"
                           color="dimmed"
                           onClick={() => toggle()}
-                          size="xs"
+                          size="sm"
                         >
                           <span
                             style={{ color: "#20986e" }}
@@ -294,7 +294,7 @@ function Login2Page(props) {
                         </Anchor>
                       </Group>
                       <Button
-                        size="xs"
+                        size="sm"
                         fw={"xs"}
                         type="submit"
                         radius={12}
@@ -417,7 +417,7 @@ function Login2Page(props) {
                                 className={classes.lesIcones}
                               />
                             }
-                            placeholder="Your password"
+                            placeholder=" Votre mot de passe"
                             variant={"filled"}
                             value={pwd.valeur}
                             onChange={(event) =>
@@ -436,7 +436,7 @@ function Login2Page(props) {
                             type="button"
                             color="dimmed"
                             onClick={() => toggle()}
-                            size="xs"
+                            size="sm"
                           >
                             <span
                               style={{ color: "#20986e" }}
@@ -448,7 +448,7 @@ function Login2Page(props) {
                         </Group>
                         <Button
                           my={20}
-                          size="xs"
+                          size="sm"
                           fw={"xs"}
                           type="submit"
                           radius={12}
@@ -532,7 +532,7 @@ function Login2Page(props) {
                         textAlign: "center",
                         alignContent: "center",
                       }}
-                      size="xs"
+                      size="sm"
                     >
                       <Text ta={"center"}>
                         Nouveau sur Zamodi ?

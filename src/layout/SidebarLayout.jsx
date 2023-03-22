@@ -122,7 +122,7 @@ const data = [
   { link: "echange", label: "Faire un échange", icon: IconArrowsLeftRight },
   { link: "recharge", label: "Recharge", icon: IconWallet },
   { link: "historique", label: "Historique", icon: IconFileText },
-  { link: "contact", label: "Créer un ticket", icon: IconAlertOctagon },
+  { link: "contact", label: "Centre d'aide", icon: IconAlertOctagon },
   { link: "partager", label: "Partager l'App", icon: IconShare },
   { link: "service", label: "Noter le service", icon: IconStar },
 ];

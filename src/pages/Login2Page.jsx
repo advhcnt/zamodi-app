@@ -175,17 +175,17 @@ function RegisterPage(props) {
           } else {
             setcondition({
               ...condition,
-              erreur: "Veillez accepter les termes et conditions d'utilisation",
+              erreur: "Veuillez accepter les termes et conditions d'utilisation",
             });
           }
         } else {
-          setPwd({ ...pwd, erreur: "Veillez entrer un mot de passe valide" });
+          setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
         }
       } else {
-        setMail({ ...mail, erreur: "Veillez entrer un mail valide" });
+        setMail({ ...mail, erreur: "Veuillez entrer un mail valide" });
       }
     } else {
-      setUser({ ...user, erreur: "Veillez entrer un nom d'utilisateur" });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
     }
   };
 
