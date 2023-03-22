@@ -283,7 +283,7 @@ function Login2Page(props) {
                           type="button"
                           color="dimmed"
                           onClick={() => toggle()}
-                          size="sm"
+                         size={20}
                         >
                           <span
                             style={{ color: "#20986e" }}
@@ -294,7 +294,7 @@ function Login2Page(props) {
                         </Anchor>
                       </Group>
                       <Button
-                        size="sm"
+                       size={20}
                         fw={"xs"}
                         type="submit"
                         radius={12}
@@ -436,7 +436,7 @@ function Login2Page(props) {
                             type="button"
                             color="dimmed"
                             onClick={() => toggle()}
-                            size="sm"
+                           size={20}
                           >
                             <span
                               style={{ color: "#20986e" }}
@@ -448,7 +448,7 @@ function Login2Page(props) {
                         </Group>
                         <Button
                           my={20}
-                          size="sm"
+                         size={20}
                           fw={"xs"}
                           type="submit"
                           radius={12}
@@ -532,7 +532,7 @@ function Login2Page(props) {
                         textAlign: "center",
                         alignContent: "center",
                       }}
-                      size="sm"
+                     size={20}
                     >
                       <Text ta={"center"}>
                         Nouveau sur Zamodi ?

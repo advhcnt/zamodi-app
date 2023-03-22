@@ -386,7 +386,7 @@ function RegisterPage(props) {
                   </Stack>
 
                   <Button
-                    size="sm"
+                   size={20}
                     fw={"xs"}
                     // type="submit"
                     radius={12}
@@ -554,7 +554,7 @@ function RegisterPage(props) {
                   </Stack>
 
                   <Button
-                    size="sm"
+                   size={20}
                     fw={"xs"}
                     // type="submit"
                     radius={12}
@@ -616,7 +616,7 @@ function RegisterPage(props) {
                     textAlign: "center",
                     alignContent: "center",
                   }}
-                  size="sm"
+                 size={20}
                 >
                   <Text ta={"center"} display={"inline-block"}>
                     Vous avez déjà un compte ?{" "}
