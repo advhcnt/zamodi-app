@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
 import Login2Page from "./pages/Login2Page";
@@ -36,11 +36,12 @@ function App(props) {
     const currentUser = authService.getCurrentUser();
     if (currentUser) authHeader(currentUser.accessToken);
   }, []);
+  const location= useLocation()
   return (
     <div>
       {/* google auth token 164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com */}
       {/* FACEBOOK ID 717531253056662 */}
-      <Routes>
+      <Routes Location={location} key={location.pathname}>
         <Route path="/" element={<LoginPage />} />
         <Route path="/admin" element={<AdminDashboard />}>
           <Route index element={<HomeAdmin />} />
