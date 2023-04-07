@@ -41,7 +41,7 @@ function App(props) {
     <div>
       {/* google auth token 164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com */}
       {/* FACEBOOK ID 717531253056662 */}
-      <Routes Location={location} key={location.pathname}>
+      <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/admin" element={<AdminDashboard />}>
           <Route index element={<HomeAdmin />} />
