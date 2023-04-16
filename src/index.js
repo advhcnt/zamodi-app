@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { I18nProvider, LOCALES } from "./i18n";
-import { FormattedMessage } from "react-intl";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
