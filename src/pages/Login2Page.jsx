@@ -25,8 +25,6 @@ import authService from "../services/authService";
 import Chargement from "../component/Chargement";
 import { verifyEmail } from "../utils/fonctions";
 import authHeader from "./../services/auth-header";
-
-import facebook from "./../assets/export22/Facebook.svg";
 import google from "./../assets/export22/google.svg";
 import { API_URL } from "../services/http-common";
 import { GoogleLoginButton } from "react-social-login-buttons";

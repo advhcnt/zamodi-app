@@ -239,16 +239,16 @@ function ServiceComponent(props) {
                       onChange={(event) => setdescription(event.target.value)}
                     />
                   </Box>
-                  <Box my={40}>
+                  <Group position={'center'} my={40}>
                     <Button
                       className={"ArrierePlan"}
                       c={"white"}
-                      fullWidth
+                      // fullWidth={true}
                       onClick={handleSubmit}
                     >
                       Envoyer
                     </Button>
-                  </Box>
+                  </Group>
                 </Container>
               </Grid.Col>
             </Grid>

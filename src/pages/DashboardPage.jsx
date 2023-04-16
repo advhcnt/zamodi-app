@@ -8,10 +8,32 @@ import authService from "../services/authService";
 
 const useStyles = createStyles((theme) => ({
   colonne1: {
+    position:'fixed',
+    width:"20vw",
+    height:'100vh',
+    overflow:'auto',
+    paddingBottom:'3vh',
     [theme.fn.smallerThan("md")]: {
       display: "none",
     },
   },
+  colonne2:{
+    position:'absolute',
+    left:"20vw",
+    display:'flex',
+    width:'80vw',
+    flexDirection:'column',
+    height:'100vh',
+    overflow:'scroll',
+    [theme.fn.smallerThan("md")]: {
+      left:0,
+      width:'100vw',
+    },
+  },
+  conteneur:{
+    display:'flex',
+    width:'100vw',
+  }
 }));
 
 function DashboardPage(props) {
@@ -38,21 +60,21 @@ function DashboardPage(props) {
 
   return currentUser ? (
     <Box style={{ overflowX: "hidden" }}>
-      <Grid style={{ height: "100vh", overflowX: "hidden" }} gutter={1}>
+      <Box className={classes.conteneur}>
         {/* Première partie */}
-        <Grid.Col md={2} className={classes.colonne1}>
+        <Box md={2} className={classes.colonne1}>
           <SidebarLayout />
-        </Grid.Col>
+        </Box>
 
-        <Grid.Col md={10} style={{ backgroundColor: "#f7f7f7" }}>
+        <Box md={10} style={{ backgroundColor: "#f7f7f7" }} className={classes.colonne2}>
           <Box>
             <HearderLayout />
           </Box>
           <Box style={{ paddingInline: "5px" }}>
             <Outlet />
           </Box>
-        </Grid.Col>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

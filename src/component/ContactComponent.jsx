@@ -11,6 +11,7 @@ import {
   Button,
   Modal,
   Notification,
+  Group,
 } from "@mantine/core";
 import { IconX } from "@tabler/icons";
 import React, { useState } from "react";
@@ -128,16 +129,16 @@ function ContactComponent(props) {
                       onChange={(event) => setmessage(event.target.value)}
                     />
                   </Box>
-                  <Box my={40}>
+                  <Group position={'center'} my={40}>
                     <Button
                       className={"ArrierePlan"}
                       c={"white"}
-                      fullWidth
+                      // fullWidth={true}
                       onClick={handleSubmit}
                     >
                       Envoyer
                     </Button>
-                  </Box>
+                  </Group>
                 </Container>
               </Grid.Col>
             </Grid>

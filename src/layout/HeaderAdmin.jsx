@@ -14,6 +14,7 @@ import {
   UnstyledButton,
   Paper,
   Indicator,
+  getStylesRef,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -57,7 +58,7 @@ const DrawerData = [
 ];
 
 const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef("icon");
+  const icon = getStylesRef("icon");
 
   return {
     link2: {

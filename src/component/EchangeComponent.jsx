@@ -155,7 +155,7 @@ function EchangeComponent(props) {
                       J'ai
                     </Text>
                     <Select
-                      fullWidth
+                      // fullWidth={true}
                       placeholder="J'ai"
                       rightSection={<IconChevronDown size={14} />}
                       rightSectionWidth={30}

@@ -7,6 +7,8 @@ import {
   Text,
   Paper,
   Button,
+  getStylesRef,
+  Box,
 } from "@mantine/core";
 import {
   IconStar,
@@ -24,7 +26,7 @@ import authService from "../services/authService";
 import { useEffect } from "react";
 
 const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef("icon");
+  const icon = getStylesRef("icon");
   return {
     header: {
       paddingBottom: theme.spacing.md,
@@ -39,6 +41,10 @@ const useStyles = createStyles((theme, _params, getRef) => {
     footer: {
       paddingTop: theme.spacing.md,
       marginTop: theme.spacing.md,
+      marginBottom:'5vh',
+      display:'flex',
+      justifyContent:'center',
+      alignContent:'center',
       borderTop: `1px solid ${
         theme.colorScheme === "dark"
           ? theme.colors.dark[4]
@@ -55,7 +61,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
         theme.colorScheme === "dark"
           ? theme.colors.dark[1]
           : theme.colors.gray[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      padding: `10px 10px 10pxpx  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
     },
@@ -70,7 +76,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
         theme.colorScheme === "dark"
           ? theme.colors.dark[1]
           : theme.colors.gray[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      padding: `10px 10px 10px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 
@@ -138,14 +144,14 @@ function SidebarLayout() {
     let tablePath = location.pathname.split("/");
     let path = ((tablePath.length>2 &&tablePath[2]!=="profile") ?tablePath[2]:'/'+tablePath[1] );
     let lien = data.filter((item) => item.link === path);
-    console.log(path)
-    setActive(lien[0].label);
+   if(lien.length===1) setActive(lien[0].label);
+    
   });
 
   const links = data.map((item) => (
     <div
       key={item.icon}
-      style={{ display: "flex", width: "100%" }}
+      style={{ display: "flex", width: "100%",marginBlock:10 }}
       onClick={(event) => {
         event.preventDefault();
         setActive(item.label);
@@ -180,12 +186,15 @@ function SidebarLayout() {
     navigate("/login");
   };
   return (
-    <Navbar height={"100%"} width={"auto"} p="md">
+    <Navbar height={"100%"} width={"20vw"} p="md" flex={1}>
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
           <Image src={ZamodiLogo} width={150} mt={10} />
         </Group>
-        {links}
+        <Box my={30}>
+            {links}
+        </Box>
+      
       </Navbar.Section>
 
       <Navbar.Section>
@@ -210,6 +219,7 @@ function SidebarLayout() {
             borderRadius: "12px",
             paddingLeft: "10px",
             color: "white",
+            marginBottom:'1vh'
           }}
           onClick={logOut}
         >

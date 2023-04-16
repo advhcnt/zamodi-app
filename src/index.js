@@ -10,7 +10,6 @@ import { FormattedMessage } from "react-intl";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { ModalsProvider } from "@mantine/modals";
 import { MantineProvider } from "@mantine/core";
-import { NotificationsProvider } from "@mantine/notifications";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,13 +23,7 @@ root.render(
           <GoogleOAuthProvider clientId="164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com">
             <ModalsProvider labels={{ confirm: "Submit", cancel: "Cancel" }}>
               <MantineProvider withNormalizeCSS withGlobalStyles>
-                <NotificationsProvider
-                  position="top-right"
-                  zIndex={2077}
-                  autoClose={4000}
-                >
-                  <App />
-                </NotificationsProvider>
+                <App />
               </MantineProvider>
             </ModalsProvider>
           </GoogleOAuthProvider>
@@ -40,4 +33,3 @@ root.render(
     </I18nProvider>
   </React.StrictMode>
 );
-

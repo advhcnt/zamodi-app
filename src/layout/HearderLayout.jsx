@@ -14,6 +14,8 @@ import {
   UnstyledButton,
   Indicator,
   ScrollArea,
+  getStylesRef,
+  Paper,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
@@ -46,8 +48,6 @@ import notificationsService from "../services/notifications.service";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 
-
-
 const user = {
   name: "J. Spoonfgf",
   email: "janspoon@fighter.dev",
@@ -66,7 +66,7 @@ const DrawerData = [
 ];
 
 const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef("icon");
+  const icon = getStylesRef("icon");
 
   return {
     link2: {
@@ -107,7 +107,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       textDecoration: "none",
       fontSize: theme.fontSizes.sm,
       color: "#fff",
-      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      padding: `10px 10px 10px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
 
@@ -152,6 +152,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       justifyContent: "space-between",
       alignItems: "center",
       height: 86,
+      flex: 1,
 
       [theme.fn.smallerThan("md")]: {
         // justifyContent: "flex-start",
@@ -267,7 +268,12 @@ function HearderLayout(props) {
 
   const linksDrawer = DrawerData.map((item) => (
     <div
-      style={{ display: "flex", width: "100%" }}
+      style={{
+        display: "flex",
+        width: "100%",
+        marginTop: "10px",
+        marginBottom: "10px",
+      }}
       onClick={(event) => {
         event.preventDefault();
         closeDrawer();
@@ -283,7 +289,7 @@ function HearderLayout(props) {
       >
         ..
       </span>
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "100%" }}>
         {" "}
         <Link
           className={cx(classes.linkDrawer, {
@@ -377,7 +383,7 @@ function HearderLayout(props) {
 
   return (
     <>
-      <Header height={70} mb={30}>
+      <Header height={70} mb={30} style={{ flex: 1 }}>
         <Box className={classes.inner}>
           <Group
             position="apart"
@@ -453,7 +459,7 @@ function HearderLayout(props) {
                 }
                 radius={"md"}
                 size={"sm"}
-                style={{ width: "40vw" }}
+                style={{ width: "30vw" }}
               />
               {/* Menu pour le choix de la langue */}
               <LanguagePicker />
@@ -586,109 +592,124 @@ function HearderLayout(props) {
         </Box>
       </Header>
 
-      <Drawer
+      <Drawer.Root
         opened={drawerOpened}
         onClose={closeDrawer}
-        size="75%"
-        // title="ZAMODI"
+        size="85%"
         className={classes.hiddenDesktop2}
         zIndex={1000000}
-        style={{ background: "#20986e !important" }}
+        scrollAreaComponent={ScrollArea.Autosize}
       >
-        <Box
-          py={10}
-          sx={{
-            background: "#fff",
-            borderRadius: "0 0 0 32px",
-            marginTop: "-100",
-          }}
-        >
-          <Group position={"right"}>
-            <span
-              onClick={closeDrawer}
-              style={{
-                border: "1px solid #fff",
-                borderRadius: "360px",
-                padding: "5px 10px",
-                marginRight: 10,
-                background: "#f3f3f3",
-              }}
-            >
-              {/*  */}
-              <IconLetterX size={14} color={"#20986E"} />
-            </span>
-          </Group>
-          <Group pl={35}>
-            {/* <Image src={ZamodiLogo} width={130} /> */}
-            {/* <IconLetterX mt={-100} /> */}
-            <Group>
-              <Avatar
-                src={
-                  currentUser.message.photo
-                    ? currentUser.message.photo
-                    : user.image
-                }
-                alt={user.name}
-                radius="xl"
-                size={50}
-              />
-              <Box>
-                <Text fw={500} fz={"md"}>
-                  {currentUser.message.username}
-                </Text>
-                <Text
-                  fz={"xs"}
-                  className="dh"
-                  onClick={() => {
-                    closeDrawer();
-                    navigate("profile");
-                  }}
-                >
-                  Edit Profile
-                </Text>
+        <Drawer.Overlay />
+        <Drawer.Content style={{ background: "#20986e" }}>
+          <Drawer.Header
+            style={{ display: "flex", borderRadius: "0px 0px 0px 32px" }}
+          >
+            <Drawer.Title style={{ display: "flex", flex: 1 }}>
+              <Box
+                py={10}
+                sx={{
+                  background: "#fff",
+                  borderRadius: "0 0 0 32px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  alignItems: "stretch",
+                  flex: 1,
+                }}
+              >
+                <div>
+                  <Group pl={35}>
+                    <Group>
+                      <Avatar
+                        src={
+                          currentUser.message.photo
+                            ? currentUser.message.photo
+                            : user.image
+                        }
+                        alt={user.name}
+                        radius="xl"
+                        size={50}
+                      />
+                      <Box>
+                        <Text fw={500} fz={"md"}>
+                          {currentUser.message.username}
+                        </Text>
+                        <Text
+                          fz={"xs"}
+                          className="dh"
+                          onClick={() => {
+                            closeDrawer();
+                            navigate("profile");
+                          }}
+                        >
+                          Edit Profile
+                        </Text>
+                      </Box>
+                    </Group>
+                  </Group>
+                </div>
+
+                <div style={{ marginTop: "-2vh" }}>
+                  <span
+                    onClick={closeDrawer}
+                    style={{
+                      border: "1px solid #fff",
+                      borderRadius: "360px",
+                      padding: "5px 10px",
+                      marginRight: 10,
+                      background: "#f3f3f3",
+                    }}
+                  >
+                    {/*  */}
+                    <IconLetterX size={14} color={"#20986E"} />
+                  </span>
+                </div>
               </Box>
-            </Group>
-          </Group>
-        </Box>
-        <Box mt={30}>
-          <ScrollArea type={"scroll"} sx={{ paddingBottom: 30 }}>
-            <Box>{linksDrawer}</Box>
+            </Drawer.Title>
+          </Drawer.Header>
+          <Drawer.Body style={{paddingLeft:0}}>
+            <Box mt={30}>
+              <Box>{linksDrawer}</Box>
 
-            <Box style={{ bottom: 0, position: "fixed", paddingBottom: 20 }}>
-              {/* <Group position={"center"} my={"5px"} >
-              <Paper style={{marginLeft:30, border: "1px solid #f7f7f7", padding: "20px",background:"#62C3A1",marginRight:20 }}>
-                <Text ta="center" fw={"bold"} c={'#fff'}>
-                  À Propos
-                </Text>
-                <Text fz={"xs"} c={'#fff'} ta={'center'}>
-                  Lorem ipsum dolor sit amet, consetetur sadipscing
-                  diam nonumy eirmod tempor
-                </Text>
-              </Paper>
-            </Group> */}
+              <Box my={30} style={{paddingLeft:'1rem'}}>
+                <Paper style={{ border: "2px solid #f7f7f7", padding: "15px" }}>
+                  <Text fw={"bold"} mb={10} ta={'center'}>
+                    À Propos
+                  </Text>
+                  <Text fz={"12px"}>
+                    Avec ZAMODI, vous pouvez transférer facilement et rapidement
+                    des soldes entre MTN Money, Moov Money et Celtiis Cash ou
+                    acheter facilement du crédit d'appel ou des données
+                    internet.
+                  </Text>
+                </Paper>
+              </Box>
 
-              <Group position={"center"} ml={30}>
-                <span
-                  className={classes.link2}
-                  onClick={(event) => {
-                    event.preventDefault();
-                    logOut();
-                  }}
-                  style={{
-                    borderRadius: "12px",
-                    paddingLeft: "15px",
-                    color: "#20986e",
-                    background: "#fff",
-                  }}
-                >
-                  <IconLogout className={classes.linkIcon} stroke={1.5} />
-                  <span>Deconnexion</span>
-                </span>
-              </Group>
+              <Box>
+                <Group position={"center"} ml={30}>
+                  <span
+                    className={classes.link2}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      logOut();
+                    }}
+                    style={{
+                      borderRadius: "12px",
+                      paddingLeft: "15px",
+                      color: "#20986e",
+                      background: "#fff",
+                    }}
+                  >
+                    <IconLogout className={classes.linkIcon} stroke={1.5} />
+                    <span>Deconnexion</span>
+                  </span>
+                </Group>
+              </Box>
             </Box>
-          </ScrollArea>
-        </Box>
-      </Drawer>
+          </Drawer.Body>
+        </Drawer.Content>
+      </Drawer.Root>
     </>
   );
 }

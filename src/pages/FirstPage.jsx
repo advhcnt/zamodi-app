@@ -295,7 +295,7 @@ function FirstPage(props) {
                 <Button
                   onClick={() => navigation("/login")}
                   size={"lg"}
-                  fullWidth
+                  // fullWidth={true}
                   my={20}
                   style={{
                     borderRadius: "32px",
@@ -309,7 +309,7 @@ function FirstPage(props) {
 
                 <Button
                   my={20}
-                  fullWidth
+                  // fullWidth={true}
                   onClick={() => navigation("/register")}
                   size={"lg"}
                   style={{

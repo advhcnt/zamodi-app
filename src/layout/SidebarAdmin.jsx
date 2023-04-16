@@ -1,7 +1,17 @@
 import { useState } from "react";
-import { createStyles, Navbar, Group, Code, Image, Card, Text, Paper, Button } from "@mantine/core";
 import {
-
+  createStyles,
+  Navbar,
+  Group,
+  Code,
+  Image,
+  Card,
+  Text,
+  Paper,
+  Button,
+  getStylesRef,
+} from "@mantine/core";
+import {
   IconStar,
   IconLogout,
   IconArrowsLeftRight,
@@ -17,24 +27,26 @@ import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService";
 
 const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef("icon");
+  const icon = getStylesRef("icon");
   return {
     header: {
       paddingBottom: theme.spacing.md,
-      marginBottom: theme.spacing.md * 1.5,
-      borderBottom: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
-        }`,
+      marginBottom: "20px",
+      borderBottom: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[2]
+      }`,
     },
 
     footer: {
       paddingTop: theme.spacing.md,
       marginTop: theme.spacing.md,
-      borderTop: `1px solid ${theme.colorScheme === "dark"
-        ? theme.colors.dark[4]
-        : theme.colors.gray[2]
-        }`,
+      borderTop: `1px solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[2]
+      }`,
     },
     link2: {
       ...theme.fn.focusStyles(),
@@ -46,10 +58,9 @@ const useStyles = createStyles((theme, _params, getRef) => {
         theme.colorScheme === "dark"
           ? theme.colors.dark[1]
           : theme.colors.gray[7],
-      padding: `${theme.spacing.xs}px ${theme.spacing.xs}px ${theme.spacing.sm}px  0px`,
+      padding: `10px 10px 10px  0px`,
       borderRadius: theme.radius.sm,
       fontWeight: 500,
-
     },
 
     link: {
@@ -81,7 +92,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
     firstPartActive: {
       backgroundColor: "black",
-      display: 'block',
+      display: "block",
     },
     firstPart: {
       display: "none",
@@ -93,7 +104,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
       marginRight: theme.spacing.sm,
       "&:hover": {
         color: "white",
-      }
+      },
     },
 
     linkActive: {
@@ -126,7 +137,7 @@ function SidebarAdminLayout() {
 
   const links = data.map((item) => (
     <div
-    key={item.icon}
+      key={item.icon}
       style={{ display: "flex", width: "100%" }}
       onClick={(event) => {
         event.preventDefault();
@@ -164,31 +175,35 @@ function SidebarAdminLayout() {
   return (
     <Navbar height={"100%"} width={"auto"} p="md">
       <Navbar.Section grow>
-        <Group className={classes.header} position="apart">
+        <Group className={classes.header} position="apart" mb={20}>
           <Image src={ZamodiLogo} width={200} />
         </Group>
         {links}
       </Navbar.Section>
 
-      <Navbar.Section >
-        <Paper style={{ border: '2px solid #f7f7f7',padding:'15px' }}>
-          <Text ta="center" fw={'bold'}>À Propos</Text>
-          <Text fz={'xs'} >
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-            diam nonumy eirmod tempor
+      <Navbar.Section>
+        <Paper style={{ border: "2px solid #f7f7f7", padding: "15px" }}>
+          <Text ta="center" fw={"bold"}>
+            À Propos
+          </Text>
+          <Text fz={"xs"}>
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor
           </Text>
         </Paper>
       </Navbar.Section>
       <Navbar.Section className={classes.footer}>
-
-
         <Button
-        
           className={classes.link2}
           // onClick={(event) => event.preventDefault()}
 
-          style={{ backgroundColor: '#20986e', borderRadius: '12px', paddingLeft: '10px', color: "white" }}
-        onClick={logOut}
+          style={{
+            backgroundColor: "#20986e",
+            borderRadius: "12px",
+            paddingLeft: "10px",
+            color: "white",
+          }}
+          onClick={logOut}
         >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Deconnexion</span>
