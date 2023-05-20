@@ -64,7 +64,7 @@ export function Error404() {
           La page que vous essayez d’ouvrir n’existe pas. Vous avez peut-être mal tapé l’adresse, ou le
             a été déplacée vers une autre URL. Si vous pensez qu’il s’agit d’une erreur, contactez le support.
           </Text>
-          <Group position="center">
+          <Group position="center" mt={20}>
             <Button size="md" onClick={()=>navigate('/')} className={'ArrierePlan'} >Ramenez-moi à la page d’accueil</Button>
           </Group>
         </div>

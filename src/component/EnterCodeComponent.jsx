@@ -14,10 +14,7 @@ import { IconMail } from "@tabler/icons";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import authService from "../services/authService";
-import { verifyEmail } from "../utils/fonctions";
-import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import Chargement from "./Chargement";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 

@@ -1,10 +1,9 @@
-import { Box, Card, Group, Image, Paper, Text } from "@mantine/core";
+import { Box, Card, Image, Paper, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import mtnLogo from "./../assets/momo.png";
 import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 import { createStyles } from "@mantine/core";
-import { IconDots, IconDotsVertical } from "@tabler/icons";
 import operationsService from "../services/operations.service";
 
 const useStyles = createStyles((theme) => ({

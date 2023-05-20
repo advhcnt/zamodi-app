@@ -56,7 +56,8 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     justifyItems: "center",
-    paddingTop: 70,
+    paddingTop:70
+   
   },
   partieNeutre: {
     backgroundColor: "#20986e",
@@ -107,11 +108,11 @@ function Login2Page(props) {
   const [type, toggle] = useToggle(["login", "register"]);
 
   const handleSubmit = async (e) => {
+    setvisible(true);
     e.preventDefault();
     // setvisible(true);
     if (user.valeur && verifyEmail(user.valeur)) {
       if (pwd.valeur && pwd.valeur.length >= 8) {
-        setvisible(true);
         authService.login(user.valeur, pwd.valeur).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
@@ -143,7 +144,7 @@ function Login2Page(props) {
         setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
       }
     } else {
-      setUser({ ...user, erreur: "Veuillez entrer un mail valide " });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
     }
   };
 
@@ -182,17 +183,12 @@ function Login2Page(props) {
       <Chargement visible={visible} />
       <Box>
         <Box style={{ maxWidth: "100vw", position: "relative" }}>
-          <Grid style={{ margin: 0 }}>
+          <Grid style={{margin:0}}>
             {/* Première partie */}
-            <Grid.Col
-              md={6}
-              order={2}
-              orderMd={1}
-              className={``}
-              style={{ padding: 0 }}
-            >
+            <Grid.Col md={6} order={2} orderMd={1} className={``} style={{padding:0}}>
               <Box
                 className={`${classes.hiddenMobile}  ${classes.partieChamp} secondplaceLogin `}
+
               >
                 {pageKing === "login" && (
                   <Box className={classes.boxStyle}>
@@ -287,7 +283,7 @@ function Login2Page(props) {
                           type="button"
                           color="dimmed"
                           onClick={() => toggle()}
-                          size={"md"}
+                         size={"md"}
                         >
                           <span
                             style={{ color: "#20986e" }}
@@ -298,7 +294,7 @@ function Login2Page(props) {
                         </Anchor>
                       </Group>
                       <Button
-                        size={"md"}
+                       size={"md"}
                         fw={"xs"}
                         type="submit"
                         radius={12}
@@ -440,7 +436,7 @@ function Login2Page(props) {
                             type="button"
                             color="dimmed"
                             onClick={() => toggle()}
-                            size={"md"}
+                           size={"md"}
                           >
                             <span
                               style={{ color: "#20986e" }}
@@ -452,7 +448,7 @@ function Login2Page(props) {
                         </Group>
                         <Button
                           my={20}
-                          size={"md"}
+                         size={"md"}
                           fw={"xs"}
                           type="submit"
                           radius={12}
@@ -489,17 +485,19 @@ function Login2Page(props) {
                     />
                   )}
                 </Card>
+               
               </Box>
 
               {pageKing === "login" && (
                 <Box>
-                  <Divider
-                    label="Ou continuez avec "
-                    labelPosition="center"
-                    my="sm"
-                    mx={"lg"}
-                    className={classes.hiddenDesktop}
-                  />
+                   <Divider
+                  label="Ou continuez avec "
+                  labelPosition="center"
+                  my="sm"
+                  mx={"lg"}
+                  className={classes.hiddenDesktop}
+                 
+                />
                   <Group position="center" pw={0} my={"sm"}>
                     <LoginSocialGoogle
                       client_id={
@@ -519,14 +517,7 @@ function Login2Page(props) {
                         console.log(err);
                       }}
                     >
-                      <GoogleLoginButton
-                        text={"Connexion avec Google"}
-                        style={{
-                          borderRadius: 32,
-                          fontSize: 15,
-                          fontWeight: 500,
-                        }}
-                      />
+                      <GoogleLoginButton text={"Connexion avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
                     </LoginSocialGoogle>
                   </Group>
 
@@ -541,7 +532,7 @@ function Login2Page(props) {
                         textAlign: "center",
                         alignContent: "center",
                       }}
-                      size={"md"}
+                     size={"md"}
                     >
                       <Text ta={"center"}>
                         Nouveau sur Zamodi ?

@@ -10,7 +10,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { keys } from '@mantine/utils';
-import { IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconDotsVertical } from '@tabler/icons';
+import { IconSelector, IconChevronDown, IconChevronUp, IconSearch } from '@tabler/icons';
 import operationsService from '../services/operations.service';
 
 

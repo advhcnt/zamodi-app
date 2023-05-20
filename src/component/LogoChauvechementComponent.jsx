@@ -1,7 +1,6 @@
 import { Image } from '@mantine/core';
 import React from 'react';
 import mtnLogo from "./../assets/momo.png";
-import moovLogo from "./../assets/flooz.png";
 import sbinLogo from "./../assets/celtiis.png";
 
 function LogoChauvechementComponent(props) {
