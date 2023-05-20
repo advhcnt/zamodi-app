@@ -56,7 +56,8 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     justifyItems: "center",
-    paddingTop: 70,
+    paddingTop:70
+   
   },
   partieNeutre: {
     backgroundColor: "#20986e",
@@ -107,11 +108,11 @@ function Login2Page(props) {
   const [type, toggle] = useToggle(["login", "register"]);
 
   const handleSubmit = async (e) => {
+    setvisible(true);
     e.preventDefault();
     // setvisible(true);
     if (user.valeur && verifyEmail(user.valeur)) {
       if (pwd.valeur && pwd.valeur.length >= 8) {
-        setvisible(true);
         authService.login(user.valeur, pwd.valeur).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
@@ -143,7 +144,7 @@ function Login2Page(props) {
         setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
       }
     } else {
-      setUser({ ...user, erreur: "Veuillez entrer un mail valide " });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
     }
   };
 
@@ -182,17 +183,12 @@ function Login2Page(props) {
       <Chargement visible={visible} />
       <Box>
         <Box style={{ maxWidth: "100vw", position: "relative" }}>
-          <Grid style={{ margin: 0 }}>
+          <Grid style={{margin:0}}>
             {/* Première partie */}
-            <Grid.Col
-              md={6}
-              order={2}
-              orderMd={1}
-              className={``}
-              style={{ padding: 0 }}
-            >
+            <Grid.Col md={6} order={2} orderMd={1} className={``} style={{padding:0}}>
               <Box
                 className={`${classes.hiddenMobile}  ${classes.partieChamp} secondplaceLogin `}
+
               >
                 {pageKing === "login" && (
                   <Box className={classes.boxStyle}>
@@ -201,18 +197,21 @@ function Login2Page(props) {
                         src={ZamodiLogo3}
                         width={"70%"}
                         mb={"4%"}
+                        mt={"10%"}
                         className={classes.hiddenMobile}
                       />
                     </Group>
 
                     <Image src={ZamodiLogo3} className={classes.logo} />
 
-                    <Text size={25} weight={900}>
+                    <Text size={30} weight={900}>
                       Connexion
                     </Text>
                     <Text
-                      size={"xs"}
+                      size={"xl"}
                       mb={"8%"}
+                      mt={"5%"}
+
                       className={classes.hiddenMobile}
                     >
                       Nous sommes heureux de vous revoir !
@@ -221,6 +220,7 @@ function Login2Page(props) {
                     <Text
                       size={"xs"}
                       mb={"8%"}
+                      mt={"5%"}
                       className={classes.hiddenDesktop}
                     >
                       Content de vous revoir !
@@ -237,16 +237,20 @@ function Login2Page(props) {
                     <form onSubmit={handleSubmit}>
                       <Stack>
                         <TextInput
+                        mb={"5%"}
+                        mt={"2%"}
                           radius={12}
                           icon={
                             <IconMail
-                              size={20}
+                              size={30}
                               color={"#20986e"}
+
                               className={classes.lesIcones}
                             />
                           }
-                          size={"sm"}
-                          placeholder="votre email"
+                          size={"lg"}
+
+                          placeholder="Adresse Email"
                           variant={"filled"}
                           value={user.valeur}
                           onChange={(event) =>
@@ -259,16 +263,18 @@ function Login2Page(props) {
                         />
 
                         <PasswordInput
+                         mb={"5%"}
+                        mt={"2%"}
                           radius={12}
-                          size={"sm"}
+                          size={"lg"}
                           icon={
                             <IconLock
-                              size={20}
+                              size={30}
                               color={"#20986e"}
                               className={classes.lesIcones}
                             />
                           }
-                          placeholder="Votre mot de passe"
+                          placeholder="Mot de passe"
                           variant={"filled"}
                           value={pwd.valeur}
                           onChange={(event) =>
@@ -287,7 +293,7 @@ function Login2Page(props) {
                           type="button"
                           color="dimmed"
                           onClick={() => toggle()}
-                          size={"md"}
+                         size={"lg"}
                         >
                           <span
                             style={{ color: "#20986e" }}
@@ -298,7 +304,9 @@ function Login2Page(props) {
                         </Anchor>
                       </Group>
                       <Button
-                        size={"md"}
+                       size={"md"}
+                       mb={"5%"}
+                        mt={"2%"}
                         fw={"xs"}
                         type="submit"
                         radius={12}
@@ -440,7 +448,7 @@ function Login2Page(props) {
                             type="button"
                             color="dimmed"
                             onClick={() => toggle()}
-                            size={"md"}
+                           size={"md"}
                           >
                             <span
                               style={{ color: "#20986e" }}
@@ -452,7 +460,7 @@ function Login2Page(props) {
                         </Group>
                         <Button
                           my={20}
-                          size={"md"}
+                         size={"md"}
                           fw={"xs"}
                           type="submit"
                           radius={12}
@@ -489,17 +497,19 @@ function Login2Page(props) {
                     />
                   )}
                 </Card>
+               
               </Box>
 
               {pageKing === "login" && (
                 <Box>
-                  <Divider
-                    label="Ou continuez avec "
-                    labelPosition="center"
-                    my="sm"
-                    mx={"lg"}
-                    className={classes.hiddenDesktop}
-                  />
+                   <Divider
+                  label="Ou continuez avec "
+                  labelPosition="center"
+                  my="sm"
+                  mx={"lg"}
+                  className={classes.hiddenDesktop}
+                 
+                />
                   <Group position="center" pw={0} my={"sm"}>
                     <LoginSocialGoogle
                       client_id={
@@ -519,14 +529,7 @@ function Login2Page(props) {
                         console.log(err);
                       }}
                     >
-                      <GoogleLoginButton
-                        text={"Connexion avec Google"}
-                        style={{
-                          borderRadius: 32,
-                          fontSize: 15,
-                          fontWeight: 500,
-                        }}
-                      />
+                      <GoogleLoginButton text={"Connexion avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
                     </LoginSocialGoogle>
                   </Group>
 
@@ -541,7 +544,7 @@ function Login2Page(props) {
                         textAlign: "center",
                         alignContent: "center",
                       }}
-                      size={"md"}
+                     size={"md"}
                     >
                       <Text ta={"center"}>
                         Nouveau sur Zamodi ?
