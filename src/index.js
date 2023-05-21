@@ -12,6 +12,7 @@ import { MantineProvider } from "@mantine/core";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Notifications } from "@mantine/notifications";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,6 +23,7 @@ root.render(
           <GoogleOAuthProvider clientId="164454011985-g4tmud0sacpen1sogb30rn6tfs569c2s.apps.googleusercontent.com">
             <ModalsProvider labels={{ confirm: "Submit", cancel: "Cancel" }}>
               <MantineProvider withNormalizeCSS withGlobalStyles>
+              <Notifications position="top-right" />
                 <App />
               </MantineProvider>
             </ModalsProvider>

@@ -343,7 +343,7 @@ function HearderAdminLayout(props) {
                 style={{ marginLeft: "20px" }}
                 className={classes.hiddenMobile}
               >
-                Dashboard
+                 Tableau de bord
               </Text>
             </Box>
 

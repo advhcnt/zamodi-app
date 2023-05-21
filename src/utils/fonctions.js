@@ -17,3 +17,16 @@ export const verifyEmail = (email)=> {
     
   }
 
+
+  export const modalMessage = (data) => {
+    if (data === "username") {
+      return "Modification de votre nom d'utilisateur";
+    }
+    else if(data==='email'){
+      return "Modification de votre email"
+    }
+    else{
+      return "Modification de votre mot de passe"
+    }
+  };
+
