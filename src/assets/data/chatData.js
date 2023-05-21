@@ -4,7 +4,6 @@ operationsService.getUserOperation().then(
   (data) => {
     const dataR = data.data;
     data= [...dataR];
-    console.log("Historique ", data);
   },
   (error) => {
     console.log(error);

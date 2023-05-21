@@ -8,6 +8,8 @@ import { useToggle } from "@mantine/hooks";
 import operationsService from "../services/operations.service";
 import blankTable from "./../assets/blankTable.png";
 import { useNavigate } from "react-router-dom";
+import RechargeTableau from "./tableauHistorique/RechargeTableau";
+import AchatTableau from "./tableauHistorique/AchatTableau";
 
 const useStyles = createStyles((theme) => ({
   secondCard: {
@@ -40,15 +42,11 @@ function HistoriqueComponent(props) {
     operationsService.getUserOperation().then(
       (data) => {
         const dataR = data.data;
-        console.log(data.data);
         let achat = dataR.filter((item) => item.OperationKind === "achat");
         let echange = dataR.filter((item) => item.OperationKind === "echange");
 
         setachatTable([...achat]);
         setechangeTable([...echange]);
-
-        console.log("Echange ", echangeTable);
-        console.log("Achat ", achatTable);
       },
       (error) => {
         console.log(error);
@@ -110,109 +108,10 @@ function HistoriqueComponent(props) {
 
       {historiqueType === "echanges" ? (
         <>
-          <Box>
-            <Group position={"apart"} px={10}>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  J'ai
-                </Text>
-              </Box>
-
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Je veux
-                </Text>
-              </Box>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Numéro
-                </Text>
-              </Box>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Montant
-                </Text>
-              </Box>
-              {/* <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Action
-                </Text>
-              </Box> */}
-            </Group>
-          </Box>
+          
           {echangeTable.length > 0 ? (
             <>
-              {echangeTable.map((item) => (
-                <Paper
-                  withBorder
-                  radius="md"
-                  p="xs"
-                  className={classes.secondCard}
-                  key={item}
-                >
-                  <Group
-                    position={"apart"}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
-                  >
-                    <Box>
-                      <Image
-                        src={
-                          item.jai.split(" ")[0] === "Mtn"
-                            ? mtnLogo
-                            : item.jai.split(" ")[0] === "Moov"
-                            ? moovLogo
-                            : sbinLogo
-                        }
-                        style={{ height: "100%", width: "100%" }}
-                        alt={`Logo ${item.jai}`}
-                      />
-                    </Box>
-                    <Box>
-                      <Image
-                        src={
-                          item.jeveux.split(" ")[0] === "Mtn"
-                            ? mtnLogo
-                            : item.jeveux.split(" ")[0] === "Moov"
-                            ? moovLogo
-                            : sbinLogo
-                        }
-                        style={{ height: "100%", width: "100%" }}
-                        alt={`Logo ${item.jeveux}`}
-                      />
-                    </Box>
-                    <Box>
-                      <Text size="sm" mt={7} fw={400} c="dark">
-                        {item.numero}
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Text
-                        size="sm"
-                        mt={7}
-                        fw={400}
-                        c="dark"
-                        className="ArrierePlan"
-                        style={{
-                          padding: "10px",
-                          borderRadius: "8px",
-                          color: "white",
-                        }}
-                      >
-                        {item.montant} Fcfa
-                      </Text>
-                    </Box>
-                    {/* <Box>
-                  <Text size="xs" mt={1} c="dimmed">
-                    <IconDotsVertical size={20} color={"red"} />
-                  </Text>
-                </Box> */}
-                  </Group>
-                </Paper>
-              ))}
+             <RechargeTableau data={echangeTable} />
             </>
           ) : (
             <>
@@ -224,6 +123,7 @@ function HistoriqueComponent(props) {
                   alignItems: "center",
                 }}
               >
+
                 <Image
                   src={blankTable}
                   width={150}
@@ -249,109 +149,10 @@ function HistoriqueComponent(props) {
         </>
       ) : (
         <>
-          <Box>
-            <Group position={"apart"} px={5}>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  J'ai
-                </Text>
-              </Box>
-
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Je veux
-                </Text>
-              </Box>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Numéro
-                </Text>
-              </Box>
-              <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Type d'opération
-                </Text>
-              </Box>
-              {/* <Box>
-                <Text size="sm" mt={7} fw={700} c="dark">
-                  Action
-                </Text>
-              </Box> */}
-            </Group>
-          </Box>
+         
           {achatTable.length > 0 ? (
             <>
-              {achatTable.map((item) => (
-                <Paper
-                  withBorder
-                  radius="md"
-                  p="xs"
-                  className={classes.secondCard}
-                  key={item}
-                >
-                  <Group
-                    position={"apart"}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
-                  >
-                    <Box>
-                      <Image
-                        src={
-                          item.jai.split(" ")[0] === "Mtn"
-                            ? mtnLogo
-                            : item.jai.split(" ")[0] === "Moov"
-                            ? moovLogo
-                            : sbinLogo
-                        }
-                        style={{ height: "100%", width: "100%" }}
-                        alt={`Logo ${item.jai}`}
-                      />
-                    </Box>
-                    <Box>
-                      <Image
-                        src={
-                          item.jeveux.split(" ")[0] === "Mtn"
-                            ? mtnLogo
-                            : item.jeveux.split(" ")[0] === "Moov"
-                            ? moovLogo
-                            : sbinLogo
-                        }
-                        style={{ height: "100%", width: "100%" }}
-                        alt={`Logo ${item.jeveux}`}
-                      />
-                    </Box>
-                    <Box>
-                      <Text size="sm" mt={7} fw={400} c="dark">
-                        {item.numero}
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Text
-                        size="sm"
-                        mt={7}
-                        fw={400}
-                        c="dark"
-                        className="ArrierePlan"
-                        style={{
-                          padding: "10px",
-                          borderRadius: "8px",
-                          color: "white",
-                        }}
-                      >
-                        Achat {item.Description}
-                      </Text>
-                    </Box>
-                    {/* <Box>
-                  <Text size="xs" mt={1} c="dimmed">
-                    <IconDotsVertical size={20} color={"red"} />
-                  </Text>
-                </Box> */}
-                  </Group>
-                </Paper>
-              ))}
+               <AchatTableau data={achatTable} />
             </>
           ) : (
             <>

@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
+import { useToggle, upperFirst } from "@mantine/hooks"
 import {
   TextInput,
   PasswordInput,
@@ -13,25 +13,25 @@ import {
   createStyles,
   Image,
   Card,
-} from "@mantine/core";
-import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
-import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
-import { Link, useNavigate } from "react-router-dom";
-import { IconLock, IconMail } from "@tabler/icons";
-import authLogo from "./../assets/Auth.svg";
-import { useEffect, useState, useRef } from "react";
-import authService from "../services/authService";
-import authHeader from "../services/auth-header";
-import Chargement from "../component/Chargement";
+} from "@mantine/core"
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png"
+import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png"
+import { Link, useNavigate } from "react-router-dom"
+import { IconLock, IconMail } from "@tabler/icons"
+import authLogo from "./../assets/Auth.svg"
+import { useEffect, useState, useRef } from "react"
+import authService from "../services/authService"
+import authHeader from "../services/auth-header"
+import Chargement from "../component/Chargement"
 
-import { LoginSocialGoogle } from "reactjs-social-login";
-import PasswordForgotComponent from "../component/PasswordForgotComponent";
-import EnterCodeComponent from "../component/EnterCodeComponent";
-import NewPasswordComponent from "../component/NewPasswordComponent";
+import { LoginSocialGoogle } from "reactjs-social-login"
+import PasswordForgotComponent from "../component/PasswordForgotComponent"
+import EnterCodeComponent from "../component/EnterCodeComponent"
+import NewPasswordComponent from "../component/NewPasswordComponent"
 
-import { verifyEmail } from "../utils/fonctions";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { showError } from "../utils/NotificationPopUp";
+import { verifyEmail } from "../utils/fonctions"
+import { GoogleLoginButton } from "react-social-login-buttons"
+import { showError } from "../utils/NotificationPopUp"
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -87,45 +87,45 @@ const useStyles = createStyles((theme) => ({
       width: "80%",
     },
   },
-}));
+}))
 
 function Login2Page(props) {
-  const errRef = useRef();
-  const [user, setUser] = useState({ valeur: "", erreur: false });
-  const [pwd, setPwd] = useState({ valeur: "", erreur: false });
-  const [errMsg, setErrMsg] = useState(false);
-  const [pageKing, setpageKing] = useState("login");
-  const [visible, setvisible] = useState(false);
-  const [client, setclient] = useState(false);
-  const [Code, SetCode] = useState(false);
-  const navigate = useNavigate();
+  const errRef = useRef()
+  const [user, setUser] = useState({ valeur: "", erreur: false })
+  const [pwd, setPwd] = useState({ valeur: "", erreur: false })
+  const [errMsg, setErrMsg] = useState(false)
+  const [pageKing, setpageKing] = useState("login")
+  const [visible, setvisible] = useState(false)
+  const [client, setclient] = useState(false)
+  const [Code, SetCode] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd]);
+    setErrMsg("")
+  }, [user, pwd])
 
-  const { classes } = useStyles();
-  const [type, toggle] = useToggle(["login", "register"]);
+  const { classes } = useStyles()
+  const [type, toggle] = useToggle(["login", "register"])
 
   const handleSubmit = async (e) => {
-    setvisible(true);
-    e.preventDefault();
-    // setvisible(true);
+    setvisible(true)
+    e.preventDefault()
+    // setvisible(true)
     if (user.valeur && verifyEmail(user.valeur)) {
       if (pwd.valeur && pwd.valeur.length >= 8) {
         authService.login(user.valeur, pwd.valeur).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
-              authHeader(data.accessToken);
+              authHeader(data.accessToken)
 
               if (data.isAdmin) {
-                navigate("/admin");
+                navigate("/admin")
               } else {
-                navigate("/dashboard");
+                navigate("/dashboard")
               }
             } else {
-              setvisible(false);
-              showError("Connexion", data.message);
+              setvisible(false)
+              showError("Connexion", data.message)
             }
           },
           (error) => {
@@ -134,34 +134,34 @@ function Login2Page(props) {
                 error.response.data &&
                 error.response.data.message) ||
               error.message ||
-              error.toString();
+              error.toString()
 
-            setvisible(false);
-            showError("Connexion", resMessage);
+            setvisible(false)
+            showError("Connexion", resMessage)
           }
-        );
+        )
       } else {
-        setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
+        setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" })
       }
     } else {
-      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" })
     }
-  };
+  }
 
   const googleAuth = (data, provider) => {
     authService.authWithGoogle(data, provider).then(
       (data) => {
-        setvisible(true);
+        setvisible(true)
         if (data.status === 200 || data.state === "success") {
-          authHeader(data.accessToken);
+          authHeader(data.accessToken)
           if (data.isAdmin) {
-            navigate("/admin");
+            navigate("/admin")
           } else {
-            navigate("/dashboard");
+            navigate("/dashboard")
           }
         } else {
-          setvisible(false);
-          showError("Connexion", data.message);
+          setvisible(false)
+          showError("Connexion", data.message)
         }
       },
       (error) => {
@@ -170,13 +170,13 @@ function Login2Page(props) {
             error.response.data &&
             error.response.data.message) ||
           error.message ||
-          error.toString();
+          error.toString()
 
-        setvisible(false);
-        showError("Connexion", resMessage);
+        setvisible(false)
+        showError("Connexion", resMessage)
       }
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -197,21 +197,18 @@ function Login2Page(props) {
                         src={ZamodiLogo3}
                         width={"70%"}
                         mb={"4%"}
-                        mt={"10%"}
                         className={classes.hiddenMobile}
                       />
                     </Group>
 
                     <Image src={ZamodiLogo3} className={classes.logo} />
 
-                    <Text size={30} weight={900}>
+                    <Text size={25} weight={900}>
                       Connexion
                     </Text>
                     <Text
-                      size={"xl"}
+                      size={"xs"}
                       mb={"8%"}
-                      mt={"5%"}
-
                       className={classes.hiddenMobile}
                     >
                       Nous sommes heureux de vous revoir !
@@ -220,7 +217,6 @@ function Login2Page(props) {
                     <Text
                       size={"xs"}
                       mb={"8%"}
-                      mt={"5%"}
                       className={classes.hiddenDesktop}
                     >
                       Content de vous revoir !
@@ -237,20 +233,16 @@ function Login2Page(props) {
                     <form onSubmit={handleSubmit}>
                       <Stack>
                         <TextInput
-                        mb={"5%"}
-                        mt={"2%"}
                           radius={12}
                           icon={
                             <IconMail
-                              size={30}
+                              size={20}
                               color={"#20986e"}
-
                               className={classes.lesIcones}
                             />
                           }
-                          size={"lg"}
-
-                          placeholder="Adresse Email"
+                          size={"sm"}
+                          placeholder="votre email"
                           variant={"filled"}
                           value={user.valeur}
                           onChange={(event) =>
@@ -263,18 +255,16 @@ function Login2Page(props) {
                         />
 
                         <PasswordInput
-                         mb={"5%"}
-                        mt={"2%"}
                           radius={12}
-                          size={"lg"}
+                          size={"sm"}
                           icon={
                             <IconLock
-                              size={30}
+                              size={20}
                               color={"#20986e"}
                               className={classes.lesIcones}
                             />
                           }
-                          placeholder="Mot de passe"
+                          placeholder="Votre mot de passe"
                           variant={"filled"}
                           value={pwd.valeur}
                           onChange={(event) =>
@@ -293,7 +283,7 @@ function Login2Page(props) {
                           type="button"
                           color="dimmed"
                           onClick={() => toggle()}
-                         size={"lg"}
+                         size={"md"}
                         >
                           <span
                             style={{ color: "#20986e" }}
@@ -305,8 +295,6 @@ function Login2Page(props) {
                       </Group>
                       <Button
                        size={"md"}
-                       mb={"5%"}
-                        mt={"2%"}
                         fw={"xs"}
                         type="submit"
                         radius={12}
@@ -521,12 +509,12 @@ function Login2Page(props) {
                       discoveryDocs="claims_supported"
                       access_type="offline"
                       onResolve={({ provider, data }) => {
-                        // setProvider(provider);
-                        // setProfile(data);
-                        googleAuth(data, provider);
+                        // setProvider(provider)
+                        // setProfile(data)
+                        googleAuth(data, provider)
                       }}
                       onReject={(err) => {
-                        console.log(err);
+                        console.log(err)
                       }}
                     >
                       <GoogleLoginButton text={"Connexion avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
@@ -608,7 +596,7 @@ function Login2Page(props) {
         </Box>
       </Box>
     </>
-  );
+  )
 }
 
-export default Login2Page;
+export default Login2Page

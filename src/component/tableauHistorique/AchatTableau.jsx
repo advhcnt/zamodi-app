@@ -15,9 +15,7 @@ import {
   IconChevronDown,
   IconChevronUp,
   IconSearch,
-  IconDotsVertical,
 } from "@tabler/icons";
-import operationsService from "../services/operations.service";
 
 const useStyles = createStyles((theme) => ({
   th: {
@@ -93,7 +91,7 @@ function sortData(data, payload) {
   return reponse;
 }
 
-function Tableau(props) {
+function AchatTableau({data}) {
   const [search, setSearch] = useState("");
   const [sortedData, setSortedData] = useState([]);
   const [sortBy, setSortBy] = useState(null);
@@ -102,11 +100,8 @@ function Tableau(props) {
   const [historique, sethistorique] = useState([{}]);
 
   useEffect(() => {
-    operationsService.getUserOperation().then((data) => {
-      const dataR = data.data;
-      setSortedData([...dataR]);
-      sethistorique([...dataR]);
-    });
+    setSortedData([...data]);
+    sethistorique([...data]);
   }, []);
 
   const setSorting = (field) => {
@@ -149,7 +144,11 @@ function Tableau(props) {
         {" "}
         <Text
           className={
-            row.statut === 'Annuler' ? "warning" : row.statut === 'success' ? "validated" : "waiting"
+            row.statut === "Annuler"
+              ? "warning"
+              : row.statut === "success"
+              ? "validated"
+              : "waiting"
           }
           p={0}
           m={0}
@@ -169,6 +168,7 @@ function Tableau(props) {
     <ScrollArea
       sx={{ height: 400 }}
       onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
+      mt={30}
     >
       <TextInput
         placeholder="Search by any field"
@@ -236,4 +236,4 @@ function Tableau(props) {
   );
 }
 
-export default Tableau;
+export default AchatTableau;

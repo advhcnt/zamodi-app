@@ -100,31 +100,18 @@ function DashboardComponent(props) {
   const [ExBu, setExBu] = useState({});
   const [afficheGraphe, setafficheGraphe] = useState(false);
 
-  const [chartSemaineData, setchartSemaineData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [chartMoisData, setchartMoisData] = useState({
-    labels: [],
-    datasets: [],
-  });
-  const [chartAnneeData, setchartAnneeData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const [chartSemaineData, setchartSemaineData] = useState({});
+  const [chartMoisData, setchartMoisData] = useState({});
+  const [chartAnneeData, setchartAnneeData] = useState({});
 
   useEffect(() => {
     operationsService.getUserOperationDetails().then((data) => {
       const dataResponse = data.data;
-      console.log(dataResponse);
       setoperationsDetails({ ...dataResponse });
-      console.log("coucou la team 1", dataResponse);
-      // console.log('coucou la team ', operationsDetails)
     });
 
     operationsService.getUserOperation().then((data) => {
       let dataR = data.data;
-      console.log(dataR);
       sethistorique([...dataR]);
 
       let Years = [];
@@ -140,12 +127,7 @@ function DashboardComponent(props) {
       let montantAn = [];
       let montantSemaine = [];
 
-      let YearsInter = {};
-      let WeekInter = {};
-      let MontInter = {};
-
       let dataHistorique = [...dataR];
-      console.log("Historique ", dataHistorique);
 
       for (let i = 0; i < dataHistorique.length; i++) {
         let element = dataHistorique[i];
@@ -186,7 +168,7 @@ function DashboardComponent(props) {
         }
       }
 
-      YearsInter = {
+      setchartAnneeData({
         labels: [...NewYears],
         datasets: [
           {
@@ -198,23 +180,9 @@ function DashboardComponent(props) {
             tension: 0.5,
           },
         ],
-      };
+      });
 
-      WeekInter = {
-        labels: [...NewWeek],
-        datasets: [
-          {
-            data: [...montantSemaine],
-            backgroundColor: "transparent",
-            borderColor: "green",
-            pointBorderColor: "transparent",
-            pointBorderWidth: 4,
-            tension: 0.5,
-          },
-        ],
-      };
-
-      MontInter = {
+      setchartMoisData({
         labels: [...NewMonth],
         datasets: [
           {
@@ -226,18 +194,25 @@ function DashboardComponent(props) {
             tension: 0.5,
           },
         ],
-      };
+      });
 
-      setchartAnneeData({ ...YearsInter });
-
-      setchartMoisData({ ...MontInter });
-
-      setchartSemaineData({ ...WeekInter });
+      setchartSemaineData({
+        labels: [...NewWeek],
+        datasets: [
+          {
+            data: [...montantSemaine],
+            backgroundColor: "transparent",
+            borderColor: "green",
+            pointBorderColor: "transparent",
+            pointBorderWidth: 4,
+            tension: 0.5,
+          },
+        ],
+      });
     });
 
     operationsService.SommeOperation().then(
       (data) => {
-        console.log(data.data);
         setExBu({ ...data.data });
       },
       (error) => {
@@ -247,11 +222,11 @@ function DashboardComponent(props) {
   }, []);
 
   useEffect(() => {
-    console.log('COUCOU ET DOUDOUD',[chartSemaineData, chartMoisData, chartAnneeData]);
     setTimeout(() => {
       setafficheGraphe(true);
-    }, 100);
-  }, [chartSemaineData, chartMoisData, chartAnneeData]);
+    }, 5000);
+  }, [chartSemaineData,chartAnneeData,chartMoisData]);
+  
 
   const settings = {
     infinite: true,
@@ -408,8 +383,8 @@ function DashboardComponent(props) {
           {/* Niveau 2 */}
           <Box>
             <Grid>
-              <Grid.Col md={6}  style={{display:'flex',flex:1}} >
-                <Card style={{display:'flex',flex:1}}>
+              <Grid.Col md={6}>
+                <Card>
                   {/* <GrapheComponent /> */}
 
                   <Tabs defaultValue="semaine" color="#20986e" center>
@@ -422,18 +397,11 @@ function DashboardComponent(props) {
                     <Tabs.Panel value="semaine" pt="xs">
                       {afficheGraphe ? (
                         <>
-                          {chartSemaineData.labels.length > 0 ? (
-                            <>jhfergregjberjhbeg</>
-                            // <Graphe
-                            //   chartData={chartSemaineData}
-                            //   titre={"Dépense de la semaine"}
-                            //   text={"Dépense sur la semaine N°"}
-                            // />
-                          ) : (
-                            <Text color="#20986e" ta={"center"}>
-                              Aucune transaction disponible actuellement
-                            </Text>
-                          )}
+                          <Graphe
+                            chartData={chartSemaineData}
+                            titre={"Dépense de la semaine"}
+                            text={"Dépense sur la semaine N°"}
+                          />
                         </>
                       ) : (
                         <Box>
@@ -447,23 +415,14 @@ function DashboardComponent(props) {
 
                     <Tabs.Panel value="mois" pt="xs">
                       {afficheGraphe ? (
-
                         <>
-                          {chartMoisData.labels.length > 0 ? (
-                            <>hjrejtjertjretkje</>
-                            // <Graphe
-                            //   chartData={chartMoisData}
-                            //   titre={"Dépense de la semaine"}
-                            //   text={"Dépense sur la semaine N°"}
-                            // />
-                          ) : (
-                            <Text color="#20986e" ta={"center"}>
-                              Aucune transaction disponible actuellement
-                            </Text>
-                          )}
+                          <Graphe
+                            chartData={chartMoisData}
+                            titre={"Dépense du mois"}
+                            text={"Dépense dans le mois N°"}
+                          />
                         </>
                       ) : (
-                        
                         <Box>
                           <Text color="#20986e" ta={"center"}>
                             {" "}
@@ -476,20 +435,13 @@ function DashboardComponent(props) {
                     <Tabs.Panel value="annees" pt="xs">
                       {afficheGraphe ? (
                         <>
-                        {chartAnneeData.labels.length > 0 ? (
                           <Graphe
                             chartData={chartAnneeData}
-                            titre={"Dépense de la semaine"}
-                            text={"Dépense sur la semaine N°"}
+                            titre={"Dépense de l'année"}
+                            text={"Dépense sur l'année"}
                           />
-                        ) : (
-                          <Text color="#20986e" ta={"center"}>
-                            Aucune transaction disponible actuellement
-                          </Text>
-                        )}
-                      </>
+                        </>
                       ) : (
-                        
                         <Box>
                           <Text color="#20986e" ta={"center"}>
                             {" "}

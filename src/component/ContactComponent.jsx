@@ -38,7 +38,7 @@ function ContactComponent(props) {
         })
         .then(
           (data) => {
-            console.log(data);
+            
             setOpenedMessageModal(true);
             setMessage(data.data.message);
           },
@@ -49,8 +49,6 @@ function ContactComponent(props) {
                 error.response.data.message) ||
               error.message ||
               error.toString();
-
-            console.log(resMessage);
             setOpenedMessageModal(true);
             setMessage(resMessage);
             // alert(resMessage);

@@ -57,7 +57,6 @@ export function NotificationsPage(props) {
 
   const navigate = useNavigate();
   useLayoutEffect(() => {
-    console.log(location.pathname.split("/"));
     let path = location.pathname;
     navigate(path);
   }, []);
@@ -80,7 +79,7 @@ export function NotificationsPage(props) {
     setTimeout(() => {
       notificationsService.lireNotification(operation._id).then(
         (data) => {
-          console.log("lue");
+         let reponse = data.data
         },
         (error) => {
           console.log("error");
@@ -99,7 +98,7 @@ export function NotificationsPage(props) {
             (data) => {
               setwho("ADMIN");
               setnotification([...data.data.contenu]);
-              console.log(data.data.contenu);
+             
             },
             (error) => {
               console.log(error);
@@ -108,7 +107,6 @@ export function NotificationsPage(props) {
         } else {
           notificationsService.listeNotification().then(
             (data) => {
-              console.log(data);
               setnotification([...data.data]);
             },
             (error) => {

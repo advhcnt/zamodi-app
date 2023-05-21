@@ -5,9 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 function DetailsNotificationClient({ operation }) {
 const location = useLocation();
-    useEffect(() => {
-        console.log(location)
-    }, [])
+  
     return (
         <Box>
             <Text>

@@ -19,7 +19,6 @@ import operation from "./../services/operations.service";
 import authService from "../services/authService";
 import { verifyAmount, verifyPhoneNumber } from "../utils/fonctions";
 
-
 const useStyles = createStyles((theme) => ({
   hiddenMobile: {
     [theme.fn.smallerThan("md")]: {
@@ -32,10 +31,6 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-
-
-
 
 function EchangeComponent(props) {
   const { classes, cx } = useStyles();
@@ -55,7 +50,6 @@ function EchangeComponent(props) {
 
   useEffect(() => {
     setOperation(operation.getUserOperation(currentUser.message._id));
-    console.log(operations);
   }, []);
 
   useEffect(() => {
@@ -68,17 +62,37 @@ function EchangeComponent(props) {
     }
   }, [Reset]);
 
+  useEffect(() => {
+    if (jeveux === "Celtiis money" || jai === "Celtiis money") {
+      seterror({
+        statut: true,
+        message:
+          "Les opérations avec Celltiis ne sont pas encore disponible pour le moment",
+      });
+    } else {
+      seterror(false, "");
+    }
+  }, [jeveux, jai]);
+
   const handleEchange = () => {
     if (montant && jai && jeveux && numero && numeroConfirm) {
       if (numero === numeroConfirm && verifyPhoneNumber(numero)) {
         if (jeveux !== jai) {
-          if (verifyAmount(montant)) {
-            seterror(false, "");
-            setvalide(true);
+          if (jeveux !== "Celtiis money" && jai !== "Celtiis money") {
+            if (verifyAmount(montant)) {
+              seterror(false, "");
+              setvalide(true);
+            } else {
+              seterror({
+                statut: true,
+                message: "Veuillez entrer un montant correct",
+              });
+            }
           } else {
             seterror({
               statut: true,
-              message: "Veuillez entrer un montant correct",
+              message:
+                "Les opérations avec Celltiis ne sont pas encore disponible pour le moment",
             });
           }
         } else {
@@ -92,7 +106,10 @@ function EchangeComponent(props) {
           });
         }
       } else {
-        seterror({ statut: true, message: "Veuillez entrer un numéro correct" });
+        seterror({
+          statut: true,
+          message: "Veuillez entrer un numéro correct",
+        });
       }
     } else {
       seterror({ statut: true, message: "Veuillez remplir les champs" });
@@ -131,7 +148,12 @@ function EchangeComponent(props) {
               <Box mb={50}>
                 <Grid>
                   <Grid.Col md={4} mt={30}>
-                    <Text fz={"md"} weight={500} my={10}  className={`dh ${classes.hiddenMobile}`}>
+                    <Text
+                      fz={"md"}
+                      weight={500}
+                      my={10}
+                      className={`dh ${classes.hiddenMobile}`}
+                    >
                       Montant à recharger
                     </Text>
                     <TextInput
@@ -146,12 +168,14 @@ function EchangeComponent(props) {
                   </Grid.Col>
                 </Grid>
 
-                <Grid
-                  mt={15}
-                 
-                >
+                <Grid mt={15}>
                   <Grid.Col md={5}>
-                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
+                    <Text
+                      fz={"md"}
+                      weight={500}
+                      my={10}
+                      className={`dh ${classes.hiddenMobile}`}
+                    >
                       J'ai
                     </Text>
                     <Select
@@ -166,12 +190,21 @@ function EchangeComponent(props) {
                     />
                   </Grid.Col>
                   <Grid.Col md={2} className={`${classes.hiddenMobile}`}>
-                    <Group position="center" align={'center'} sx={{marginBlock:20}}>
+                    <Group
+                      position="center"
+                      align={"center"}
+                      sx={{ marginBlock: 20 }}
+                    >
                       <IconArrowsLeftRight size={20} color="green" />
                     </Group>
                   </Grid.Col>
                   <Grid.Col md={5}>
-                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
+                    <Text
+                      fz={"md"}
+                      weight={500}
+                      my={10}
+                      className={`dh ${classes.hiddenMobile}`}
+                    >
                       Je veux
                     </Text>
                     <Select
@@ -186,12 +219,14 @@ function EchangeComponent(props) {
                   </Grid.Col>
                 </Grid>
 
-                <Grid
-                  mt={15}
-                  mb={30}
-                >
+                <Grid mt={15} mb={30}>
                   <Grid.Col md={5}>
-                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
+                    <Text
+                      fz={"md"}
+                      weight={500}
+                      my={10}
+                      className={`dh ${classes.hiddenMobile}`}
+                    >
                       Numéro de réception :
                     </Text>
                     <TextInput
@@ -203,11 +238,18 @@ function EchangeComponent(props) {
                       type={"tel"}
                     />
                   </Grid.Col>
-                  <Grid.Col md={2} className={`${classes.hiddenMobile}`}></Grid.Col>
-                  <Grid.Col md={5} >
-                    <Text fz={"md"} weight={500} my={10}  className={ `dh ${classes.hiddenMobile}`}>
-                      Confirmer le numéro :
-                      {/* de réception : */}
+                  <Grid.Col
+                    md={2}
+                    className={`${classes.hiddenMobile}`}
+                  ></Grid.Col>
+                  <Grid.Col md={5}>
+                    <Text
+                      fz={"md"}
+                      weight={500}
+                      my={10}
+                      className={`dh ${classes.hiddenMobile}`}
+                    >
+                      Confirmer le numéro :{/* de réception : */}
                     </Text>
                     <TextInput
                       placeholder=" Confirmer le numéro de réception"
@@ -220,15 +262,14 @@ function EchangeComponent(props) {
                   </Grid.Col>
                 </Grid>
 
-                <Group
-                 position="center"
-                >
+                <Group position="center">
                   <Button
                     mr={"lg"}
                     className={"ArrierePlan"}
                     onClick={handleEchange}
                   >
-                     <span style={{ marginInline: 5 }}>Valider</span>{" "} <IconArrowRight size={20} mx={3} />{" "}
+                    <span style={{ marginInline: 5 }}>Valider</span>{" "}
+                    <IconArrowRight size={20} mx={3} />{" "}
                   </Button>
                 </Group>
               </Box>

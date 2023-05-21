@@ -15,7 +15,9 @@ import React from "react";
 import { useState } from "react";
 import authService from "../services/authService";
 import { verifyEmail } from "../utils/fonctions";
+import ZamodiLogo from "./../assets/Zamodi-Logo.png";
 import Chargement from "./Chargement";
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
 import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
 
 const useStyles = createStyles((theme) => ({
@@ -87,7 +89,6 @@ function PasswordForgotComponent({ setpageKing, setclient }) {
             setclient(user.valeur);
             setvisible(false);
             let response = data.data;
-            console.log(response);
             if (response.state === "success") {
               setpageKing("EnterCode");
             }

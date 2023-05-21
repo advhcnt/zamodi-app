@@ -65,7 +65,6 @@ function Avis(props) {
     AvisService.getAllAvis().then(
       (data) => {
         let reponse = data.data.data;
-        console.log(reponse);
         setListavis([...reponse]);
       },
       (error) => {

@@ -87,15 +87,12 @@ function Tickets(props) {
     setvisible(true)
 
     setticket({ ...ticket, reponse: reponse })
-    console.log(ticket)
 
     let tick = { ...ticket, reponse: reponse }
-    console.log(tick)
     ticketService.updateUserTicket(ticket._id, tick).then(
       (data) => {
         AnswerModal.close();
         setvisible(false)
-        console.log(data)
       },
       (error) => {
         setvisible(false)
@@ -105,8 +102,6 @@ function Tickets(props) {
             error.response.data.message) ||
           error.message ||
           error.toString();
-
-        console.log(resMessage)
       }
     )
   }

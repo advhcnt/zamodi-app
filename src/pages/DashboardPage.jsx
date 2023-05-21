@@ -53,7 +53,6 @@ function DashboardPage(props) {
   }, [path]);
 
   useEffect(() => {
-    console.log(location.pathname.split("/"));
     let path = location.pathname;
     navigate(path);
   }, []);

@@ -39,7 +39,6 @@ const navigate = useNavigate()
                 }
               );
         }
-        console.log([email,name]);
     })
     return (
         <div>

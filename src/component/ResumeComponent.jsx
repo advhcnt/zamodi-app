@@ -323,7 +323,6 @@ function ResumeComponent(props) {
                       .readText()
                       .then((text) => {
                         setTransactionId(text);
-                        console.log("Pasted content: ", text);
                       })
                       .catch((err) => {
                         console.error(

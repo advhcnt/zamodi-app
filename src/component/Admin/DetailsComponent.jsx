@@ -66,7 +66,6 @@ function DetailsComponent(props) {
         setmtn({ ...detail.Mtn });
         setmoov({ ...detail.Moov });
         setuser(detail.utilisateurs);
-        console.log(detail);
       },
       (error) => {
         console.log(error);

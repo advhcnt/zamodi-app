@@ -49,17 +49,37 @@ function RechargeComponent(props) {
   const [valideRecharge, setValideRecharge] = useState(false);
   const [Reset, setreset] = useState(false);
 
+  useEffect(() => {
+    if (jeveux === "Celtiis money" || jai === "Celtiis money") {
+      seterror({
+        statut: true,
+        message:
+          "Les opérations avec Celltiis ne sont pas encore disponible pour le moment",
+      });
+    } else {
+      seterror(false, "");
+    }
+  }, [jeveux, jai]);
+
   const handleRecharge = () => {
     if (montant && jai && jeveux && numero && numeroConfirm && operation) {
       if (numero === numeroConfirm && verifyPhoneNumber(numero)) {
         if (jeveux !== jai) {
-          if (verifyAmount(montant)) {
-            seterror(false, "");
-            setValideRecharge(true);
+          if (jeveux !== "Celtiis money" && jai !== "Celtiis money") {
+            if (verifyAmount(montant)) {
+              seterror(false, "");
+              setValideRecharge(true);
+            } else {
+              seterror({
+                statut: true,
+                message: "Veuillez entrer un montant correct",
+              });
+            }
           } else {
             seterror({
               statut: true,
-              message: "Veuillez entrer un montant correct",
+              message:
+                "Les opérations avec Celltiis ne sont pas encore disponible pour le moment",
             });
           }
         } else {
@@ -73,7 +93,10 @@ function RechargeComponent(props) {
           });
         }
       } else {
-        seterror({ statut: true, message: "Veuillez entrer un numéro correct" });
+        seterror({
+          statut: true,
+          message: "Veuillez entrer un numéro correct",
+        });
       }
     } else {
       seterror({ statut: true, message: "Veuillez remplir les champs" });
@@ -145,7 +168,11 @@ function RechargeComponent(props) {
                     />
                   </Grid.Col>
                   <Grid.Col md={2} className={`${classes.hiddenMobile}`}>
-                    <Group position="center" align={'center'} sx={{marginBlock:20}}>
+                    <Group
+                      position="center"
+                      align={"center"}
+                      sx={{ marginBlock: 20 }}
+                    >
                       <IconArrowsLeftRight size={20} color="green" />
                     </Group>
                   </Grid.Col>
@@ -188,7 +215,11 @@ function RechargeComponent(props) {
                     />
                   </Grid.Col>
                   <Grid.Col md={2} className={`${classes.hiddenMobile}`}>
-                  <Group position="center" align={'center'} sx={{marginBlock:20}}>
+                    <Group
+                      position="center"
+                      align={"center"}
+                      sx={{ marginBlock: 20 }}
+                    >
                       <IconArrowsLeftRight size={20} color="green" />
                     </Group>
                   </Grid.Col>

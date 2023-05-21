@@ -92,7 +92,6 @@ function LoginPage(props) {
   const location = useLocation();
 
   useLayoutEffect(() => {
-    console.log(location.pathname.split("/"));
     let path = location.pathname;
     navigate(path);
   }, []);
@@ -156,78 +155,6 @@ function LoginPage(props) {
   };
 
   const [visible, setvisible] = useState(false);
-
-  // const loginGoogle = useGoogleLogin({
-  //   onSuccess: async (tokenResponse) => {
-  //     try {
-  //       const res = await axios.get(
-  //         "https://www.googleapis.com/oauth2/v3/userinfo",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${tokenResponse.access_token}`,
-  //           },
-  //         }
-  //       );
-
-  //       console.log("response token", tokenResponse);
-  //       console.log("info user ", res.data);
-  //       const info = res.data;
-
-  //       var decoded = jwt_decode(tokenResponse.access_token);
-  //       console.log("decodage du token", decoded);
-
-  //       // email = decoded.email
-  //       // email verify = decoded.verify_email
-  //       // familiname = decoded.family_name
-  //       // given_name = decoded.given_name
-  //       // piture = decoded.picture
-  //       try {
-  //         authService.loginBySocialLink(info.email, "google").then(
-  //           (data) => {
-  //             if (data.status === 200 || data.state === "success") {
-  //               authHeader(data.accessToken);
-
-  //               navigate("/dashboard");
-  //               // window.location.reload();
-  //             } else {
-  //               setvisible(false);
-  //               setErrMsg(data.message);
-  //             }
-  //           },
-  //           (error) => {
-  //             const resMessage =
-  //               (error.response &&
-  //                 error.response.data &&
-  //                 error.response.data.message) ||
-  //               error.message ||
-  //               error.toString();
-
-  //             setvisible(false);
-  //             setErrMsg(resMessage);
-  //           }
-  //         );
-  //       } catch (error) {}
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   },
-  //   onError: (error) => {
-  //     console.log("Login Failed");
-  //   },
-  // });
-
-  // const useSocialLogin = (provider, token) => {
-  //   try {
-  //     authService.loginWithSocial(provider, token).then((data) => {
-  //       if (data.status === 200 || data.state === "success") {
-  //         console.log(data.data);
-  //       } else {
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
 
   const googleAuth = () => {
@@ -421,19 +348,16 @@ function LoginPage(props) {
                 }
                 // onLoginStart={onLoginStart}
                 onResolve={({ provider, data }) => {
-                  console.log("access_token ", data);
-                  console.log("provider: ", provider);
                   try {
                     authService
                       .loginWithSocial({ ...data, provider: 'google' })
                       .then((data) => {
                         if (data.status === 200 || data.state === "success") {
-                          console.log(data.data);
                         } else {
                         }
                       });
                   } catch (error) {
-                    console.log(error);
+                   let errorr=true
                   }
                 }}
                 onReject={(err) => {
@@ -473,25 +397,25 @@ function LoginPage(props) {
               <LoginSocialFacebook
                 appId={717531253056662}
                 onResolve={(response) => {
-                  console.log(response);
+                 
                   const { provider, access_token, ...other } = response
                   try {
                     authService
                       .loginWithSocial({ "provider": response.provider, "token": response.access_token })
                       .then((data) => {
-                        console.log(data);
+                      
                         if (data.status === 200 || data.state === "success") {
-                          console.log(data.data);
+                          let reponse = data.data;
                         } else {
                           console.log("erreur");
                         }
                       });
                   } catch (error) {
-                    console.log(error);
+                   let errorr=true
                   }
                 }}
                 onReject={(error) => {
-                  console.log(error);
+                 let errorr=true
                 }}
               >
                 {/* <FacebookLoginButton /> */}

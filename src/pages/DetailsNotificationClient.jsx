@@ -19,7 +19,7 @@ const path = window.location.pathname;
   }, path);
  
   useLayoutEffect(() => {
-    console.log(location.pathname.split("/"));
+    
     let path = location.pathname;
     navigate(path);
   }, []);

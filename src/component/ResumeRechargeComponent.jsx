@@ -86,9 +86,7 @@ function ResumeRechargeComponent(props) {
     setOpenedSecondModal(true);
   };
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, []);
+
 
   const [NumeroMarchand, setNumeroMarchand] = useState("61815442");
 
@@ -344,7 +342,6 @@ function ResumeRechargeComponent(props) {
                       .readText()
                       .then((text) => {
                         setTransactionId(text);
-                        console.log("Pasted content: ", text);
                       })
                       .catch((err) => {
                         console.error(

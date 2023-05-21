@@ -30,7 +30,6 @@ function AdminDashboard(props) {
         }
       },
       (error) => {
-        console.log(error)
       }
     )
   }, [admin])

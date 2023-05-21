@@ -1,5 +1,5 @@
-import { Box, Checkbox,Group } from '@mantine/core';
-import { IconStar, } from '@tabler/icons';
+import { Box, Checkbox, Divider, Group } from '@mantine/core';
+import { IconStar, IconStarOff,IconStars } from '@tabler/icons';
 import React from 'react';
 
 function NoteComponent({note,niveau,setnote}) {

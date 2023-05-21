@@ -59,7 +59,7 @@ function ProfileComponent(props) {
         userService.updateUser(currentUser._id, data).then(
           (data) => {
             if (data.status === 200 || data.state === "success") {
-              console.log(data);
+              
               TraitementNotification(true, data.data.description, true);
               if (data.data.message._doc.status === "success") {
                 var item = JSON.parse(localStorage.getItem("user"));
@@ -117,7 +117,6 @@ function ProfileComponent(props) {
         userService.changeImage(formData).then(
           (data) => {
             if (data.data.status === "success") {
-              // console.log(data)
               var item = JSON.parse(localStorage.getItem("user"));
               item.message.photo = data.data.message._doc.photo;
               localStorage.setItem("user", JSON.stringify(item));

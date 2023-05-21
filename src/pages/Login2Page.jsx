@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
+import { useToggle, upperFirst } from "@mantine/hooks"
 import {
   TextInput,
   PasswordInput,
@@ -14,20 +14,22 @@ import {
   createStyles,
   Image,
   Card,
-} from "@mantine/core";
-import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png";
-import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png";
-import { Link, useNavigate } from "react-router-dom";
-import { IconLock, IconMail, IconUser } from "@tabler/icons";
-import authLogo from "./../assets/Auth.svg";
-import { useEffect, useRef, useState } from "react";
-import authService from "../services/authService";
-import Chargement from "../component/Chargement";
-import { verifyEmail } from "../utils/fonctions";
-import authHeader from "./../services/auth-header";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { LoginSocialGoogle } from "reactjs-social-login";
-import { showError, showSuccess } from "../utils/NotificationPopUp";
+} from "@mantine/core"
+import ZamodiLogo2 from "./../assets/Zamodi-Logo2.png"
+import ZamodiLogo3 from "./../assets/Zamodi-Logo3.png"
+import { Link, useNavigate } from "react-router-dom"
+import { IconLock, IconMail, IconUser } from "@tabler/icons"
+import authLogo from "./../assets/Auth.svg"
+import { useEffect, useRef, useState } from "react"
+import authService from "../services/authService"
+import Chargement from "../component/Chargement"
+import { verifyEmail } from "../utils/fonctions"
+import authHeader from "./../services/auth-header"
+import google from "./../assets/export22/google.svg"
+import { API_URL } from "../services/http-common"
+import { GoogleLoginButton } from "react-social-login-buttons"
+import { LoginSocialGoogle } from "reactjs-social-login"
+import { showError, showSuccess } from "../utils/NotificationPopUp"
 
 const useStyles = createStyles((theme) => ({
   logo: {
@@ -82,42 +84,42 @@ const useStyles = createStyles((theme) => ({
       width: "80%",
     },
   },
-}));
+}))
 
 // const verifyEmail = (email)=> {
-//   var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-//   return regex.test(email);
+//   var regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+//   return regex.test(email)
 // }
 function RegisterPage(props) {
-  const errRef = useRef();
-  const [user, setUser] = useState({ valeur: "", erreur: false });
-  const [pwd, setPwd] = useState({ valeur: "", erreur: false });
-  const [mail, setMail] = useState({ valeur: "", erreur: false });
-  const [errMsg, setErrMsg] = useState("");
-  const navigate = useNavigate();
-  const [visible, setvisible] = useState(false);
-  const [condition, setcondition] = useState({ valeur: false, erreur: false });
+  const errRef = useRef()
+  const [user, setUser] = useState({ valeur: "", erreur: false })
+  const [pwd, setPwd] = useState({ valeur: "", erreur: false })
+  const [mail, setMail] = useState({ valeur: "", erreur: false })
+  const [errMsg, setErrMsg] = useState("")
+  const navigate = useNavigate()
+  const [visible, setvisible] = useState(false)
+  const [condition, setcondition] = useState({ valeur: false, erreur: false })
 
-  const { classes, cx } = useStyles();
-  const [type, toggle] = useToggle(["register", "login"]);
+  const { classes, cx } = useStyles()
+  const [type, toggle] = useToggle(["register", "login"])
 
   useEffect(() => {
-    setErrMsg("");
-  }, [user, pwd]);
+    setErrMsg("")
+  }, [user, pwd])
 
   // Fonction pour l'inscription
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (user.valeur && user.valeur !== "") {
       if (mail.valeur && mail.valeur !== "" && verifyEmail(mail.valeur)) {
         if (pwd.valeur && pwd.valeur.length >= 8) {
           if (condition.valeur) {
-            setvisible(true);
+            setvisible(true)
             authService.register(user.valeur, mail.valeur, pwd.valeur).then(
               (data) => {
                 if (data.status === 200 || data.state === "success") {
-                  // setvisible(false);
-                  // console.log(data);
+                  // setvisible(false)
+                  // 
                   //  Login
 
                   authService.login(mail.valeur, pwd.valeur).then(
@@ -126,16 +128,16 @@ function RegisterPage(props) {
                         showSuccess(
                           "Inscription",
                           "Inscription éffectuée avec succès"
-                        );
-                        authHeader(data.accessToken);
+                        )
+                        authHeader(data.accessToken)
                         if (data.isAdmin) {
-                          navigate("/admin");
+                          navigate("/admin")
                         } else {
-                          navigate("/dashboard");
+                          navigate("/dashboard")
                         }
                       } else {
-                        setvisible(false);
-                        showError("inscription", data.message);
+                        setvisible(false)
+                        showError("inscription", data.message)
                       }
                     },
                     (error) => {
@@ -144,16 +146,16 @@ function RegisterPage(props) {
                           error.response.data &&
                           error.response.data.message) ||
                         error.message ||
-                        error.toString();
+                        error.toString()
 
-                      setvisible(false);
-                      showError("inscription", resMessage);
+                      setvisible(false)
+                      showError("inscription", resMessage)
                     }
-                  );
+                  )
                   // login
                 } else {
-                  setvisible(false);
-                  showError("inscription", data.message);
+                  setvisible(false)
+                  showError("inscription", data.message)
                 }
               },
               (error) => {
@@ -162,45 +164,44 @@ function RegisterPage(props) {
                     error.response.data &&
                     error.response.data.message) ||
                   error.message ||
-                  error.toString();
+                  error.toString()
 
-                setvisible(false);
-                showError("inscription", resMessage);
+                setvisible(false)
+                showError("inscription", resMessage)
               }
-            );
+            )
           } else {
             setcondition({
               ...condition,
               erreur: "Veuillez accepter les termes et conditions d'utilisation",
-            });
+            })
           }
         } else {
-          setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" });
+          setPwd({ ...pwd, erreur: "Veuillez entrer un mot de passe valide" })
         }
       } else {
-        setMail({ ...mail, erreur: "Veuillez entrer un mail valide" });
+        setMail({ ...mail, erreur: "Veuillez entrer un mail valide" })
       }
     } else {
-      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" });
+      setUser({ ...user, erreur: "Veuillez entrer un nom d'utilisateur" })
     }
-  };
+  }
 
   const googleAuth = (data, provider) => {
-    console.log("Hyacinthe");
     authService.authWithGoogle(data, provider).then(
       (data) => {
-        setvisible(true);
+        setvisible(true)
         if (data.status === 200 || data.state === "success") {
-          showSuccess("Inscription", "Inscription éffectuée avec succès");
-          authHeader(data.accessToken);
+          showSuccess("Inscription", "Inscription éffectuée avec succès")
+          authHeader(data.accessToken)
           if (data.isAdmin) {
-            navigate("/admin");
+            navigate("/admin")
           } else {
-            navigate("/dashboard");
+            navigate("/dashboard")
           }
         } else {
-          setvisible(false);
-          showError("inscription", data.message);
+          setvisible(false)
+          showError("inscription", data.message)
         }
       },
       (error) => {
@@ -209,13 +210,13 @@ function RegisterPage(props) {
             error.response.data &&
             error.response.data.message) ||
           error.message ||
-          error.toString();
+          error.toString()
 
-        setvisible(false);
-        showError("inscription", resMessage);
+        setvisible(false)
+        showError("inscription", resMessage)
       }
-    );
-  };
+    )
+  }
 
   return (
     <>
@@ -580,12 +581,12 @@ function RegisterPage(props) {
                   discoveryDocs="claims_supported"
                   access_type="offline"
                   onResolve={({ provider, data }) => {
-                    // setProvider(provider);
-                    // setProfile(data);
-                    googleAuth(data, provider);
+                    // setProvider(provider)
+                    // setProfile(data)
+                    googleAuth(data, provider)
                   }}
                   onReject={(err) => {
-                    console.log(err);
+                    console.log(err)
                   }}
                 >
                   <GoogleLoginButton text={"Inscription avec Google"} style={{borderRadius:32,fontSize:15,fontWeight:500}} />
@@ -666,7 +667,7 @@ function RegisterPage(props) {
         </Grid>
       </Box>
     </>
-  );
+  )
 }
 
-export default RegisterPage;
+export default RegisterPage
